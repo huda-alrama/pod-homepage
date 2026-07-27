@@ -1,5 +1,4 @@
 {{ 'section-reviews-carousel.css' | asset_url | stylesheet_tag }}
-{{ 'component-rating.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -17,34 +16,38 @@
 {%- endstyle -%}
 
 {%- comment -%}
-  Reuses Dawn's own .rating/.rating-star component (assets/component-
-  rating.css, same one used for product star ratings in snippets/card-
-  product.liquid) for both the overall score header and each review's
-  stars, and the same slider-component carousel pattern as bestsellers/
-  template-cards — no new rating or carousel mechanism invented here.
+  Rebuilt to match the real spreadshirt.de reviews section exactly (per
+  screenshot), which turned out to look quite different from a typical
+  boxed-review-card carousel: flat text blocks with no card background/
+  border, a single overall Trustpilot-branded score (not a star rating
+  per review), large circular prev/next arrows at the outer edges of the
+  whole section (not inline with the content), and a "view all reviews"
+  button below the dots. Reuses the same <slider-component> carousel
+  pattern as bestsellers/template-cards — only the visual treatment of
+  the controls and cards differs here.
 {%- endcomment -%}
 
 <div class="color-{{ section.settings.color_scheme }}">
   <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.title != blank -%}
+      <h2 class="reviews-carousel__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
     <div class="reviews-carousel__header">
-      <div
-        class="rating"
-        role="img"
-        aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: section.settings.overall_rating, rating_max: 5 }}"
-      >
-        <span
-          aria-hidden="true"
-          class="rating-star color-icon-{{ settings.accent_icons }}"
-          style="--rating: {{ section.settings.overall_rating | floor }}; --rating-max: 5; --rating-decimal: 0.5;"
-        ></span>
-      </div>
-      <p class="reviews-carousel__score">{{ section.settings.overall_rating }} / 5</p>
-      {%- if section.settings.review_count != blank -%}
-        <p class="reviews-carousel__count">{{ section.settings.review_count }}</p>
-      {%- endif -%}
+      <p class="reviews-carousel__brand">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#00b67a" aria-hidden="true"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9 1.4 7.1L12 17.8 5.6 21.3 7 14.2 2 9.3l7.1-.7z"/></svg>
+        Trustpilot
+      </p>
+      <p class="reviews-carousel__score">{{ section.settings.overall_rating }} von 5</p>
     </div>
 
-    <slider-component class="slider-mobile-gutter">
+    <slider-component class="slider-mobile-gutter reviews-carousel__slider-component">
+      {%- if section.blocks.size > section.settings.columns_desktop -%}
+        <button type="button" class="reviews-carousel__arrow reviews-carousel__arrow--prev slider-button slider-button--prev" name="previous" aria-label="{{ 'general.slider.previous_slide' | t }}" aria-controls="Slider-{{ section.id }}">
+          {% render 'icon-caret' %}
+        </button>
+      {%- endif -%}
+
       <ul
         id="Slider-{{ section.id }}"
         class="grid reviews-carousel__grid grid--1-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop slider slider--desktop slider--tablet grid--peek"
@@ -53,45 +56,89 @@
         {%- for block in section.blocks -%}
           <li id="Slide-{{ section.id }}-{{ forloop.index }}" class="grid__item slider__slide" {{ block.shopify_attributes }}>
             <div class="review-card">
-              <div
-                class="rating"
-                role="img"
-                aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: block.settings.rating, rating_max: 5 }}"
-              >
-                <span
-                  aria-hidden="true"
-                  class="rating-star color-icon-{{ settings.accent_icons }}"
-                  style="--rating: {{ block.settings.rating | floor }}; --rating-max: 5; --rating-decimal: 0;"
-                ></span>
-              </div>
+              {%- if block.settings.title != blank -%}
+                <p class="review-card__title">{{ block.settings.title }}</p>
+              {%- endif -%}
               {%- if block.settings.text != blank -%}
                 <p class="review-card__text">{{ block.settings.text }}</p>
               {%- endif -%}
-              <p class="review-card__meta">
-                {%- if block.settings.name != blank -%}<span class="review-card__name">{{ block.settings.name }}</span>{%- endif -%}
-                {%- if block.settings.date != blank -%}<span class="review-card__date">{{ block.settings.date }}</span>{%- endif -%}
-              </p>
+              {%- if block.settings.name != blank -%}
+                <p class="review-card__name">{{ block.settings.name }}</p>
+              {%- endif -%}
+              {%- if block.settings.date != blank -%}
+                <p class="review-card__date">{{ block.settings.date }}</p>
+              {%- endif -%}
             </div>
           </li>
         {%- endfor -%}
       </ul>
+
       {%- if section.blocks.size > section.settings.columns_desktop -%}
-        <div class="slider-buttons no-js-hidden">
-          <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'general.slider.previous_slide' | t }}" aria-controls="Slider-{{ section.id }}">
-            {% render 'icon-caret' %}
-          </button>
-          <div class="slider-counter caption">
-            <span class="slider-counter--current">1</span>
-            <span aria-hidden="true"> / </span>
-            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
-            <span class="slider-counter--total">{{ section.blocks.size }}</span>
-          </div>
-          <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'general.slider.next_slide' | t }}" aria-controls="Slider-{{ section.id }}">
-            {% render 'icon-caret' %}
-          </button>
+        <button type="button" class="reviews-carousel__arrow reviews-carousel__arrow--next slider-button slider-button--next" name="next" aria-label="{{ 'general.slider.next_slide' | t }}" aria-controls="Slider-{{ section.id }}">
+          {% render 'icon-caret' %}
+        </button>
+        <div class="reviews-carousel__dots" id="ReviewsDots-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="reviews-carousel__dot"
+              data-dot-index="{{ forloop.index0 }}"
+              aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+            >
+              <span class="dot"></span>
+            </button>
+          {%- endfor -%}
         </div>
       {%- endif -%}
     </slider-component>
+
+    {%- comment -%}
+      Self-contained dot navigation, scoped to this section only — not a
+      modification to global.js's shared SliderComponent/SlideshowComponent
+      classes. SlideshowComponent does support clickable dots, but its
+      enableSliderLooping/onButtonClick edge-case logic assumes exactly one
+      slide visible at a time (a true slideshow), not a multi-item-per-view
+      grid like this carousel — reusing it here risked a second subtle bug
+      of the same kind already found and fixed in the hero section.
+    {%- endcomment -%}
+    {%- if section.blocks.size > section.settings.columns_desktop -%}
+      <script>
+        (function () {
+          var slider = document.getElementById('Slider-{{ section.id }}');
+          var dotsWrap = document.getElementById('ReviewsDots-{{ section.id }}');
+          if (!slider || !dotsWrap) return;
+          var dots = Array.from(dotsWrap.querySelectorAll('[data-dot-index]'));
+          var items = Array.from(slider.children);
+
+          function setActiveDot() {
+            var activeIndex = 0;
+            var scrollLeft = slider.scrollLeft;
+            items.forEach(function (item, i) {
+              if (item.offsetLeft <= scrollLeft + 1) activeIndex = i;
+            });
+            dots.forEach(function (dot, i) {
+              dot.classList.toggle('reviews-carousel__dot--active', i === activeIndex);
+            });
+          }
+
+          dots.forEach(function (dot, i) {
+            dot.addEventListener('click', function () {
+              var item = items[i];
+              if (item) slider.scrollTo({ left: item.offsetLeft, behavior: 'smooth' });
+            });
+          });
+
+          slider.addEventListener('scroll', setActiveDot);
+          setActiveDot();
+        })();
+      </script>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="reviews-carousel__cta">
+        <a href="{{ section.settings.button_link | default: '#' }}" class="button button--secondary">{{ section.settings.button_label }}</a>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -101,15 +148,26 @@
   "settings": [
     {
       "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Bewertungen von Trustpilot"
+    },
+    {
+      "type": "text",
       "id": "overall_rating",
       "label": "Overall rating",
       "default": "4.6"
     },
     {
       "type": "text",
-      "id": "review_count",
-      "label": "Review count text",
-      "default": "10.000+ Bewertungen"
+      "id": "button_label",
+      "label": "View-all button label",
+      "default": "Alle Bewertungen anzeigen"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "View-all button link"
     },
     {
       "type": "range",
@@ -117,7 +175,7 @@
       "min": 2,
       "max": 5,
       "step": 1,
-      "default": 3,
+      "default": 5,
       "label": "Visible columns on desktop"
     },
     {
@@ -130,7 +188,7 @@
         { "value": "background-2", "label": "Background 2" },
         { "value": "inverse", "label": "Inverse" }
       ],
-      "default": "background-2",
+      "default": "background-1",
       "label": "Color scheme"
     },
     {
@@ -141,7 +199,7 @@
       "step": 4,
       "unit": "px",
       "label": "Top padding",
-      "default": 36
+      "default": 48
     },
     {
       "type": "range",
@@ -151,7 +209,7 @@
       "step": 4,
       "unit": "px",
       "label": "Bottom padding",
-      "default": 36
+      "default": 48
     }
   ],
   "blocks": [
@@ -160,13 +218,9 @@
       "name": "Review",
       "settings": [
         {
-          "type": "range",
-          "id": "rating",
-          "min": 1,
-          "max": 5,
-          "step": 1,
-          "default": 5,
-          "label": "Rating"
+          "type": "text",
+          "id": "title",
+          "label": "Review headline"
         },
         {
           "type": "textarea",

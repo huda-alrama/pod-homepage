@@ -1,18 +1,38 @@
-.reviews-carousel__header {
+.reviews-carousel__title {
   text-align: center;
-  margin-bottom: 2.5rem;
+  font-size: 3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 2rem;
+}
+
+.reviews-carousel__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.reviews-carousel__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 
 .reviews-carousel__score {
-  margin: 0.5rem 0 0.2rem;
-  font-size: 1.8rem;
-  font-weight: 700;
+  margin: 0;
+  font-size: 3.4rem;
+  font-weight: 800;
 }
 
-.reviews-carousel__count {
-  margin: 0;
-  font-size: 1.3rem;
-  color: rgba(var(--color-foreground), 0.7);
+.reviews-carousel__slider-component {
+  position: relative;
+  display: block;
 }
 
 .reviews-carousel__grid {
@@ -21,41 +41,92 @@
   list-style: none;
 }
 
+/* Flat text blocks, deliberately no card background/border/shadow — the
+   real spreadshirt.de reviews section has no boxed card treatment at all,
+   just plain text columns on the section's own background. */
 .review-card {
   height: 100%;
-  padding: 2rem;
-  border-radius: 0.8rem;
-  /* Deliberately a fixed white, not rgb(var(--color-background)) — that
-     variable resolves to the section's OWN scheme color, so a card using
-     it would always blend invisibly into whatever background the section
-     happens to be on (this is what made the section read as flat/dark
-     when the section itself used a dark scheme). A card should look like
-     a raised card regardless of which color scheme the section around it
-     uses. */
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-  color: #1a1a1a;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+}
+
+.review-card__title {
+  margin: 0 0 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .review-card__text {
-  margin: 0;
+  margin: 0 0 1.2rem;
   font-size: 1.4rem;
   line-height: 1.5;
-  flex-grow: 1;
-}
-
-.review-card__meta {
-  margin: 0;
-  display: flex;
-  gap: 0.8rem;
-  font-size: 1.2rem;
-  color: rgba(26, 26, 26, 0.7);
 }
 
 .review-card__name {
+  margin: 0;
+  font-size: 1.4rem;
   font-weight: 600;
-  color: #1a1a1a;
+}
+
+.review-card__date {
+  margin: 0;
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.reviews-carousel__arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviews-carousel__arrow--prev {
+  left: -1rem;
+}
+
+.reviews-carousel__arrow--next {
+  right: -1rem;
+}
+
+@media screen and (max-width: 989px) {
+  .reviews-carousel__arrow {
+    display: none;
+  }
+}
+
+.reviews-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+}
+
+.reviews-carousel__dot {
+  padding: 0.4rem;
+  line-height: 0;
+}
+
+.reviews-carousel__dot .dot {
+  display: block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: rgba(var(--color-foreground), 0.25);
+}
+
+.reviews-carousel__dot--active .dot {
+  background: rgb(var(--color-foreground));
+}
+
+.reviews-carousel__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
 }
