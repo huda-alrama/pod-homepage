@@ -195,22 +195,22 @@
         "template--18309637636369__f1552b18-6017-4231-810d-74e61da22c37-1680164422d7fb2efc-0": {
           "type": "heading",
           "settings": {
-            "heading": "Stay hydrated",
+            "heading": "Dein Design, dein T-Shirt",
             "heading_size": "h1"
           }
         },
         "template--18309637636369__f1552b18-6017-4231-810d-74e61da22c37-1680164422d7fb2efc-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Try our wax subscription so you can fly high, but never dry.</p>",
+            "text": "<p>Gestalte dein eigenes T-Shirt in wenigen Minuten — wähle Farbe, Schnitt und lade dein Design hoch.</p>",
             "text_style": "body"
           }
         },
         "template--18309637636369__f1552b18-6017-4231-810d-74e61da22c37-1680164422d7fb2efc-2": {
           "type": "button",
           "settings": {
-            "button_label": "Get waxy now",
-            "button_link": "shopify://products/selling-plans-ski-wax"
+            "button_label": "Jetzt gestalten",
+            "button_link": "shopify://collections/all"
           }
         }
       },
@@ -228,6 +228,121 @@
         "desktop_content_alignment": "left",
         "content_layout": "no-overlap",
         "color_scheme": "accent-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "theme_merch": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": { "type": "heading", "settings": { "heading": "Offizielle & Fan-Merchandise", "heading_size": "h1" } },
+        "text": { "type": "text", "settings": { "text": "<p>Entdecke lizenzierte Kollektionen deiner Lieblingsmarken und -charaktere.</p>", "text_style": "body" } },
+        "button": { "type": "button", "settings": { "button_label": "Kollektion entdecken", "button_link": "shopify://collections/all" } }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "image": "shopify://shop_images/theme_cover_image.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "theme_embroidery": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": { "type": "heading", "settings": { "heading": "Sommer-Stickerei", "heading_size": "h1" } },
+        "text": { "type": "text", "settings": { "text": "<p>Hochwertige Stickerei für einen Look, der den ganzen Sommer hält.</p>", "text_style": "body" } },
+        "button": { "type": "button", "settings": { "button_label": "Jetzt gestalten", "button_link": "shopify://collections/all" } }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "image": "shopify://shop_images/theme_cover_image.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "theme_swimwear": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": { "type": "heading", "settings": { "heading": "Bereit für den Strand", "heading_size": "h1" } },
+        "text": { "type": "text", "settings": { "text": "<p>Individuelle Bademode und Strandaccessoires für den Sommer.</p>", "text_style": "body" } },
+        "button": { "type": "button", "settings": { "button_label": "Jetzt shoppen", "button_link": "shopify://collections/all" } }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "image": "shopify://shop_images/theme_cover_image.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "theme_festival": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": { "type": "heading", "settings": { "heading": "Festival-Style", "heading_size": "h1" } },
+        "text": { "type": "text", "settings": { "text": "<p>Auffällige Designs für Festivals und Open-Airs — von dir gestaltet.</p>", "text_style": "body" } },
+        "button": { "type": "button", "settings": { "button_label": "Jetzt gestalten", "button_link": "shopify://collections/all" } }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "image": "shopify://shop_images/theme_cover_image.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "accent-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "theme_gifts": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": { "type": "heading", "settings": { "heading": "Das perfekte Geschenk", "heading_size": "h1" } },
+        "text": { "type": "text", "settings": { "text": "<p>Schulanfang, Geburtstag oder Junggesellenabschied — finde das passende Design für jeden Anlass.</p>", "text_style": "body" } },
+        "button": { "type": "button", "settings": { "button_label": "Geschenke entdecken", "button_link": "shopify://collections/all" } }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "image": "shopify://shop_images/theme_cover_image.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
         "padding_top": 60,
@@ -275,6 +390,11 @@
     "bestsellers",
     "template_cards",
     "f1552b18-6017-4231-810d-74e61da22c37",
+    "theme_merch",
+    "theme_embroidery",
+    "theme_swimwear",
+    "theme_festival",
+    "theme_gifts",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
   ]
 }
