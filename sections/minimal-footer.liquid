@@ -1,0 +1,89 @@
+{{ 'section-minimal-footer.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Replaces Dawn's stock multi-column footer per direct instruction, to
+  match spreadshirt.de's actual minimal footer: centered logo, one
+  marketing paragraph with inline links, and a centered row of legal
+  links — not a 4-column layout. Uses a dedicated background/text color
+  pair (not the shared color_scheme picker) so this always renders dark
+  regardless of the theme's configured color schemes, matching the
+  reference exactly.
+{%- endcomment -%}
+
+<footer class="minimal-footer" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};">
+  <div class="page-width minimal-footer__inner">
+    {%- if settings.logo != blank -%}
+      <div class="minimal-footer__logo">
+        {{ settings.logo | image_url: width: 200 | image_tag: loading: 'lazy', alt: shop.name }}
+      </div>
+    {%- else -%}
+      <div class="minimal-footer__logo minimal-footer__logo--placeholder" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21s-6.5-4.35-9.3-8.1C.8 10.3 1 6.9 3.6 5.1c2.2-1.5 4.9-.9 6.4.9L12 8l2-2c1.5-1.8 4.2-2.4 6.4-.9 2.6 1.8 2.8 5.2.9 7.8C18.5 16.65 12 21 12 21z"></path>
+        </svg>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.text != blank -%}
+      <div class="minimal-footer__text rte">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.show_policy or section.settings.data_settings_label != blank -%}
+      <ul class="minimal-footer__links list-unstyled">
+        {%- if section.settings.show_policy -%}
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if section.settings.data_settings_label != blank -%}
+          <li><a href="{{ section.settings.data_settings_link | default: '#' }}">{{ section.settings.data_settings_label }}</a></li>
+        {%- endif -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Minimal footer",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Gestalte dein eigenes Design oder entdecke unsere Kollektion. Alle Bestellungen werden täglich produziert und weltweit versendet!</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policy",
+      "label": "Show policy links",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "data_settings_label",
+      "label": "Data settings link label",
+      "default": "Datenschutzeinstellungen"
+    },
+    {
+      "type": "url",
+      "id": "data_settings_link",
+      "label": "Data settings link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

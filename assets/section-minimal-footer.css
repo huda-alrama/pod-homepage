@@ -1,0 +1,54 @@
+.minimal-footer {
+  padding-block: 6rem;
+}
+
+.minimal-footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2.5rem;
+}
+
+.minimal-footer__logo img,
+.minimal-footer__logo svg {
+  max-width: 6rem;
+  height: auto;
+  display: block;
+}
+
+.minimal-footer__logo--placeholder {
+  opacity: 0.9;
+}
+
+.minimal-footer__text {
+  max-width: 62rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.minimal-footer__text a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.minimal-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 2rem;
+  margin: 0;
+  padding: 0;
+  font-size: 1.3rem;
+}
+
+.minimal-footer__links a {
+  color: inherit;
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.minimal-footer__links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
