@@ -81,6 +81,62 @@
         "padding_bottom": 36
       }
     },
+    "quick_links": {
+      "type": "multicolumn",
+      "blocks": {
+        "link-1": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "T-Shirt bedrucken",
+            "link_label": "Jetzt gestalten",
+            "link": "shopify://collections/all"
+          }
+        },
+        "link-2": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "Hoodie gestalten",
+            "link_label": "Jetzt gestalten",
+            "link": "shopify://collections/all"
+          }
+        },
+        "link-3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "Stickerei",
+            "link_label": "Mehr erfahren",
+            "link": "shopify://collections/all"
+          }
+        },
+        "link-4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "Beliebte Produkte",
+            "link_label": "Entdecken",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["link-1", "link-2", "link-3", "link-4"],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "background-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -190,6 +246,7 @@
   "order": [
     "spreadshirt_hero",
     "trust_badges",
+    "quick_links",
     "featured_collection",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
