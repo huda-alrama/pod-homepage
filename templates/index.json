@@ -137,20 +137,20 @@
         "padding_bottom": 36
       }
     },
-    "featured_collection": {
+    "bestsellers": {
       "type": "featured-collection",
       "settings": {
-        "title": "<strong>Featured products</strong>",
+        "title": "<strong>Bestseller</strong>",
         "heading_size": "h1",
         "description": "",
         "show_description": false,
         "description_style": "body",
         "collection": "automated-collection",
-        "products_to_show": 10,
-        "columns_desktop": 3,
+        "products_to_show": 14,
+        "columns_desktop": 5,
         "full_width": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
+        "show_view_all": true,
+        "view_all_style": "link",
         "enable_desktop_slider": true,
         "color_scheme": "background-1",
         "image_ratio": "portrait",
@@ -159,7 +159,7 @@
         "show_rating": false,
         "enable_quick_add": false,
         "columns_mobile": "2",
-        "swipe_on_mobile": false,
+        "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -247,7 +247,7 @@
     "spreadshirt_hero",
     "trust_badges",
     "quick_links",
-    "featured_collection",
+    "bestsellers",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
   ]
