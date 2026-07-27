@@ -349,6 +349,30 @@
         "padding_bottom": 60
       }
     },
+    "reviews_carousel": {
+      "type": "reviews-carousel",
+      "blocks": {
+        "rev-1": { "type": "review", "settings": { "rating": 5, "text": "Super Qualität und schnelle Lieferung, genau wie erwartet!", "name": "Julia K.", "date": "vor 2 Tagen" } },
+        "rev-2": { "type": "review", "settings": { "rating": 5, "text": "Mein Design sieht genauso aus wie im Vorschau-Editor. Top!", "name": "Markus B.", "date": "vor 5 Tagen" } },
+        "rev-3": { "type": "review", "settings": { "rating": 4, "text": "Gute Passform, angenehmer Stoff. Würde wieder bestellen.", "name": "Sophie L.", "date": "vor 1 Woche" } },
+        "rev-4": { "type": "review", "settings": { "rating": 5, "text": "Der Kundenservice war super hilfsbereit bei meiner Frage.", "name": "Daniel R.", "date": "vor 1 Woche" } },
+        "rev-5": { "type": "review", "settings": { "rating": 5, "text": "Schon das dritte Mal bestellt — immer top Qualität.", "name": "Anna S.", "date": "vor 2 Wochen" } },
+        "rev-6": { "type": "review", "settings": { "rating": 4, "text": "Druck ist sehr sauber, Farben kräftig und langlebig.", "name": "Tobias W.", "date": "vor 2 Wochen" } },
+        "rev-7": { "type": "review", "settings": { "rating": 5, "text": "Perfekt für unser Teamevent — alle waren begeistert!", "name": "Lea M.", "date": "vor 3 Wochen" } },
+        "rev-8": { "type": "review", "settings": { "rating": 5, "text": "Einfacher Bestellprozess und schnelle Lieferzeit.", "name": "Felix H.", "date": "vor 1 Monat" } },
+        "rev-9": { "type": "review", "settings": { "rating": 4, "text": "Tolles Preis-Leistungs-Verhältnis für individuelle Designs.", "name": "Nina P.", "date": "vor 1 Monat" } },
+        "rev-10": { "type": "review", "settings": { "rating": 5, "text": "Ich bestelle hier regelmäßig Geschenke — nie enttäuscht.", "name": "Christian G.", "date": "vor 1 Monat" } }
+      },
+      "block_order": ["rev-1", "rev-2", "rev-3", "rev-4", "rev-5", "rev-6", "rev-7", "rev-8", "rev-9", "rev-10"],
+      "settings": {
+        "overall_rating": "4.6",
+        "review_count": "10.000+ Bewertungen",
+        "columns_desktop": 3,
+        "color_scheme": "background-2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "38cdf60f-e431-43b5-aac3-7e6215447d67": {
       "type": "collection-list",
       "blocks": {
@@ -395,6 +419,7 @@
     "theme_swimwear",
     "theme_festival",
     "theme_gifts",
+    "reviews_carousel",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
   ]
 }
