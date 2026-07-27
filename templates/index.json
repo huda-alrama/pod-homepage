@@ -405,6 +405,126 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "brand_info": {
+      "type": "multicolumn",
+      "blocks": {
+        "info-1": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "Gestalten",
+            "text": "<p>Lass deiner Fantasie freien Lauf und gestalte dein eigenes Design.</p>",
+            "link_label": "Jetzt gestalten",
+            "link": "shopify://collections/all"
+          }
+        },
+        "info-2": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "Shoppen",
+            "text": "<p>Entdecke fertige Designs von unserer Community und Marken.</p>",
+            "link_label": "Jetzt shoppen",
+            "link": "shopify://collections/all"
+          }
+        },
+        "info-3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "Business-Lösungen",
+            "text": "<p>Individuelle Merchandise-Lösungen für Teams und Unternehmen.</p>",
+            "link_label": "Mehr erfahren",
+            "link": "shopify://collections/all"
+          }
+        },
+        "info-4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "title": "Weitere Plattformen",
+            "text": "<p>Entdecke unsere weiteren Marken und Services.</p>",
+            "link_label": "Entdecken",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["info-1", "info-2", "info-3", "info-4"],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "background-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "guarantee_cards": {
+      "type": "trust-badges",
+      "blocks": {
+        "guarantee-1": {
+          "type": "badge",
+          "settings": {
+            "heading": "Sichere Zahlungsmethoden",
+            "text": "PayPal, Kreditkarte, Klarna & mehr"
+          }
+        },
+        "guarantee-2": {
+          "type": "badge",
+          "settings": {
+            "heading": "30 Tage Zufriedenheitsgarantie",
+            "text": "Nicht zufrieden? Geld zurück."
+          }
+        },
+        "guarantee-3": {
+          "type": "badge",
+          "settings": {
+            "heading": "Weltweiter Versand",
+            "text": "Mehrere Versandgeschwindigkeiten verfügbar"
+          }
+        }
+      },
+      "block_order": ["guarantee-1", "guarantee-2", "guarantee-3"],
+      "settings": {
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "newsletter-heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "5 € Gutschein sichern",
+            "heading_size": "h1"
+          }
+        },
+        "newsletter-paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Melde dich für unseren Newsletter an und erhalte 5 € Rabatt auf deine nächste Bestellung.</p>"
+          }
+        },
+        "newsletter-form": {
+          "type": "email_form"
+        }
+      },
+      "block_order": ["newsletter-heading", "newsletter-paragraph", "newsletter-form"],
+      "settings": {
+        "color_scheme": "accent-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
@@ -420,6 +540,9 @@
     "theme_festival",
     "theme_gifts",
     "reviews_carousel",
-    "38cdf60f-e431-43b5-aac3-7e6215447d67"
+    "brand_info",
+    "38cdf60f-e431-43b5-aac3-7e6215447d67",
+    "guarantee_cards",
+    "newsletter"
   ]
 }
