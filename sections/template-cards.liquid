@@ -1,0 +1,202 @@
+{{ 'section-template-cards.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- comment -%}
+  Reuses the exact slider-component + grid/slider-button markup from
+  sections/featured-collection.liquid (same custom element, same JS,
+  same prev/next button structure) so this behaves identically to the
+  bestsellers carousel — only the card content differs (a design
+  template preview + name + "Anpassen" button, not a real product with
+  a price).
+{%- endcomment -%}
+
+<div class="color-{{ section.settings.color_scheme }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.title != blank -%}
+      <div class="title-wrapper-with-link title-wrapper--self-padded-mobile title-wrapper--no-top-margin">
+        <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+
+    <slider-component class="slider-mobile-gutter">
+      <ul
+        id="Slider-{{ section.id }}"
+        class="grid template-cards__grid grid--2-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop slider slider--desktop slider--tablet grid--peek"
+        role="list"
+      >
+        {%- for block in section.blocks -%}
+          <li
+            id="Slide-{{ section.id }}-{{ forloop.index }}"
+            class="grid__item slider__slide"
+            {{ block.shopify_attributes }}
+          >
+            <a href="{{ block.settings.link | default: '#' }}" class="template-card">
+              <div class="template-card__image-wrap">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 600 | image_tag:
+                    loading: 'lazy',
+                    widths: '300, 450, 600',
+                    class: 'template-card__image'
+                  }}
+                {%- endif -%}
+              </div>
+              <p class="template-card__name">{{ block.settings.name }}</p>
+              <span class="button button--secondary template-card__button">{{ section.settings.button_label }}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.blocks.size > section.settings.columns_desktop -%}
+        <div class="slider-buttons no-js-hidden">
+          <button
+            type="button"
+            class="slider-button slider-button--prev"
+            name="previous"
+            aria-label="{{ 'general.slider.previous_slide' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            {% render 'icon-caret' %}
+          </button>
+          <div class="slider-counter caption">
+            <span class="slider-counter--current">1</span>
+            <span aria-hidden="true"> / </span>
+            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+            <span class="slider-counter--total">{{ section.blocks.size }}</span>
+          </div>
+          <button
+            type="button"
+            class="slider-button slider-button--next"
+            name="next"
+            aria-label="{{ 'general.slider.next_slide' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            {% render 'icon-caret' %}
+          </button>
+        </div>
+      {%- endif -%}
+    </slider-component>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Template cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Beliebte Vorlagen"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Anpassen"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 5,
+      "label": "Visible columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "accent-1", "label": "Accent 1" },
+        { "value": "accent-2", "label": "Accent 2" },
+        { "value": "background-1", "label": "Background 1" },
+        { "value": "background-2", "label": "Background 2" },
+        { "value": "inverse", "label": "Inverse" }
+      ],
+      "default": "background-1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "template",
+      "name": "Template",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Preview image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Template name",
+          "default": "OOO"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Template cards",
+      "blocks": [
+        { "type": "template" },
+        { "type": "template" },
+        { "type": "template" },
+        { "type": "template" },
+        { "type": "template" }
+      ]
+    }
+  ]
+}
+{% endschema %}
