@@ -14,10 +14,31 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "footer-contact": {
+          "type": "text",
+          "settings": {
+            "heading": "Kontakt",
+            "subtext": "<p>Kundenservice: +49 (0)800 000 0000</p><p>Mo–Fr, 9–18 Uhr</p>"
+          }
+        },
+        "footer-service": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Service",
+            "menu": "main-menu"
+          }
+        },
         "55172ef6-3a6a-4cfa-b790-88739b47891f": {
           "type": "link_list",
           "settings": {
-            "heading": "Quick links",
+            "heading": "Unternehmen",
+            "menu": "main-menu"
+          }
+        },
+        "footer-partners": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Partner-Programme",
             "menu": "main-menu"
           }
         },
@@ -26,19 +47,14 @@
           "settings": {
             "show_social": true
           }
-        },
-        "f95fe295-fbc2-4d2b-a952-72670c2ab328": {
-          "type": "text",
-          "settings": {
-            "heading": "Resources",
-            "subtext": "<ul><li><a href=\"https://shopify.dev/docs/apps/tools/development-stores/generated-data\" target=\"_blank\" title=\"Generated test data developer docs\">Generated test data docs</a></li><li><a href=\"https://shopify.dev/docs/apps/tools/graphiql-admin-api\" target=\"_blank\" title=\"GraphiQL API explorer\">GraphiQL API explorer</a></li></ul>"
-          }
         }
       },
       "block_order": [
+        "footer-contact",
+        "footer-service",
         "55172ef6-3a6a-4cfa-b790-88739b47891f",
-        "6e0c08d4-cd4c-439c-b5e2-a483bba29ec2",
-        "f95fe295-fbc2-4d2b-a952-72670c2ab328"
+        "footer-partners",
+        "6e0c08d4-cd4c-439c-b5e2-a483bba29ec2"
       ],
       "settings": {
         "color_scheme": "inverse",
@@ -46,7 +62,7 @@
         "newsletter_heading": "Subscribe to our emails",
         "enable_follow_on_shop": true,
         "show_social": true,
-        "enable_country_selector": false,
+        "enable_country_selector": true,
         "enable_language_selector": true,
         "payment_enable": true,
         "show_policy": true,
