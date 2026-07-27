@@ -9,53 +9,76 @@
  */
 {
   "sections": {
-    "6a3bb789-ce10-45f5-ae67-e2063ef8c76b": {
-      "type": "image-banner",
+    "spreadshirt_hero": {
+      "type": "spreadshirt-hero",
       "blocks": {
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-0": {
-          "type": "heading",
+        "slide-1": {
+          "type": "slide",
           "settings": {
-            "heading": "testing Generated test data",
-            "heading_size": "h1"
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "eyebrow": "Quality-Essentials",
+            "heading": "Für unvergessliche Sommer-Stories",
+            "button_label_1": "Jetzt gestalten",
+            "button_link_1": "",
+            "button_label_2": "Jetzt shoppen",
+            "button_link_2": "shopify://collections/all",
+            "button_label_3": "SPREAD Essentials",
+            "button_link_3": "",
+            "color_scheme": "background-1"
           }
         },
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-1": {
-          "type": "text",
+        "slide-2": {
+          "type": "slide",
           "settings": {
-            "text": "A theme and populated test store by Shopify to help you test commerce primitives.",
-            "text_style": "body"
-          }
-        },
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-2": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop products",
+            "image": "shopify://shop_images/theme_cover_image.jpg",
+            "eyebrow": "SPREAD Kollektion",
+            "heading": "Qualität & Style",
+            "button_label_1": "Entdecken",
             "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
-            "button_style_secondary_2": false
+            "button_label_3": "",
+            "button_link_3": "",
+            "color_scheme": "background-2"
           }
         }
       },
-      "block_order": [
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-0",
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-1",
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-2"
-      ],
-      "custom_css": [],
+      "block_order": ["slide-1", "slide-2"],
       "settings": {
-        "image": "shopify://shop_images/theme_cover_image.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "desktop_content_position": "middle-left",
-        "show_text_box": true,
-        "desktop_content_alignment": "left",
-        "color_scheme": "background-1",
-        "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
+        "auto_rotate": true,
+        "change_slides_speed": 5
+      }
+    },
+    "trust_badges": {
+      "type": "trust-badges",
+      "blocks": {
+        "badge-1": {
+          "type": "badge",
+          "settings": {
+            "heading": "Sichere Zahlung",
+            "text": "PayPal, Kreditkarte & mehr"
+          }
+        },
+        "badge-2": {
+          "type": "badge",
+          "settings": {
+            "heading": "10+ Mio. zufriedene Kunden",
+            "text": "Weltweit vertraut"
+          }
+        },
+        "badge-3": {
+          "type": "badge",
+          "settings": {
+            "heading": "20+ Jahre Erfahrung",
+            "text": "Print-on-Demand seit jeher"
+          }
+        }
+      },
+      "block_order": ["badge-1", "badge-2", "badge-3"],
+      "settings": {
+        "color_scheme": "background-2",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "featured_collection": {
@@ -165,7 +188,8 @@
     }
   },
   "order": [
-    "6a3bb789-ce10-45f5-ae67-e2063ef8c76b",
+    "spreadshirt_hero",
+    "trust_badges",
     "featured_collection",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"

@@ -1,0 +1,229 @@
+{{ 'section-spreadshirt-hero.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  A real multi-slide carousel, matching spreadshirt.de's actual hero: one
+  full-bleed image per slide (not a two-image split), eyebrow + heading +
+  up to 3 buttons overlaid bottom-left, and small circular prev/next arrows
+  overlaid bottom-right on the image itself (dots bottom-left) — not Dawn's
+  default centered top control bar. Reuses Dawn's own <slideshow-component>
+  custom element (assets/global.js) for the actual carousel behavior; only
+  the control buttons' position and the per-slide layout are custom (Dawn's
+  SliderComponent finds its prev/next buttons and dots by tag/class anywhere
+  inside the component, not by a fixed DOM position, so repositioning them
+  here doesn't break anything).
+{%- endcomment -%}
+
+<slideshow-component
+  class="spreadshirt-hero-component slider-mobile-gutter"
+  role="region"
+  aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
+  aria-label="Hero"
+>
+  <div
+    class="spreadshirt-hero grid grid--1-col slider slider--everywhere"
+    id="Slider-{{ section.id }}"
+    aria-live="polite"
+    aria-atomic="true"
+    data-autoplay="{{ section.settings.auto_rotate }}"
+    data-speed="{{ section.settings.change_slides_speed }}"
+  >
+    {%- for block in section.blocks -%}
+      <div
+        class="spreadshirt-hero__slide grid__item grid--1-col slider__slide color-{{ block.settings.color_scheme }}"
+        id="Slide-{{ section.id }}-{{ forloop.index }}"
+        {{ block.shopify_attributes }}
+        role="group"
+        aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+        aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+        tabindex="-1"
+      >
+        {%- if block.settings.image != blank -%}
+          <div class="spreadshirt-hero__image-wrap">
+            {{ block.settings.image | image_url: width: 2000 | image_tag:
+              loading: forloop.first,
+              widths: '750, 1100, 1500, 2000',
+              sizes: '100vw',
+              class: 'spreadshirt-hero__image'
+            }}
+          </div>
+        {%- endif -%}
+
+        <div class="spreadshirt-hero__content-wrap page-width">
+          <div class="spreadshirt-hero__content">
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="spreadshirt-hero__eyebrow">{{ block.settings.eyebrow }}</p>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="spreadshirt-hero__heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.button_label_1 != blank or block.settings.button_label_2 != blank or block.settings.button_label_3 != blank -%}
+              <div class="spreadshirt-hero__buttons">
+                {%- if block.settings.button_label_1 != blank -%}
+                  <a
+                    {% if block.settings.button_link_1 != blank %}href="{{ block.settings.button_link_1 }}"{% else %}role="link" aria-disabled="true"{% endif %}
+                    class="button spreadshirt-hero__button--gradient"
+                  >
+                    {{ block.settings.button_label_1 }}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.button_label_2 != blank -%}
+                  <a
+                    {% if block.settings.button_link_2 != blank %}href="{{ block.settings.button_link_2 }}"{% else %}role="link" aria-disabled="true"{% endif %}
+                    class="button spreadshirt-hero__button--dark"
+                  >
+                    {{ block.settings.button_label_2 }}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.button_label_3 != blank -%}
+                  <a
+                    {% if block.settings.button_link_3 != blank %}href="{{ block.settings.button_link_3 }}"{% else %}role="link" aria-disabled="true"{% endif %}
+                    class="button spreadshirt-hero__button--outline"
+                  >
+                    {{ block.settings.button_label_3 }}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="spreadshirt-hero__dots slider-counter slider-counter--dots no-js-hidden">
+      {%- for block in section.blocks -%}
+        <button
+          class="slider-counter__link slider-counter__link--dots link"
+          aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+          aria-controls="Slider-{{ section.id }}"
+        >
+          <span class="dot"></span>
+        </button>
+      {%- endfor -%}
+    </div>
+    <div class="spreadshirt-hero__arrows slider-buttons no-js-hidden">
+      <button
+        type="button"
+        class="slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        {% render 'icon-caret' %}
+      </button>
+      <button
+        type="button"
+        class="slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        {% render 'icon-caret' %}
+      </button>
+    </div>
+  {%- endif -%}
+</slideshow-component>
+
+{% schema %}
+{
+  "name": "Spreadshirt hero",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 9,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow text",
+          "default": "Quality-Essentials"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Für unvergessliche Sommer-Stories"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Button 1 label (gradient style)",
+          "default": "Jetzt gestalten"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Button 1 link"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Button 2 label (dark style)",
+          "default": "Jetzt shoppen"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Button 2 link"
+        },
+        {
+          "type": "text",
+          "id": "button_label_3",
+          "label": "Button 3 label (outline style)"
+        },
+        {
+          "type": "url",
+          "id": "button_link_3",
+          "label": "Button 3 link"
+        },
+        {
+          "type": "select",
+          "id": "color_scheme",
+          "options": [
+            { "value": "accent-1", "label": "Accent 1" },
+            { "value": "accent-2", "label": "Accent 2" },
+            { "value": "background-1", "label": "Background 1" },
+            { "value": "background-2", "label": "Background 2" },
+            { "value": "inverse", "label": "Inverse" }
+          ],
+          "default": "background-1",
+          "label": "Color scheme"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spreadshirt hero",
+      "blocks": [
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

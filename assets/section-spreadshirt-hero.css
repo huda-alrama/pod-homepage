@@ -1,0 +1,142 @@
+.spreadshirt-hero-component {
+  position: relative;
+  display: block;
+}
+
+.spreadshirt-hero__slide {
+  position: relative;
+  overflow: hidden;
+}
+
+.spreadshirt-hero__image-wrap {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+}
+
+@media screen and (max-width: 749px) {
+  .spreadshirt-hero__image-wrap {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.spreadshirt-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.spreadshirt-hero__content-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  padding-bottom: 4rem;
+}
+
+@media screen and (max-width: 749px) {
+  .spreadshirt-hero__content-wrap {
+    padding-bottom: 2rem;
+  }
+}
+
+.spreadshirt-hero__content {
+  pointer-events: auto;
+  max-width: 42rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.spreadshirt-hero__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.spreadshirt-hero__heading {
+  margin: 0 0 1.75rem;
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 749px) {
+  .spreadshirt-hero__heading {
+    font-size: 2.2rem;
+  }
+}
+
+.spreadshirt-hero__buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.spreadshirt-hero__buttons .button {
+  text-shadow: none;
+}
+
+.spreadshirt-hero__button--gradient {
+  background: linear-gradient(90deg, #e0245e 0%, #7b2ff7 50%, #22c1c3 100%);
+  color: #fff;
+  border: none;
+}
+
+.spreadshirt-hero__button--dark {
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+}
+
+.spreadshirt-hero__button--outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+/* Dots (bottom-left, beneath the button row) and arrows (bottom-right,
+   overlaid directly on the image) — both absolutely positioned against the
+   whole component so they stay fixed regardless of which slide is active. */
+.spreadshirt-hero__dots {
+  position: absolute;
+  left: 0;
+  bottom: 1.5rem;
+  padding-left: 2rem;
+  z-index: 2;
+}
+
+.page-width .spreadshirt-hero__dots {
+  padding-left: var(--page-width-margin, 2rem);
+}
+
+.spreadshirt-hero__dots .slideshow__control-wrapper,
+.spreadshirt-hero__dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.spreadshirt-hero__arrows {
+  position: absolute;
+  right: 2rem;
+  bottom: 1.5rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.spreadshirt-hero__arrows .slider-button {
+  position: static;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
