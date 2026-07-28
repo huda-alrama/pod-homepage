@@ -32,6 +32,11 @@
 .card:hover .card-product-swatches,
 .card-wrapper:hover .card-product-swatches {
   order: 1;
+  background-color: rgb(255, 255, 255);
+  border-radius: var(--border-radius, 0.8rem);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  margin: 0.5rem;
+  padding: 0.7rem 0.8rem;
 }
 
 .card-product-swatches__dot {
