@@ -12,21 +12,29 @@
     (`.card__media`, which is already the overflow-hidden/absolute box
     that fills `.card__inner`), pinned below the visible area at rest and
     sliding up into view on hover as a translucent blurred white strip.
-    Both use the same swatch values; there is no image-swap-on-hover —
-    spreadshirt's own grid cards don't do that either (verified: hovering
-    or clicking a swatch there doesn't change the tile's photo).
+    Both use the same swatch values.
+
+  Hovering one of the overlay dots (the only ones visible/interactive
+  during a card hover) swaps the card's main image to that color's own
+  variant photo (native featured_image), same as before — this part
+  isn't from spreadshirt's own markup, it's this project's own addition
+  on top of it, kept because it's useful.
 
   Accepts:
   - product: {Object} Product Liquid object
   - overlay: {Boolean} Render the larger in-image hover strip instead of
     the small inline row. Default: false
+  - card_image_id: {String} DOM id of the card's main <img>, required
+    when overlay: true so hovering a dot can swap it
 {%- endcomment -%}
 {%- liquid
   assign color_option = nil
+  assign color_option_index = -1
   for option in product.options_with_values
     assign lower_name = option.name | downcase
     if lower_name contains 'farbe' or lower_name contains 'color' or lower_name contains 'colour'
       assign color_option = option
+      assign color_option_index = forloop.index0
       break
     endif
   endfor
@@ -34,23 +42,56 @@
 {%- if color_option and color_option.values.size > 1 -%}
   <div
     class="card-product-swatches{% if overlay %} card-product-swatches--overlay{% else %} card-product-swatches--inline{% endif %}"
+    {% if overlay %}id="CardSwatches-{{ card_image_id }}"{% endif %}
     aria-hidden="true"
   >
     {%- for value in color_option.values limit: 7 -%}
+      {%- liquid
+        assign swatch_image = nil
+        if overlay
+          for v in product.variants
+            if v.options[color_option_index] == value.name and v.featured_image
+              assign swatch_image = v.featured_image | image_url: width: 533 | prepend: 'https:'
+              break
+            endif
+          endfor
+        endif
+      -%}
       <span
         class="card-product-swatches__dot"
         style="background-color: {{ value.swatch.color | color_to_hex | default: '#cccccc' }};"
         title="{{ value.name }}"
+        {% if swatch_image %}data-swatch-image="{{ swatch_image }}"{% endif %}
       ></span>
     {%- endfor -%}
     {%- if color_option.values.size > 7 -%}
       <span class="card-product-swatches__more">+{{ color_option.values.size | minus: 7 }}</span>
     {%- endif -%}
   </div>
-  {%- unless overlay -%}
+  {%- if overlay -%}
+    <script>
+      (function () {
+        var wrap = document.getElementById('CardSwatches-{{ card_image_id }}');
+        var img = document.getElementById('{{ card_image_id }}');
+        if (!wrap || !img) return;
+        var originalSrc = img.getAttribute('src');
+        var originalSrcset = img.getAttribute('srcset');
+        wrap.querySelectorAll('[data-swatch-image]').forEach(function (dot) {
+          dot.addEventListener('mouseenter', function () {
+            img.removeAttribute('srcset');
+            img.setAttribute('src', dot.getAttribute('data-swatch-image'));
+          });
+        });
+        wrap.addEventListener('mouseleave', function () {
+          img.setAttribute('src', originalSrc);
+          if (originalSrcset) img.setAttribute('srcset', originalSrcset);
+        });
+      })();
+    </script>
+  {%- else -%}
     <span class="visually-hidden">
       {{- color_option.name }}:
       {%- for value in color_option.values -%}{{ value.name }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
     </span>
-  {%- endunless -%}
+  {%- endif -%}
 {%- endif -%}

@@ -1,9 +1,14 @@
-/* Matches spreadshirt.de's real product-grid card hover exactly (values
-   read directly off spreadshirt.de's own computed styles, not guessed):
-   a small dot row sits below price/title at rest and fades out on card
+/* Matches spreadshirt.de's real product-grid card hover (values read
+   directly off spreadshirt.de's own computed styles, not guessed): a
+   small dot row sits below price/title at rest and fades out on card
    hover, while a larger dot row hidden inside the image slides up from
-   the bottom on hover, as a translucent blurred white strip. No image
-   swap — spreadshirt's own grid cards don't do that on hover either. */
+   the bottom on hover, as a translucent blurred white strip. Hovering
+   one of those dots also swaps the card's photo to that color's own
+   variant image — this project's own addition on top of spreadshirt's
+   layout, not something spreadshirt's grid itself does. z-index: 2
+   puts the overlay above the card's full-card stretched link
+   (.card__heading a::after, z-index: 1) so real hover/click actually
+   reaches the dots instead of hitting the link underneath. */
 
 .card-product-swatches--inline {
   display: flex;
@@ -35,7 +40,6 @@
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   transition: bottom 0.3s ease-in-out;
-  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -61,6 +65,10 @@
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
+}
+
+.card-product-swatches--overlay .card-product-swatches__dot[data-swatch-image] {
+  cursor: pointer;
 }
 
 .card-product-swatches__more {

@@ -50,6 +50,9 @@
         style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
       >
         {%- if card_product.featured_media -%}
+          {%- liquid
+            assign card_image_id = 'CardImage-' | append: section_id | append: '-' | append: card_product.id
+          -%}
           <div class="card__media">
             <div class="media media--transparent media--hover-effect">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
@@ -67,7 +70,7 @@
                 sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
                 alt="{{ card_product.featured_media.alt | escape }}"
                 class="motion-reduce"
-                id="CardImage-{{ section_id }}-{{ card_product.id }}"
+                id="{{ card_image_id }}"
                 {% unless lazy_load == false %}
                   loading="lazy"
                 {% endunless %}
@@ -97,8 +100,8 @@
                 >
               {%- endif -%}
             </div>
-            {% render 'card-product-swatches', product: card_product, overlay: true %}
           </div>
+          {% render 'card-product-swatches', product: card_product, overlay: true, card_image_id: card_image_id %}
         {%- endif -%}
         <div class="card__content">
           <div class="card__information">
