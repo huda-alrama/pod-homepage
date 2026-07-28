@@ -128,6 +128,20 @@
   align-items: center;
 }
 
+/* Dawn's default dot styling colors itself from the ambient color scheme's
+   --color-foreground, which isn't guaranteed to be visible here — these
+   dots sit directly on a photo (desktop) or the dark bar below it
+   (mobile), neither of which reliably matches whatever scheme happens to
+   be set. Forced to explicit white-based colors so they're always visible
+   regardless of the photo or scheme in play. */
+.spreadshirt-hero__dots .dot {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.spreadshirt-hero__dots .slider-counter__link--active .dot {
+  background-color: #fff;
+}
+
 .spreadshirt-hero__arrows {
   display: flex;
   gap: 0.8rem;
@@ -143,4 +157,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* On mobile the button stack (up to 3, wrapping) can grow taller than the
+   fixed space the desktop overlay design assumes, so the arrows (fixed to
+   the slide's bottom edge) ended up overlapping the last button instead of
+   sitting below it. Rather than guess a taller fixed offset that could
+   still break with more/longer buttons, the controls bar drops out of the
+   absolute-overlay context entirely on mobile and flows normally right
+   after the image+content block — no overlap possible regardless of how
+   tall the content above it gets. */
+@media screen and (max-width: 749px) {
+  .spreadshirt-hero__controls {
+    position: static;
+    background: #111;
+    padding-block: 1.2rem;
+  }
+
+  .spreadshirt-hero__arrows .slider-button {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
 }
