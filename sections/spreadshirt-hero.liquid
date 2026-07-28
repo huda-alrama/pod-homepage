@@ -93,16 +93,17 @@
 
   {%- if section.blocks.size > 1 -%}
     {%- comment -%}
-      Dots and arrows must both live inside the same .slider-buttons
-      container — Dawn's SlideshowComponent (assets/global.js) finds
-      sliderControlWrapper via `this.querySelector('.slider-buttons')`,
-      then wires up dot clicks via
-      `sliderControlWrapper.querySelectorAll('.slider-counter__link')`
-      scoped to THAT element specifically. Splitting dots and arrows into
-      separate sibling divs (an earlier version of this section did) left
-      the dots visually present but non-functional, since the JS never
-      found them. Positioned via flexbox (dots left, arrows right)
-      instead of two separately-positioned absolute blocks.
+      Only the dots need to live inside .slider-buttons — Dawn's
+      SlideshowComponent (assets/global.js) finds sliderControlWrapper
+      via `this.querySelector('.slider-buttons')`, then wires up dot
+      clicks via `sliderControlWrapper.querySelectorAll('.slider-counter__link')`
+      scoped to THAT element specifically. The prev/next buttons, by
+      contrast, are found via `this.querySelector('button[name="previous"]')`
+      / `[name="next"]` on the whole custom element regardless of where
+      in the DOM they sit (verified directly in global.js) — so they're
+      a sibling here instead, positioned to straddle the image's bottom
+      edge like spreadshirt.de's own hero arrows do, independently of
+      wherever the dots bar sits.
     {%- endcomment -%}
     <div class="spreadshirt-hero__controls slider-buttons no-js-hidden">
       <div class="spreadshirt-hero__dots slider-counter slider-counter--dots">
@@ -117,26 +118,6 @@
             </button>
           {%- endfor -%}
         </div>
-      </div>
-      <div class="spreadshirt-hero__arrows">
-        <button
-          type="button"
-          class="slider-button slider-button--prev"
-          name="previous"
-          aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
-          aria-controls="Slider-{{ section.id }}"
-        >
-          {% render 'icon-caret' %}
-        </button>
-        <button
-          type="button"
-          class="slider-button slider-button--next"
-          name="next"
-          aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
-          aria-controls="Slider-{{ section.id }}"
-        >
-          {% render 'icon-caret' %}
-        </button>
       </div>
       {%- if section.settings.auto_rotate -%}
         {%- comment -%}
@@ -161,6 +142,26 @@
           {%- render 'icon-play' -%}
         </button>
       {%- endif -%}
+    </div>
+    <div class="spreadshirt-hero__arrows no-js-hidden">
+      <button
+        type="button"
+        class="slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        {% render 'icon-caret' %}
+      </button>
+      <button
+        type="button"
+        class="slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        {% render 'icon-caret' %}
+      </button>
     </div>
   {%- endif -%}
 </slideshow-component>
