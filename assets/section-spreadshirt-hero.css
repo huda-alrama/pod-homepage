@@ -96,9 +96,9 @@
 }
 
 .spreadshirt-hero__button--outline {
-  background: transparent;
-  color: #fff;
-  border: 1px solid #fff;
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
 }
 
 /* Single control container (dots left, arrows right) — must stay one
