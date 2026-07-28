@@ -1,25 +1,21 @@
-/* Now overlaid on the product image itself (bottom edge), matching
-   spreadshirt.de's actual layout, rather than sitting below the price —
-   positioned absolutely against .card__media (already position:absolute
-   itself, anchored to .card__inner).
-   Still needs its own stacking context above Dawn's card__heading
-   a::after (an invisible position:absolute; inset:0 overlay at z-index:1,
-   stretched across the whole card so clicking anywhere navigates to the
-   product) — without this, real mouse hover/click never reaches the
-   swatch buttons at all (confirmed via elementFromPoint at the dot's
-   exact screen position resolving to that link, not the dot). */
+/* Its own clean row directly below the image (normal document flow, not
+   an overlay/fade on top of the photo — a first attempt at "on the
+   image" used a semi-transparent gradient overlay, which didn't match
+   the actual expectation of a plain white strip visually separate from
+   the photo). Still needs to sit at the .card__inner level (sibling of
+   .card__media/.card__content) rather than nested inside .card__media,
+   for the same stacking-context reason as before — even in normal flow,
+   nesting it inside .card__media (which is position:absolute, taken out
+   of the document's normal flow entirely) wouldn't render as a real row
+   pushing content below it the way a true sibling does. */
 .card-product-swatches {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 1rem 0.8rem;
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  padding: 0.8rem;
 }
 
 .card-product-swatches__dot {

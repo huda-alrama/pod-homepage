@@ -98,10 +98,6 @@
               {%- endif -%}
             </div>
           </div>
-          {%- liquid
-            assign card_image_id = 'CardImage-' | append: section_id | append: '-' | append: card_product.id
-          -%}
-          {% render 'card-product-swatches', product: card_product, card_image_id: card_image_id %}
         {%- endif -%}
         <div class="card__content">
           <div class="card__information">
@@ -140,6 +136,12 @@
           </div>
         </div>
       </div>
+      {%- if card_product.featured_media -%}
+        {%- liquid
+          assign card_image_id = 'CardImage-' | append: section_id | append: '-' | append: card_product.id
+        -%}
+        {% render 'card-product-swatches', product: card_product, card_image_id: card_image_id %}
+      {%- endif -%}
       <div class="card__content">
         <div class="card__information">
           <h3
