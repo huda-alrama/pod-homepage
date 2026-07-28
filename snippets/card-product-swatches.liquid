@@ -1,90 +1,56 @@
 {{ 'component-card-product-swatches.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
-  Renders small color swatches below a product card's price, one per
-  color option value — reuses the same native Shopify per-option-value
-  swatch (value.swatch.color, via color_to_hex) already used for the
-  storefront's designer button (extensions/designer-button/blocks/
-  designer-button.liquid), so a color added in admin shows up here with
-  zero extra configuration, same as it does there.
+  Renders color swatches for a product card, matching spreadshirt.de's
+  own product-grid card exactly (confirmed by inspecting spreadshirt.de's
+  live DOM/CSS directly, not by approximation):
 
-  Hovering a dot swaps the card's main image to that color's own
-  variant photo (native featured_image, same source used elsewhere in
-  this project) — matches spreadshirt.de's own hover behavior. Handled
-  by a small script scoped to this exact card (unique element IDs keyed
-  off section_id + product.id), not a shared/global script, since this
-  only needs to react to hovers within its own card.
-
-  On the real site, the swatch row itself doesn't move or float over
-  the photo — it lives in normal flow as the last thing in the card
-  (after price/title/vendor) at rest, then jumps to right after the
-  image (before price/title) on hover via a CSS `order` swap on `.card`'s
-  flex children (see component-card-product-swatches.css), growing
-  slightly larger at the same time. Confirmed by directly observing
-  spreadshirt.de's own product card hover behavior.
+  - A small dot row sits in normal flow right after price/title/vendor.
+    It's visible at rest and fades to opacity 0 on card hover (no reflow,
+    no reorder — the row keeps its place, just disappears).
+  - A second, larger dot row lives inside the product image itself
+    (`.card__media`, which is already the overflow-hidden/absolute box
+    that fills `.card__inner`), pinned below the visible area at rest and
+    sliding up into view on hover as a translucent blurred white strip.
+    Both use the same swatch values; there is no image-swap-on-hover —
+    spreadshirt's own grid cards don't do that either (verified: hovering
+    or clicking a swatch there doesn't change the tile's photo).
 
   Accepts:
   - product: {Object} Product Liquid object
-  - card_image_id: {String} DOM id of the card's main <img> to swap on hover
+  - overlay: {Boolean} Render the larger in-image hover strip instead of
+    the small inline row. Default: false
 {%- endcomment -%}
 {%- liquid
   assign color_option = nil
-  assign color_option_index = -1
   for option in product.options_with_values
     assign lower_name = option.name | downcase
     if lower_name contains 'farbe' or lower_name contains 'color' or lower_name contains 'colour'
       assign color_option = option
-      assign color_option_index = forloop.index0
       break
     endif
   endfor
 -%}
 {%- if color_option and color_option.values.size > 1 -%}
-  <div class="card-product-swatches" id="CardSwatches-{{ card_image_id }}">
-    {%- for value in color_option.values limit: 6 -%}
-      {%- liquid
-        assign swatch_image = nil
-        for v in product.variants
-          if v.options[color_option_index] == value.name and v.featured_image
-            assign swatch_image = v.featured_image | image_url: width: 533 | prepend: 'https:'
-            break
-          endif
-        endfor
-      -%}
-      <button
-        type="button"
+  <div
+    class="card-product-swatches{% if overlay %} card-product-swatches--overlay{% else %} card-product-swatches--inline{% endif %}"
+    aria-hidden="true"
+  >
+    {%- for value in color_option.values limit: 7 -%}
+      <span
         class="card-product-swatches__dot"
         style="background-color: {{ value.swatch.color | color_to_hex | default: '#cccccc' }};"
-        {% if swatch_image %}data-swatch-image="{{ swatch_image }}"{% endif %}
-        aria-label="{{ value.name }}"
-        tabindex="-1"
-      ></button>
+        title="{{ value.name }}"
+      ></span>
     {%- endfor -%}
-    {%- if color_option.values.size > 6 -%}
-      <span class="card-product-swatches__more">+{{ color_option.values.size | minus: 6 }}</span>
+    {%- if color_option.values.size > 7 -%}
+      <span class="card-product-swatches__more">+{{ color_option.values.size | minus: 7 }}</span>
     {%- endif -%}
+  </div>
+  {%- unless overlay -%}
     <span class="visually-hidden">
       {{- color_option.name }}:
       {%- for value in color_option.values -%}{{ value.name }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
     </span>
-  </div>
-  <script>
-    (function () {
-      var wrap = document.getElementById('CardSwatches-{{ card_image_id }}');
-      var img = document.getElementById('{{ card_image_id }}');
-      if (!wrap || !img) return;
-      var originalSrc = img.getAttribute('src');
-      var originalSrcset = img.getAttribute('srcset');
-      wrap.querySelectorAll('[data-swatch-image]').forEach(function (dot) {
-        dot.addEventListener('mouseenter', function () {
-          img.removeAttribute('srcset');
-          img.setAttribute('src', dot.getAttribute('data-swatch-image'));
-        });
-      });
-      wrap.addEventListener('mouseleave', function () {
-        img.setAttribute('src', originalSrc);
-        if (originalSrcset) img.setAttribute('srcset', originalSrcset);
-      });
-    })();
-  </script>
+  {%- endunless -%}
 {%- endif -%}

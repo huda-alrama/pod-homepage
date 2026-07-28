@@ -50,9 +50,6 @@
         style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
       >
         {%- if card_product.featured_media -%}
-          {%- liquid
-            assign card_image_id = 'CardImage-' | append: section_id | append: '-' | append: card_product.id
-          -%}
           <div class="card__media">
             <div class="media media--transparent media--hover-effect">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
@@ -100,6 +97,7 @@
                 >
               {%- endif -%}
             </div>
+            {% render 'card-product-swatches', product: card_product, overlay: true %}
           </div>
         {%- endif -%}
         <div class="card__content">
@@ -140,7 +138,7 @@
         </div>
       </div>
       {%- if card_product.featured_media -%}
-        {% render 'card-product-swatches', product: card_product, card_image_id: card_image_id %}
+        {% render 'card-product-swatches', product: card_product %}
       {%- endif -%}
       <div class="card__content">
         <div class="card__information">

@@ -1,51 +1,66 @@
-/* Matches spreadshirt.de's real card behavior (confirmed by observing
-   https://www.spreadshirt.de/shop/s/Minions+The+More+I+Think directly):
-   the swatch row doesn't float over the photo. At rest it's the last
-   thing in the card, after price/title/vendor; on hover it jumps to
-   right after the image, before price/title, and grows slightly. Since
-   .card (when not itself a .ratio box) is already a flex column
-   (see component-card.css, `.card:not(.ratio){display:flex;
-   flex-direction:column}`), this is a plain `order` swap on flex
-   children rather than absolute positioning — sidesteps the stacking
-   fights that Dawn's stretched title link (.card__heading a::after)
-   otherwise causes for anything overlaid on the image. */
-.card__inner {
-  order: 0;
+/* Matches spreadshirt.de's real product-grid card hover exactly (values
+   read directly off spreadshirt.de's own computed styles, not guessed):
+   a small dot row sits below price/title at rest and fades out on card
+   hover, while a larger dot row hidden inside the image slides up from
+   the bottom on hover, as a translucent blurred white strip. No image
+   swap — spreadshirt's own grid cards don't do that on hover either. */
+
+.card-product-swatches--inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 6px;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.card__content {
-  order: 1;
+.card:hover .card-product-swatches--inline,
+.card-wrapper:hover .card-product-swatches--inline {
+  opacity: 0;
 }
 
-.card-product-swatches {
-  order: 2;
-  position: relative;
+.card-product-swatches--overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -48px;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  padding: 1.6rem 0.8rem;
-  transition: order 0s;
+  gap: 8px;
+  padding: 12px 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  transition: bottom 0.3s ease-in-out;
+  pointer-events: none;
 }
 
-.card:hover .card-product-swatches,
-.card-wrapper:hover .card-product-swatches {
-  order: 1;
-  background-color: rgb(255, 255, 255);
-  width: 100%;
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .card-product-swatches--overlay,
+  .card-wrapper:hover .card-product-swatches--overlay {
+    bottom: 0;
+  }
+}
+
+.card-product-swatches--inline .card-product-swatches__dot {
+  width: 10px;
+  height: 10px;
+}
+
+.card-product-swatches--overlay .card-product-swatches__dot {
+  width: 16px;
+  height: 16px;
 }
 
 .card-product-swatches__dot {
-  width: 1.5rem;
-  height: 1.5rem;
+  display: block;
   padding: 0;
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
-  cursor: pointer;
-  transition: transform 0.15s ease;
 }
 
 .card-product-swatches__more {
