@@ -1,21 +1,15 @@
-/* Its own clean row directly below the image (normal document flow, not
-   an overlay/fade on top of the photo — a first attempt at "on the
-   image" used a semi-transparent gradient overlay, which didn't match
-   the actual expectation of a plain white strip visually separate from
-   the photo). Still needs to sit at the .card__inner level (sibling of
-   .card__media/.card__content) rather than nested inside .card__media,
-   for the same stacking-context reason as before — even in normal flow,
-   nesting it inside .card__media (which is position:absolute, taken out
-   of the document's normal flow entirely) wouldn't render as a real row
-   pushing content below it the way a true sibling does. */
+/* Two copies exist per card (see snippets/card-product-swatches.liquid,
+   mode: 'row' / 'overlay'): spreadshirt.de shows the swatches in a plain
+   row below the title at rest, then relocates them onto the product
+   photo (a floating white pill) once the card is hovered — not just an
+   in-place enlarge. Rendering separate elements for the two states is
+   simpler and more robust than animating one element between normal
+   flow and an absolutely-positioned overlay. */
 .card-product-swatches {
-  position: relative;
-  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0.8rem;
 }
 
 .card-product-swatches__dot {
@@ -30,12 +24,49 @@
   transition: transform 0.15s ease;
 }
 
-/* The whole row grows together on approach (not just the one dot under
-   the cursor) — matches the reference behavior: dots start small/subtle
-   and enlarge as a group once you're interacting with that area, rather
-   than each dot only reacting to its own individual hover. */
-.card-product-swatches:hover .card-product-swatches__dot {
+.card-product-swatches--row {
+  position: relative;
+  z-index: 2;
+  padding: 0.8rem;
+}
+
+/* The resting row still grows together on approach, as a subtle "these
+   are interactive" cue even before the overlay pill takes over. */
+.card-product-swatches--row:hover .card-product-swatches__dot {
   transform: scale(1.35);
+}
+
+/* The overlay pill sits as a direct child of .card__inner (sibling of
+   .card__media), not nested inside .card__media itself — that keeps its
+   z-index:2 competing at the same stacking level as Dawn's stretched
+   title link (.card__heading a::after, z-index:1, anchored to
+   .card__inner), rather than being trapped one level down where the
+   image's own z-index:0 stacking context would still lose to that link. */
+.card-product-swatches--overlay {
+  position: absolute;
+  left: 50%;
+  bottom: 1.2rem;
+  z-index: 2;
+  transform: translate(-50%, 0.4rem);
+  padding: 0.5rem 0.9rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.card-product-swatches--overlay .card-product-swatches__dot {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.card:hover .card-product-swatches--overlay,
+.card-wrapper:hover .card-product-swatches--overlay {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
 }
 
 .card-product-swatches__more {
