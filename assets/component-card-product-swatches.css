@@ -8,9 +8,16 @@
 .card-product-swatches__dot {
   width: 1.4rem;
   height: 1.4rem;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid rgba(var(--color-foreground), 0.15);
   flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.card-product-swatches__dot:hover {
+  transform: scale(1.15);
 }
 
 .card-product-swatches__more {

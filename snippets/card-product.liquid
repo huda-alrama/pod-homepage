@@ -67,6 +67,7 @@
                 sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
                 alt="{{ card_product.featured_media.alt | escape }}"
                 class="motion-reduce"
+                id="CardImage-{{ section_id }}-{{ card_product.id }}"
                 {% unless lazy_load == false %}
                   loading="lazy"
                 {% endunless %}
@@ -197,7 +198,10 @@
             {%- endif -%}
 
             {% render 'price', product: card_product, price_class: '' %}
-            {% render 'card-product-swatches', product: card_product %}
+            {%- liquid
+              assign card_image_id = 'CardImage-' | append: section_id | append: '-' | append: card_product.id
+            -%}
+            {% render 'card-product-swatches', product: card_product, card_image_id: card_image_id %}
           </div>
         </div>
         {%- if show_quick_add -%}

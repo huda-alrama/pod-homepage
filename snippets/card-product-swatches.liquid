@@ -8,27 +8,49 @@
   designer-button.liquid), so a color added in admin shows up here with
   zero extra configuration, same as it does there.
 
+  Hovering a dot swaps the card's main image to that color's own
+  variant photo (native featured_image, same source used elsewhere in
+  this project) — matches spreadshirt.de's own hover behavior. Handled
+  by a small script scoped to this exact card (unique element IDs keyed
+  off section_id + product.id), not a shared/global script, since this
+  only needs to react to hovers within its own card.
+
   Accepts:
   - product: {Object} Product Liquid object
+  - card_image_id: {String} DOM id of the card's main <img> to swap on hover
 {%- endcomment -%}
 {%- liquid
   assign color_option = nil
+  assign color_option_index = -1
   for option in product.options_with_values
     assign lower_name = option.name | downcase
     if lower_name contains 'farbe' or lower_name contains 'color' or lower_name contains 'colour'
       assign color_option = option
+      assign color_option_index = forloop.index0
       break
     endif
   endfor
 -%}
 {%- if color_option and color_option.values.size > 1 -%}
-  <div class="card-product-swatches">
+  <div class="card-product-swatches" id="CardSwatches-{{ card_image_id }}">
     {%- for value in color_option.values limit: 6 -%}
-      <span
+      {%- liquid
+        assign swatch_image = nil
+        for v in product.variants
+          if v.options[color_option_index] == value.name and v.featured_image
+            assign swatch_image = v.featured_image | image_url: width: 533 | prepend: 'https:'
+            break
+          endif
+        endfor
+      -%}
+      <button
+        type="button"
         class="card-product-swatches__dot"
         style="background-color: {{ value.swatch.color | color_to_hex | default: '#cccccc' }};"
-        aria-hidden="true"
-      ></span>
+        {% if swatch_image %}data-swatch-image="{{ swatch_image }}"{% endif %}
+        aria-label="{{ value.name }}"
+        tabindex="-1"
+      ></button>
     {%- endfor -%}
     {%- if color_option.values.size > 6 -%}
       <span class="card-product-swatches__more">+{{ color_option.values.size | minus: 6 }}</span>
@@ -38,4 +60,23 @@
       {%- for value in color_option.values -%}{{ value.name }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
     </span>
   </div>
+  <script>
+    (function () {
+      var wrap = document.getElementById('CardSwatches-{{ card_image_id }}');
+      var img = document.getElementById('{{ card_image_id }}');
+      if (!wrap || !img) return;
+      var originalSrc = img.getAttribute('src');
+      var originalSrcset = img.getAttribute('srcset');
+      wrap.querySelectorAll('[data-swatch-image]').forEach(function (dot) {
+        dot.addEventListener('mouseenter', function () {
+          img.removeAttribute('srcset');
+          img.setAttribute('src', dot.getAttribute('data-swatch-image'));
+        });
+      });
+      wrap.addEventListener('mouseleave', function () {
+        img.setAttribute('src', originalSrc);
+        if (originalSrcset) img.setAttribute('srcset', originalSrcset);
+      });
+    })();
+  </script>
 {%- endif -%}
