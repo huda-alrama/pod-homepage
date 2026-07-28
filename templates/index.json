@@ -81,6 +81,50 @@
         "padding_bottom": 36
       }
     },
+    "secondary_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "secondary-heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "SPREAD Essentials",
+            "heading_size": "h1"
+          }
+        },
+        "secondary-text": {
+          "type": "text",
+          "settings": {
+            "text": "Qualität & Style — entdecke unsere exklusive Kollektion.",
+            "text_style": "body"
+          }
+        },
+        "secondary-button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Entdecken",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": ["secondary-heading", "secondary-text", "secondary-button"],
+      "settings": {
+        "image": "shopify://shop_images/theme_cover_image.jpg",
+        "image_overlay_opacity": 20,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
     "quick_links": {
       "type": "multicolumn",
       "blocks": {
@@ -530,6 +574,7 @@
   "order": [
     "spreadshirt_hero",
     "trust_badges",
+    "secondary_banner",
     "quick_links",
     "bestsellers",
     "template_cards",

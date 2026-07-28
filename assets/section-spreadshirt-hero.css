@@ -81,7 +81,10 @@
 }
 
 .spreadshirt-hero__button--gradient {
-  background: linear-gradient(90deg, #e0245e 0%, #7b2ff7 50%, #22c1c3 100%);
+  /* Real spreadshirt.de gradient colors, confirmed directly from their
+     page source (linear-gradient(284deg, #dc2626 -8.23%, #4d52d2 35.94%,
+     #16a34a 86.17%)) — not a guessed color combination. */
+  background: linear-gradient(90deg, #dc2626 0%, #4d52d2 50%, #16a34a 100%);
   color: #fff;
   border: none;
 }
