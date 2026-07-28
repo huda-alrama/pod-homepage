@@ -119,11 +119,14 @@
   border: 1px solid #111;
 }
 
-/* Single control container (dots left, arrows right) — must stay one
-   element in the DOM (see the Liquid comment above this markup) even
-   though it reads visually as two separate groups; positioned via
-   flexbox across the full width rather than as two independently
-   absolutely-positioned blocks. */
+/* Single control container (dots centered, arrows pinned right) — must
+   stay one element in the DOM (see the Liquid comment above this
+   markup) even though it reads visually as two separate groups. Dots
+   are centered via absolute positioning within this container (rather
+   than flex justify-content, which can only push the two groups to
+   opposite ends or bunch them together, not center one while pinning
+   the other) — arrows are pushed to the right edge with margin-left:
+   auto on the remaining flex space. */
 .spreadshirt-hero__controls {
   position: absolute;
   left: 0;
@@ -138,12 +141,19 @@
 /* .slider-buttons (component-slider.css, shared by every other slider
    on this theme) also sets justify-content: center at the same
    specificity — and that stylesheet loads after this one (both are
-   linked from this section, in that order), so it was winning the tie
-   and bunching dots+arrows together in the middle instead of spreading
-   them to opposite edges like spreadshirt's own hero. The extra class
-   here is only to beat that specificity tie, not a real style scope. */
+   linked from this section, in that order), so it was winning any tie
+   on this property. Not relied on for layout here (dots/arrows
+   positioning below doesn't use justify-content at all), but pinned to
+   flex-start explicitly so this container's own behavior doesn't
+   depend on that load-order coincidence either.  */
 .spreadshirt-hero__controls.slider-buttons {
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.spreadshirt-hero__dots {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .page-width .spreadshirt-hero__controls {
@@ -173,6 +183,7 @@
 .spreadshirt-hero__arrows {
   display: flex;
   gap: 0.8rem;
+  margin-left: auto;
 }
 
 .spreadshirt-hero__arrows .slider-button {
