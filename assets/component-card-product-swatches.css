@@ -1,51 +1,29 @@
-/* Matches spreadshirt.de's real card behavior (confirmed by observing
-   https://www.spreadshirt.de/shop/s/Minions+The+More+I+Think directly):
-   the swatch row doesn't float over the photo. At rest it's the last
-   thing in the card, after price/title/vendor; on hover it jumps to
-   right after the image, before price/title, and grows slightly. Since
-   .card (when not itself a .ratio box) is already a flex column
-   (see component-card.css, `.card:not(.ratio){display:flex;
-   flex-direction:column}`), this is a plain `order` swap on flex
-   children rather than absolute positioning — sidesteps the stacking
-   fights that Dawn's stretched title link (.card__heading a::after)
-   otherwise causes for anything overlaid on the image. */
-.card__inner {
-  order: 0;
-}
-
-.card__content {
-  order: 1;
-}
-
+/* Matches spreadshirt.de's real card behavior, confirmed by directly
+   observing https://www.spreadshirt.de/shop/s/Minions+The+More+I+Think
+   with the mouse over the image, then the text, then the swatches
+   themselves: the row never relocates or restyles on hover. It's a
+   plain, always-visible strip below the title/price. The only thing
+   that changes on hover is the product photo itself, via Dawn's own
+   built-in zoom (component-card.css, `.media--hover-effect`). */
 .card-product-swatches {
-  order: 2;
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  padding: 1.6rem 0.8rem;
-  transition: order 0s;
-}
-
-.card:hover .card-product-swatches,
-.card-wrapper:hover .card-product-swatches {
-  order: 1;
-  background-color: rgb(255, 255, 255);
-  width: 100%;
+  gap: 0.6rem;
+  padding: 0.8rem;
 }
 
 .card-product-swatches__dot {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
   padding: 0;
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
   cursor: pointer;
-  transition: transform 0.15s ease;
 }
 
 .card-product-swatches__more {

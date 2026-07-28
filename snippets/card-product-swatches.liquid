@@ -15,13 +15,12 @@
   off section_id + product.id), not a shared/global script, since this
   only needs to react to hovers within its own card.
 
-  On the real site, the swatch row itself doesn't move or float over
-  the photo — it lives in normal flow as the last thing in the card
-  (after price/title/vendor) at rest, then jumps to right after the
-  image (before price/title) on hover via a CSS `order` swap on `.card`'s
-  flex children (see component-card-product-swatches.css), growing
-  slightly larger at the same time. Confirmed by directly observing
-  spreadshirt.de's own product card hover behavior.
+  The swatch row itself never moves or restyles on hover — it's a
+  plain, always-visible strip after the price/title. Confirmed by
+  directly observing spreadshirt.de with the cursor over the image,
+  then the text, then the swatches themselves: the row stays put the
+  whole time. Only the product photo changes on hover, via Dawn's own
+  built-in zoom (component-card.css, `.media--hover-effect`).
 
   Accepts:
   - product: {Object} Product Liquid object
