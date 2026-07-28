@@ -7,7 +7,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  padding: 1.2rem 0;
+  /* padding-top/bottom only — this element also carries .page-width,
+     which supplies the left/right padding; a shorthand `padding: 1.2rem
+     0` here would zero that back out since this stylesheet loads after
+     base.css and wins the tie (same specificity, later in cascade). */
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
 }
 
 .spreadshirt-nav-bar__list {
