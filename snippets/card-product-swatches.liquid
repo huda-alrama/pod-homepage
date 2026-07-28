@@ -1,0 +1,41 @@
+{{ 'component-card-product-swatches.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Renders small color swatches below a product card's price, one per
+  color option value — reuses the same native Shopify per-option-value
+  swatch (value.swatch.color, via color_to_hex) already used for the
+  storefront's designer button (extensions/designer-button/blocks/
+  designer-button.liquid), so a color added in admin shows up here with
+  zero extra configuration, same as it does there.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+{%- endcomment -%}
+{%- liquid
+  assign color_option = nil
+  for option in product.options_with_values
+    assign lower_name = option.name | downcase
+    if lower_name contains 'farbe' or lower_name contains 'color' or lower_name contains 'colour'
+      assign color_option = option
+      break
+    endif
+  endfor
+-%}
+{%- if color_option and color_option.values.size > 1 -%}
+  <div class="card-product-swatches">
+    {%- for value in color_option.values limit: 6 -%}
+      <span
+        class="card-product-swatches__dot"
+        style="background-color: {{ value.swatch.color | color_to_hex | default: '#cccccc' }};"
+        aria-hidden="true"
+      ></span>
+    {%- endfor -%}
+    {%- if color_option.values.size > 6 -%}
+      <span class="card-product-swatches__more">+{{ color_option.values.size | minus: 6 }}</span>
+    {%- endif -%}
+    <span class="visually-hidden">
+      {{- color_option.name }}:
+      {%- for value in color_option.values -%}{{ value.name }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
+    </span>
+  </div>
+{%- endif -%}
