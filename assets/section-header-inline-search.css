@@ -59,6 +59,11 @@
 }
 
 .header__inline-search-input {
+  /* Browser UA stylesheets don't make <input> inherit font-family from
+     its ancestors the way normal elements do — without this it silently
+     fell back to the browser's default form-control font (Arial),
+     mismatched against the theme's body font everywhere else. */
+  font-family: inherit;
   flex: 1 1 auto;
   min-width: 0;
   border: none;
