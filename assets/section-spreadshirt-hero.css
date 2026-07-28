@@ -3,6 +3,19 @@
   display: block;
 }
 
+/* .slider--everywhere (component-slider.css, shared by every slider on
+   this theme) carries an unconditional margin-bottom: 1rem meant for
+   sliders with their own below-the-fold controls/counter. Our hero's
+   controls are absolutely positioned over the image instead (see
+   .spreadshirt-hero__controls below), so that margin just adds a
+   visible gap of empty body-background between this section and
+   whatever renders after it — confirmed the only non-zero gap among
+   every section boundary on the homepage. Scoped to .spreadshirt-hero
+   specifically so it doesn't affect .slider--everywhere elsewhere. */
+.spreadshirt-hero.slider--everywhere {
+  margin-bottom: 0;
+}
+
 .spreadshirt-hero__slide {
   position: relative;
   overflow: hidden;
