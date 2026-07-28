@@ -15,14 +15,17 @@
   off section_id + product.id), not a shared/global script, since this
   only needs to react to hovers within its own card.
 
+  On the real site, the swatch row itself doesn't move or float over
+  the photo — it lives in normal flow as the last thing in the card
+  (after price/title/vendor) at rest, then jumps to right after the
+  image (before price/title) on hover via a CSS `order` swap on `.card`'s
+  flex children (see component-card-product-swatches.css), growing
+  slightly larger at the same time. Confirmed by directly observing
+  spreadshirt.de's own product card hover behavior.
+
   Accepts:
   - product: {Object} Product Liquid object
   - card_image_id: {String} DOM id of the card's main <img> to swap on hover
-  - mode: {String} 'row' (default) renders the always-visible strip below the
-    card content, matching spreadshirt.de's resting state. 'overlay' renders
-    a second copy as a floating pill on the product image itself, hidden
-    until the card is hovered — spreadshirt.de relocates the swatches onto
-    the photo on hover rather than just enlarging them in place.
 {%- endcomment -%}
 {%- liquid
   assign color_option = nil
@@ -35,10 +38,9 @@
       break
     endif
   endfor
-  assign mode = mode | default: 'row'
 -%}
 {%- if color_option and color_option.values.size > 1 -%}
-  <div class="card-product-swatches card-product-swatches--{{ mode }}" id="CardSwatches-{{ mode }}-{{ card_image_id }}">
+  <div class="card-product-swatches" id="CardSwatches-{{ card_image_id }}">
     {%- for value in color_option.values limit: 6 -%}
       {%- liquid
         assign swatch_image = nil
@@ -68,7 +70,7 @@
   </div>
   <script>
     (function () {
-      var wrap = document.getElementById('CardSwatches-{{ mode }}-{{ card_image_id }}');
+      var wrap = document.getElementById('CardSwatches-{{ card_image_id }}');
       var img = document.getElementById('{{ card_image_id }}');
       if (!wrap || !img) return;
       var originalSrc = img.getAttribute('src');
