@@ -1,0 +1,41 @@
+.spreadshirt-category-links__heading {
+  margin: 0 0 2.4rem;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.spreadshirt-category-links__list {
+  display: flex;
+  gap: 1.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.spreadshirt-category-links__item {
+  flex-shrink: 0;
+}
+
+.spreadshirt-category-links__pill {
+  display: block;
+  white-space: nowrap;
+  padding: 1.4rem 2rem;
+  border: 1px solid rgb(var(--color-foreground));
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.spreadshirt-category-links__pill:hover {
+  background-color: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+.spreadshirt-category-links__pill[aria-disabled='true'] {
+  cursor: default;
+}
