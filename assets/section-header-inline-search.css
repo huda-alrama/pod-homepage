@@ -1,0 +1,80 @@
+/* Matches spreadshirt.de's own header: a persistent search box between
+   the logo and account/cart icons, not Dawn's default icon-that-opens-
+   a-modal. Desktop only — mobile keeps the existing icon + modal search
+   (.header__search), toggled purely by these two media queries so the
+   underlying markup/JS for both stays untouched. */
+
+.header__inline-search {
+  display: none;
+}
+
+@media screen and (min-width: 990px) {
+  .header--has-inline-search {
+    grid-template-areas: 'heading search icons';
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .header--has-inline-search .header__inline-search {
+    display: flex;
+    align-items: center;
+    grid-area: search;
+    max-width: 50rem;
+    margin: 0 2rem;
+  }
+
+  /* !important: needed to beat base.css's own
+     `.header:not(.header--top-center) * > .header__search { display:
+     inline-flex; }` inside this same min-width: 990px query, which is
+     more specific (0,3,0) than a plain two-class override (0,2,0). */
+  .header--has-inline-search .header__search {
+    display: none !important;
+  }
+
+  /* The second header row (sections/spreadshirt-nav-bar.liquid) already
+     shows this same menu on desktop — hide the header's own inline
+     dropdown nav there to avoid showing it twice. Mobile is untouched:
+     the hamburger drawer this same "menu" setting also drives lives in
+     a separate element (header-drawer) with its own visibility rules. */
+  .header--has-inline-search .header__inline-menu {
+    display: none;
+  }
+}
+
+.header__inline-search-field {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid rgba(var(--color-foreground), 0.3);
+  border-radius: var(--inputs-radius, 0.4rem);
+  background: rgb(var(--color-background));
+}
+
+.header__inline-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 1rem 1.4rem;
+  font-size: 1.5rem;
+  color: rgb(var(--color-foreground));
+}
+
+.header__inline-search-input:focus {
+  outline: none;
+}
+
+.header__inline-search-input::placeholder {
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.header__inline-search-button {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.4rem;
+  background: none;
+  border: none;
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+}

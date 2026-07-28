@@ -1,0 +1,90 @@
+{{ 'section-spreadshirt-nav-bar.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  The second header row on spreadshirt.de: category links (Gestalten /
+  Shoppen / B2B) on the left, a single link (Selber verkaufen) on the
+  right — sitting below the logo/search/icons row, not part of it.
+  Reuses whichever link_list the main header section already points at
+  (default "main-menu") for the left side, rather than a second,
+  separately-maintained menu.
+{%- endcomment -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient spreadshirt-nav-bar-wrapper{% if section.settings.show_line_separator %} spreadshirt-nav-bar-wrapper--border-bottom{% endif %}">
+  <div class="spreadshirt-nav-bar page-width">
+    {%- if section.settings.menu != blank -%}
+      <nav class="spreadshirt-nav-bar__menu">
+        <ul class="spreadshirt-nav-bar__list">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a href="{{ link.url }}" class="spreadshirt-nav-bar__link link">
+                {{ link.title }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+    {%- if section.settings.secondary_link_label != blank -%}
+      <a
+        {% if section.settings.secondary_link_url != blank %}
+          href="{{ section.settings.secondary_link_url }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+        class="spreadshirt-nav-bar__secondary-link link animate-arrow"
+      >
+        {{ section.settings.secondary_link_label }}
+        <span class="icon-wrap">{% render 'icon-arrow' %}</span>
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Spreadshirt nav bar",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "secondary_link_label",
+      "default": "Selber verkaufen",
+      "label": "Secondary link label"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link_url",
+      "label": "Secondary link URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "Show bottom border"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "accent-1", "label": "t:sections.all.colors.accent_1.label" },
+        { "value": "accent-2", "label": "t:sections.all.colors.accent_2.label" },
+        { "value": "background-1", "label": "t:sections.all.colors.background_1.label" },
+        { "value": "background-2", "label": "t:sections.all.colors.background_2.label" },
+        { "value": "inverse", "label": "t:sections.all.colors.inverse.label" }
+      ],
+      "default": "background-1",
+      "label": "Color scheme"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spreadshirt nav bar"
+    }
+  ]
+}
+{% endschema %}
