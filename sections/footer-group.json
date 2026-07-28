@@ -11,6 +11,60 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "footer_columns": {
+      "type": "footer",
+      "blocks": {
+        "footer-contact": {
+          "type": "text",
+          "settings": {
+            "heading": "Kontaktiere uns",
+            "subtext": "<p>0341 996 59989 Mo-Fr 9-18 Uhr</p><p><a href=\"/pages/contact\">Kontakt</a></p>"
+          }
+        },
+        "footer-service": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Service",
+            "menu": "main-menu"
+          }
+        },
+        "footer-company": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Unternehmen",
+            "menu": "main-menu"
+          }
+        },
+        "footer-partners": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Für Partner",
+            "menu": "main-menu"
+          }
+        },
+        "footer-brand": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": true
+          }
+        }
+      },
+      "block_order": ["footer-brand", "footer-contact", "footer-service", "footer-company", "footer-partners"],
+      "settings": {
+        "color_scheme": "background-1",
+        "newsletter_enable": false,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": false,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": false,
+        "payment_enable": false,
+        "show_policy": false,
+        "margin_top": 0,
+        "padding_top": 52,
+        "padding_bottom": 36
+      }
+    },
     "footer": {
       "type": "minimal-footer",
       "settings": {
@@ -24,6 +78,7 @@
     }
   },
   "order": [
+    "footer_columns",
     "footer"
   ]
 }
