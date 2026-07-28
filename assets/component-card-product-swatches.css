@@ -3,6 +3,15 @@
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.6rem;
+  /* Dawn's card__heading a::after is an invisible position:absolute;
+     inset:0 overlay at z-index:1, stretched across the whole card so
+     clicking anywhere navigates to the product. Without a stacking
+     context of its own above that, this sits underneath it — real mouse
+     hover/click never reaches the swatch buttons at all (confirmed via
+     elementFromPoint at the dot's exact screen position resolving to
+     that link, not the dot). */
+  position: relative;
+  z-index: 2;
 }
 
 .card-product-swatches__dot {
