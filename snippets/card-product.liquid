@@ -139,6 +139,9 @@
           </div>
         </div>
       </div>
+      {%- if card_product.featured_media -%}
+        {% render 'card-product-swatches', product: card_product, card_image_id: card_image_id %}
+      {%- endif -%}
       <div class="card__content">
         <div class="card__information">
           <h3
@@ -335,9 +338,6 @@
           {%- endif -%}
         </div>
       </div>
-      {%- if card_product.featured_media -%}
-        {% render 'card-product-swatches', product: card_product, card_image_id: card_image_id %}
-      {%- endif -%}
     </div>
   </div>
 {%- else -%}
