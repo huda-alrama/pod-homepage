@@ -596,39 +596,42 @@
       {%- endif -%}
     {%- endif -%}
 
-    {%- if section.settings.show_inline_search -%}
-      {%- comment -%}
-        A real, persistent search box like spreadshirt.de's own header,
-        not Dawn's default icon-that-opens-a-modal. Kept deliberately
-        separate from the existing <details-modal class="header__search">
-        below (not rewired into it) — that component's JS/CSS assumes a
-        togglable dialog, and retrofitting it into an always-open inline
-        field would mean fighting fixed positioning, overlay backdrop and
-        focus-trap behavior built for the modal case. This is a plain,
-        working `?q=` search form instead; CSS hides whichever of the two
-        doesn't apply at the current viewport (this one on mobile, the
-        icon on desktop — see section-header-inline-search.css).
-      {%- endcomment -%}
-      <form action="{{ routes.search_url }}" method="get" role="search" class="header__inline-search">
-        <div class="header__inline-search-field">
-          <input
-            class="header__inline-search-input"
-            type="search"
-            name="q"
-            value="{{ search.terms | escape }}"
-            placeholder="{{ 'general.search.search' | t }}"
-            autocomplete="off"
-          >
-          <button type="submit" class="header__inline-search-button" aria-label="{{ 'general.search.search' | t }}">
-            <svg class="icon icon-search" aria-hidden="true" focusable="false" width="18" height="19" viewBox="0 0 18 19">
-              <use href="#icon-search">
-            </svg>
-          </button>
-        </div>
-      </form>
-    {%- endif -%}
-
     <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header__localization{% endif %}">
+      {%- if section.settings.show_inline_search -%}
+        {%- comment -%}
+          A real, persistent search box like spreadshirt.de's own
+          header, not Dawn's default icon-that-opens-a-modal. Lives
+          inside .header__icons (not its own grid area) specifically so
+          it's grouped tight against the account/cart icons on the
+          right, matching spreadshirt's layout, rather than stretching
+          across the whole middle of the header. Kept deliberately
+          separate from the existing <details-modal class="header__search">
+          below (not rewired into it) — that component's JS/CSS assumes a
+          togglable dialog, and retrofitting it into an always-open inline
+          field would mean fighting fixed positioning, overlay backdrop and
+          focus-trap behavior built for the modal case. This is a plain,
+          working `?q=` search form instead; CSS hides whichever of the
+          two doesn't apply at the current viewport (this one on mobile,
+          the icon on desktop — see section-header-inline-search.css).
+        {%- endcomment -%}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="header__inline-search">
+          <div class="header__inline-search-field">
+            <input
+              class="header__inline-search-input"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ 'general.search.search' | t }}"
+              autocomplete="off"
+            >
+            <button type="submit" class="header__inline-search-button" aria-label="{{ 'general.search.search' | t }}">
+              <svg class="icon icon-search" aria-hidden="true" focusable="false" width="18" height="19" viewBox="0 0 18 19">
+                <use href="#icon-search">
+              </svg>
+            </button>
+          </div>
+        </form>
+      {%- endif -%}
       <div class="desktop-localization-wrapper">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <localization-form class="small-hide medium-hide">
