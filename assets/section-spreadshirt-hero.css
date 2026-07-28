@@ -43,7 +43,12 @@
 
 .spreadshirt-hero__content {
   pointer-events: auto;
-  max-width: 42rem;
+  /* px, not rem: this theme sets html { font-size: 62.5% }, so 1rem is
+     10px here, not 16px — 42rem previously computed to only 420px,
+     too narrow to fit all 3 buttons on one row (confirmed: the 3
+     buttons need ~588px combined, wrapping "SPREAD Essentials" onto
+     its own line). 700px comfortably fits them with room to spare. */
+  max-width: 700px;
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
