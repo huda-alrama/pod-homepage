@@ -8,7 +8,16 @@
    layout, not something spreadshirt's grid itself does. z-index: 2
    puts the overlay above the card's full-card stretched link
    (.card__heading a::after, z-index: 1) so real hover/click actually
-   reaches the dots instead of hitting the link underneath. */
+   reaches the dots instead of hitting the link underneath. Being a
+   sibling of .card__media rather than nested inside it also means it's
+   no longer covered by .card__media's own overflow: hidden, so
+   .card--media .card__inner (the ratio box both share) gets it here
+   instead — otherwise the strip stays visibly parked below the image
+   at rest instead of clipped out of view. */
+
+.card--media .card__inner {
+  overflow: hidden;
+}
 
 .card-product-swatches--inline {
   display: flex;
