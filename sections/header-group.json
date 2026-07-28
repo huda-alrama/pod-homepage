@@ -13,6 +13,9 @@
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
+      "custom_css": [
+        ".announcement-bar-section .color-inverse {--color-background: 255, 75, 48; --gradient-background: rgb(255, 75, 48);}"
+      ],
       "blocks": {
         "announcement-bar-0": {
           "type": "announcement",
