@@ -132,8 +132,18 @@
   z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding-inline: 2rem;
+}
+
+/* .slider-buttons (component-slider.css, shared by every other slider
+   on this theme) also sets justify-content: center at the same
+   specificity — and that stylesheet loads after this one (both are
+   linked from this section, in that order), so it was winning the tie
+   and bunching dots+arrows together in the middle instead of spreading
+   them to opposite edges like spreadshirt's own hero. The extra class
+   here is only to beat that specificity tie, not a real style scope. */
+.spreadshirt-hero__controls.slider-buttons {
+  justify-content: space-between;
 }
 
 .page-width .spreadshirt-hero__controls {
