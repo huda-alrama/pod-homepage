@@ -101,106 +101,6 @@
         "padding_bottom": 36
       }
     },
-    "secondary_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "secondary-heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "SPREAD Essentials",
-            "heading_size": "h1"
-          }
-        },
-        "secondary-text": {
-          "type": "text",
-          "settings": {
-            "text": "Qualität & Style — entdecke unsere exklusive Kollektion.",
-            "text_style": "body"
-          }
-        },
-        "secondary-button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Entdecken",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": ["secondary-heading", "secondary-text", "secondary-button"],
-      "settings": {
-        "image": "shopify://shop_images/theme_cover_image.jpg",
-        "image_overlay_opacity": 20,
-        "image_height": "medium",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
-        "desktop_content_alignment": "center",
-        "color_scheme": "background-1",
-        "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
-      }
-    },
-    "quick_links": {
-      "type": "multicolumn",
-      "blocks": {
-        "link-1": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/theme_cover_image.jpg",
-            "title": "T-Shirt bedrucken",
-            "link_label": "Jetzt gestalten",
-            "link": "shopify://collections/all"
-          }
-        },
-        "link-2": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/theme_cover_image.jpg",
-            "title": "Hoodie gestalten",
-            "link_label": "Jetzt gestalten",
-            "link": "shopify://collections/all"
-          }
-        },
-        "link-3": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/theme_cover_image.jpg",
-            "title": "Stickerei",
-            "link_label": "Mehr erfahren",
-            "link": "shopify://collections/all"
-          }
-        },
-        "link-4": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/theme_cover_image.jpg",
-            "title": "Beliebte Produkte",
-            "link_label": "Entdecken",
-            "link": "shopify://collections/all"
-          }
-        }
-      },
-      "block_order": ["link-1", "link-2", "link-3", "link-4"],
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "square",
-        "columns_desktop": 2,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "background-1",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "bestsellers": {
       "type": "featured-collection",
       "settings": {
@@ -530,38 +430,6 @@
         "padding_bottom": 48
       }
     },
-    "guarantee_cards": {
-      "type": "trust-badges",
-      "blocks": {
-        "guarantee-1": {
-          "type": "badge",
-          "settings": {
-            "heading": "Sichere Zahlungsmethoden",
-            "text": "PayPal, Kreditkarte, Klarna & mehr"
-          }
-        },
-        "guarantee-2": {
-          "type": "badge",
-          "settings": {
-            "heading": "30 Tage Zufriedenheitsgarantie",
-            "text": "Nicht zufrieden? Geld zurück."
-          }
-        },
-        "guarantee-3": {
-          "type": "badge",
-          "settings": {
-            "heading": "Weltweiter Versand",
-            "text": "Mehrere Versandgeschwindigkeiten verfügbar"
-          }
-        }
-      },
-      "block_order": ["guarantee-1", "guarantee-2", "guarantee-3"],
-      "settings": {
-        "color_scheme": "background-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "newsletter": {
       "type": "newsletter",
       "blocks": {
@@ -595,8 +463,6 @@
     "spreadshirt_hero",
     "trust_badges",
     "gestalten_links",
-    "secondary_banner",
-    "quick_links",
     "bestsellers",
     "template_cards",
     "f1552b18-6017-4231-810d-74e61da22c37",
@@ -608,7 +474,6 @@
     "reviews_carousel",
     "brand_info",
     "38cdf60f-e431-43b5-aac3-7e6215447d67",
-    "guarantee_cards",
     "newsletter"
   ]
 }
