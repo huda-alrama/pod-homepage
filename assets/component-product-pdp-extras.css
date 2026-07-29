@@ -18,18 +18,24 @@
 
 /* Wraps the whole product info column (title, price, variant pickers,
    bulk pricing, CTAs, social proof, etc.) in a single rounded card,
-   matching the mockup rather than Dawn's default borderless column. */
+   matching the mockup rather than Dawn's default borderless column.
+   overflow: hidden clips the badge bar's square corners to match the
+   card's own rounding (see .product__badge-bar below) instead of
+   relying on the bar's own border-radius lining up with it exactly —
+   any sub-pixel mismatch there left a visible sliver at the corners. */
 .product__info-container {
   background: rgb(var(--color-background));
   border: 1px solid rgba(var(--color-foreground), 0.08);
   border-radius: 1.2rem;
   padding: 2rem;
+  overflow: hidden;
 }
 
 /* Badge bar above the title (e.g. "Bestseller! 1.204 Aufrufe in den
-   letzten 24 Stunden"). Bleeds into the card's own rounded top
-   corners and border via negative margins, since it's always the
-   first element inside .product__info-container. */
+   letzten 24 Stunden"). Bleeds into the card's own top edge via
+   negative margins, since it's always the first element inside
+   .product__info-container; the parent's overflow: hidden clips its
+   square corners into the card's rounded shape. */
 .product__badge-bar {
   background: rgba(var(--color-foreground), 0.04);
   border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
@@ -37,7 +43,6 @@
   font-size: 1.3rem;
   padding: 1.2rem 2rem;
   margin: -2rem -2rem 1.5rem;
-  border-radius: 1.1rem 1.1rem 0 0;
 }
 
 .product__badge-bar strong {
