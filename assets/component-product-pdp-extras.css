@@ -143,6 +143,69 @@
   background: #b91c1c;
 }
 
+/* Trust icons row */
+.product__trust-icons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.2rem;
+  list-style: none;
+  margin: 0 0 1.6rem;
+  padding: 0;
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.product__trust-icons li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.product__trust-icons li + li::before {
+  content: '·';
+  margin-right: 1.2rem;
+}
+
+/* Each product accordion tab as its own separate rounded bordered box
+   with a gap between, instead of Dawn's default connected-list style
+   (shared borders, no gap between adjacent tabs). */
+.product__accordion {
+  border: 1px solid rgba(var(--color-foreground), 0.15) !important;
+  border-radius: 0.8rem;
+  margin-top: 1.2rem !important;
+  padding: 0 1.6rem;
+}
+
+.product__accordion + .product__accordion {
+  border-top: 1px solid rgba(var(--color-foreground), 0.15) !important;
+}
+
+/* Plus/minus indicator instead of Dawn's rotating caret arrow,
+   matching the mockup's accordion style. */
+.product__accordion .icon-caret {
+  display: none;
+}
+
+.product__accordion summary {
+  position: relative;
+}
+
+.product__accordion summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.product__accordion details[open] > summary::after {
+  content: '−';
+}
+
 /* Social proof line */
 .product__social-proof {
   font-size: 1.3rem;

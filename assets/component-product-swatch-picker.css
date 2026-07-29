@@ -80,5 +80,6 @@
 .product-form__input--size input[type='radio']:disabled + label {
   text-decoration: line-through;
   color: rgba(var(--color-foreground), 0.35);
-  border-color: rgba(var(--color-foreground), 0.1);
+  border-style: dashed;
+  border-color: rgba(var(--color-foreground), 0.2);
 }

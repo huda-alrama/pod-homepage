@@ -65,6 +65,10 @@
           "type": "pdp_stock_status",
           "settings": {}
         },
+        "trust_icons": {
+          "type": "pdp_trust_icons",
+          "settings": {}
+        },
         "pod_platform_designer_button_GLGXTh": {
           "type": "shopify://apps/pod-platform/blocks/designer-button/019f64fe-c614-7401-923a-c065954756e5",
           "settings": {
@@ -153,6 +157,7 @@
         "quantity_selector",
         "bulk_pricing",
         "stock_status",
+        "trust_icons",
         "pod_platform_designer_button_GLGXTh",
         "buy_buttons",
         "social_proof",
