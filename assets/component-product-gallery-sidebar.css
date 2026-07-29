@@ -6,6 +6,16 @@
    reflecting the section's gallery_layout setting) so this doesn't
    affect the other gallery layout options. */
 @media screen and (min-width: 750px) {
+  /* Dawn's stock grid stretches thumbnails to fill however many equal
+     columns product--large/medium set (4-6), so with only 3-4 images
+     they end up nearly as wide as the main image. The mockup instead
+     keeps thumbnails at a small fixed size and lets the row stay
+     left-aligned, with empty space after the last one. */
+  media-gallery[data-desktop-layout='thumbnail'] .thumbnail-list {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 9rem));
+    justify-content: start;
+  }
+
   /* Dawn hides the main image's prev/next arrows at this breakpoint
      (component-slider.css: `.slider--mobile + .slider-buttons {
      display: none }`) since the thumbnail column already provides
