@@ -16,6 +16,16 @@
   --border-opacity: var(--buttons-border-opacity);
 }
 
+/* Wraps the whole product info column (title, price, variant pickers,
+   bulk pricing, CTAs, social proof, etc.) in a single rounded card,
+   matching the mockup rather than Dawn's default borderless column. */
+.product__info-container {
+  background: rgb(var(--color-background));
+  border: 1px solid rgba(var(--color-foreground), 0.08);
+  border-radius: 1.2rem;
+  padding: 2rem;
+}
+
 /* Badge pill above the title (e.g. "Bestseller") */
 .product__badge-pill {
   display: inline-block;
