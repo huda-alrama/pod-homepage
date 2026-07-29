@@ -10,6 +10,9 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'component-product-shipping-info.css' | asset_url | stylesheet_tag }}
+  {{ 'component-product-gallery-sidebar.css' | asset_url | stylesheet_tag }}
+  {{ 'component-product-swatch-picker.css' | asset_url | stylesheet_tag }}
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -26,6 +29,7 @@
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-gallery-arrows.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer" type="module"></script>
   {% if section.settings.image_zoom == 'hover' %}
     <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
@@ -164,8 +168,28 @@
               </p>
             {%- when 'description' -%}
               {%- if product.description != blank -%}
-                <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                  {{ product.description }}
+                {%- comment -%}
+                  Matches spreadshirt.de's own PDP: the description
+                  lives inside a "Produktdetails" accordion tab rather
+                  than as plain text above the fold — same accordion
+                  markup as the collapsible_tab block type below, just
+                  driven by product.description instead of a block
+                  setting, since that's per-product and a static block
+                  setting can't reference it.
+                {%- endcomment -%}
+                <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
+                  <details id="ProductDescription-{{ section.id }}">
+                    <summary>
+                      <div class="summary__title">
+                        {% render 'icon-accordion', icon: 'clipboard' %}
+                        <h2 class="h4 accordion__title">Produktdetails</h2>
+                      </div>
+                      {% render 'icon-caret' %}
+                    </summary>
+                    <div class="accordion__content rte product__description">
+                      {{ product.description }}
+                    </div>
+                  </details>
                 </div>
               {%- endif -%}
             {%- when 'sku' -%}
@@ -348,6 +372,41 @@
                   </span>
                 </p>
               {%- endif -%}
+            {%- when 'spreadshirt_shipping_info' -%}
+              {%- comment -%}
+                Matches spreadshirt.de's own delivery-estimate + returns
+                box below the buy buttons: a bordered box with a truck
+                icon and two delivery-speed lines, a divider, then a
+                return-policy line with its own icon. Text is editable
+                per block (no invented delivery dates — merchant fills
+                in real numbers).
+              {%- endcomment -%}
+              <div class="product__shipping-info" {{ block.shopify_attributes }}>
+                <div class="product__shipping-info-row">
+                  {% render 'icon-accordion', icon: 'truck' %}
+                  <div class="product__shipping-info-lines">
+                    {%- if block.settings.express_time != blank -%}
+                      <p>
+                        <span class="product__shipping-info-label">{{ block.settings.express_label }}</span>
+                        {{ block.settings.express_time }}
+                      </p>
+                    {%- endif -%}
+                    {%- if block.settings.standard_time != blank -%}
+                      <p>
+                        <span class="product__shipping-info-label">{{ block.settings.standard_label }}</span>
+                        {{ block.settings.standard_time }}
+                      </p>
+                    {%- endif -%}
+                  </div>
+                </div>
+                {%- if block.settings.return_text != blank -%}
+                  <div class="product__shipping-info-divider"></div>
+                  <div class="product__shipping-info-row">
+                    {% render 'icon-accordion', icon: 'return' %}
+                    <p>{{ block.settings.return_text }}</p>
+                  </div>
+                {%- endif -%}
+              </div>
             {%- when 'complementary' -%}
               <product-recommendations class="complementary-products quick-add-hidden no-js-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_list_limit }}&intent=complementary">
                 {%- if recommendations.performed and recommendations.products_count > 0 -%}
@@ -1012,6 +1071,43 @@
         {
           "type": "paragraph",
           "content": "t:sections.main-product.blocks.rating.settings.paragraph.content"
+        }
+      ]
+    },
+    {
+      "type": "spreadshirt_shipping_info",
+      "name": "Shipping & returns",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "express_label",
+          "label": "Express label",
+          "default": "Express"
+        },
+        {
+          "type": "text",
+          "id": "express_time",
+          "label": "Express delivery estimate",
+          "default": "1-2 Werktage"
+        },
+        {
+          "type": "text",
+          "id": "standard_label",
+          "label": "Standard label",
+          "default": "Standard"
+        },
+        {
+          "type": "text",
+          "id": "standard_time",
+          "label": "Standard delivery estimate",
+          "default": "3-5 Werktage"
+        },
+        {
+          "type": "text",
+          "id": "return_text",
+          "label": "Return policy text",
+          "default": "30 Tage Rückgaberecht"
         }
       ]
     },

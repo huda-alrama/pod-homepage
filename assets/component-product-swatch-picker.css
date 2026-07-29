@@ -1,0 +1,52 @@
+/* Circular color swatches for the product page's variant picker,
+   matching spreadshirt.de's own PDP (small colored circles with a
+   checkmark badge on the selected one) instead of Dawn's default
+   rectangular text-label pills. Only applies to whichever option is
+   named Farbe/Color/Colour — every other option (Size, etc.) keeps
+   Dawn's normal pill-button styling untouched. */
+.product-form__input input[type='radio'] + label.product-form__swatch-label {
+  width: 3.6rem;
+  height: 3.6rem;
+  padding: 0;
+  margin: 0.4rem 0.8rem 0.4rem 0;
+  border-radius: 50%;
+  background-color: var(--swatch-color);
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  box-shadow: none;
+  position: relative;
+}
+
+.product-form__input input[type='radio'] + label.product-form__swatch-label:before {
+  display: none;
+}
+
+.product-form__input input[type='radio']:checked + label.product-form__swatch-label {
+  background-color: var(--swatch-color);
+}
+
+.product-form__input input[type='radio'].disabled + label.product-form__swatch-label {
+  opacity: 0.35;
+}
+
+.product-form__swatch-check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.product-form__swatch-check .icon-checkmark {
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+}
+
+.product-form__input input[type='radio']:checked + label.product-form__swatch-label .product-form__swatch-check {
+  opacity: 1;
+}

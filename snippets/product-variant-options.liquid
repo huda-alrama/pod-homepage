@@ -21,6 +21,12 @@
   assign variants_option3_arr = product.variants | map: 'option3'
 
   assign product_form_id = 'product-form-' | append: section.id
+
+  assign lower_option_name = option.name | downcase
+  assign is_color_option = false
+  if lower_option_name contains 'farbe' or lower_option_name contains 'color' or lower_option_name contains 'colour'
+    assign is_color_option = true
+  endif
 -%}
 
 {%- for value in option.values -%}
@@ -59,8 +65,20 @@
         class="disabled"
       {% endif %}
     >
-    <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-      {{ value -}}
+    <label
+      for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+      {% if is_color_option %}
+        class="product-form__swatch-label"
+        style="--swatch-color: {{ value.swatch.color | color_to_hex | default: '#cccccc' }};"
+        title="{{ value.name | default: value }}"
+      {% endif %}
+    >
+      {%- if is_color_option -%}
+        <span class="visually-hidden">{{ value.name | default: value }}</span>
+        <span class="product-form__swatch-check">{% render 'icon-checkmark' %}</span>
+      {%- else -%}
+        {{ value -}}
+      {%- endif -%}
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
   {%- elsif block.settings.picker_type == 'dropdown' -%}

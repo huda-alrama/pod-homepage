@@ -1,0 +1,40 @@
+/* Matches spreadshirt.de's own delivery-estimate + returns box below
+   the buy buttons on the product page: a bordered box, truck icon +
+   two delivery-speed lines, a thin divider, then a return-policy line
+   with its own icon. */
+.product__shipping-info {
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 0.4rem;
+  padding: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.product__shipping-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.product__shipping-info-row .icon-accordion {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.product__shipping-info-lines p {
+  margin: 0;
+}
+
+.product__shipping-info-lines p + p {
+  margin-top: 0.4rem;
+}
+
+.product__shipping-info-label {
+  font-weight: 600;
+  margin-right: 0.6rem;
+}
+
+.product__shipping-info-divider {
+  height: 1px;
+  background: rgba(var(--color-foreground), 0.1);
+  margin: 1.2rem 0;
+}
