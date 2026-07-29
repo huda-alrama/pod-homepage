@@ -436,20 +436,30 @@
               </div>
             {%- when 'pdp_bulk_pricing' -%}
               {%- comment -%}
-                Quantity tiles that set the real quantity input's value
-                when clicked (see product-bulk-pricing.js) — the
-                discount percentages shown are informational labels
-                from block settings; the actual checkout price only
-                changes if the store has a matching Shopify quantity-
-                break/volume-pricing rule configured for this product,
-                since a theme alone can't apply a real price rule.
+                Tiers are fetched live from the real discount-tiers API
+                (product-bulk-pricing.js) — confirmed backed by a real
+                Shopify automatic discount at checkout, not just a
+                theme-side display. Only the base "1 Stück" tile is
+                rendered server-side; every real tier is added by JS
+                once the fetch resolves, so this never shows stale
+                hardcoded numbers. Requires that API to allow this
+                storefront's origin via CORS — without it the fetch is
+                silently blocked by the browser and only the base tile
+                shows (see product-bulk-pricing.js for the fallback).
               {%- endcomment -%}
               <product-bulk-pricing
                 class="product__bulk-pricing"
                 data-quantity-input-id="Quantity-{{ section.id }}"
+                data-api-url="{{ block.settings.api_url }}"
+                data-tier-label-template="{{ block.settings.tier_label_template | escape }}"
+                data-tier-discount-template="{{ block.settings.tier_discount_template | escape }}"
                 {{ block.shopify_attributes }}
               >
-                {% render 'product-bulk-pricing-tiles', block: block %}
+                <div class="product__bulk-pricing-grid">
+                  <button type="button" class="product__bulk-pricing-tile is-selected" data-quantity="1">
+                    <span class="product__bulk-pricing-qty">{{ block.settings.tier_0_label }}</span>
+                  </button>
+                </div>
               </product-bulk-pricing>
             {%- when 'pdp_stock_status' -%}
               {%- comment -%}
@@ -474,26 +484,7 @@
                 the merchant actually fills it in (no fabricated
                 certifications by default).
               {%- endcomment -%}
-              <ul class="product__trust-icons" {{ block.shopify_attributes }}>
-                {%- for i in (1..3) -%}
-                  {%- liquid
-                    case i
-                      when 1
-                        assign icon_text = block.settings.icon_1
-                        assign label_text = block.settings.label_1
-                      when 2
-                        assign icon_text = block.settings.icon_2
-                        assign label_text = block.settings.label_2
-                      when 3
-                        assign icon_text = block.settings.icon_3
-                        assign label_text = block.settings.label_3
-                    endcase
-                  -%}
-                  {%- if label_text != blank -%}
-                    <li>{{ icon_text }} {{ label_text }}</li>
-                  {%- endif -%}
-                {%- endfor -%}
-              </ul>
+              {% render 'product-trust-icons', block: block %}
             {%- when 'pdp_social_proof' -%}
               {%- if block.settings.text != blank -%}
                 <p class="product__social-proof" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
@@ -1288,7 +1279,13 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "The discount % shown is informational only — it doesn't change the price at checkout unless you've set up a matching Shopify volume-pricing/quantity-break rule for this product."
+          "content": "Tiers are fetched live from the discount-tiers API (real checkout discount, confirmed backed by a matching Shopify automatic discount) — not hardcoded here. Requires that API to send an Access-Control-Allow-Origin header for this storefront's domain; until then the browser will block the request and only the base \"1 Stück\" tile will show."
+        },
+        {
+          "type": "text",
+          "id": "api_url",
+          "label": "Discount tiers API URL",
+          "default": "https://dev.al-rama.ae/api/backend/discount-tiers"
         },
         {
           "type": "text",
@@ -1298,93 +1295,17 @@
         },
         {
           "type": "text",
-          "id": "tier_1_qty",
-          "label": "Tier 1 quantity",
-          "default": "5"
+          "id": "tier_label_template",
+          "label": "Tier label template",
+          "info": "{qty} is replaced with the tier's minQuantity.",
+          "default": "{qty}+ Artikel"
         },
         {
           "type": "text",
-          "id": "tier_1_label",
-          "label": "Tier 1 label",
-          "default": "5+ Artikel"
-        },
-        {
-          "type": "text",
-          "id": "tier_1_discount",
-          "label": "Tier 1 discount label",
-          "default": "Spare 10%"
-        },
-        {
-          "type": "text",
-          "id": "tier_2_qty",
-          "label": "Tier 2 quantity",
-          "default": "15"
-        },
-        {
-          "type": "text",
-          "id": "tier_2_label",
-          "label": "Tier 2 label",
-          "default": "15+ Artikel"
-        },
-        {
-          "type": "text",
-          "id": "tier_2_discount",
-          "label": "Tier 2 discount label",
-          "default": "Spare 20%"
-        },
-        {
-          "type": "text",
-          "id": "tier_3_qty",
-          "label": "Tier 3 quantity",
-          "default": "30"
-        },
-        {
-          "type": "text",
-          "id": "tier_3_label",
-          "label": "Tier 3 label",
-          "default": "30+ Artikel"
-        },
-        {
-          "type": "text",
-          "id": "tier_3_discount",
-          "label": "Tier 3 discount label",
-          "default": "Spare 35%"
-        },
-        {
-          "type": "text",
-          "id": "tier_4_qty",
-          "label": "Tier 4 quantity",
-          "default": "100"
-        },
-        {
-          "type": "text",
-          "id": "tier_4_label",
-          "label": "Tier 4 label",
-          "default": "100+ Artikel"
-        },
-        {
-          "type": "text",
-          "id": "tier_4_discount",
-          "label": "Tier 4 discount label",
-          "default": "Spare 50%"
-        },
-        {
-          "type": "text",
-          "id": "tier_5_qty",
-          "label": "Tier 5 quantity",
-          "default": "500"
-        },
-        {
-          "type": "text",
-          "id": "tier_5_label",
-          "label": "Tier 5 label",
-          "default": "500+ Artikel"
-        },
-        {
-          "type": "text",
-          "id": "tier_5_discount",
-          "label": "Tier 5 discount label",
-          "default": "Spare 60%"
+          "id": "tier_discount_template",
+          "label": "Tier discount label template",
+          "info": "{percent} is replaced with the tier's discountPercent.",
+          "default": "Spare {percent}%"
         }
       ]
     },

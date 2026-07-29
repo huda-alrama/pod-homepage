@@ -1,0 +1,31 @@
+{% comment %}
+  Renders the trust-icons row for the pdp_trust_icons block. Split out
+  of sections/main-product.liquid to keep that file's Liquid
+  complexity under the theme-check limit.
+
+  Accepts:
+  - block: {Object} the pdp_trust_icons block
+
+  Usage:
+  {% render 'product-trust-icons', block: block %}
+{% endcomment %}
+<ul class="product__trust-icons" {{ block.shopify_attributes }}>
+  {%- for i in (1..3) -%}
+    {%- liquid
+      case i
+        when 1
+          assign icon_text = block.settings.icon_1
+          assign label_text = block.settings.label_1
+        when 2
+          assign icon_text = block.settings.icon_2
+          assign label_text = block.settings.label_2
+        when 3
+          assign icon_text = block.settings.icon_3
+          assign label_text = block.settings.label_3
+      endcase
+    -%}
+    {%- if label_text != blank -%}
+      <li>{{ icon_text }} {{ label_text }}</li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
