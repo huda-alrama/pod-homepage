@@ -22,8 +22,14 @@
    overflow: hidden clips the badge bar's square corners to match the
    card's own rounding (see .product__badge-bar below) instead of
    relying on the bar's own border-radius lining up with it exactly —
-   any sub-pixel mismatch there left a visible sliver at the corners. */
+   any sub-pixel mismatch there left a visible sliver at the corners.
+
+   <product-info> is a custom element with no built-in display style,
+   so it defaults to display: inline — which breaks the padding/
+   overflow math above (an inline box doesn't offset block children
+   by its own padding the way a block box does). Force it to block. */
 .product__info-container {
+  display: block;
   background: rgb(var(--color-background));
   border: 1px solid rgba(var(--color-foreground), 0.08);
   border-radius: 1.2rem;
