@@ -89,6 +89,11 @@
 }
 
 .product__bulk-pricing-tile {
+  /* <button> doesn't inherit font-family from ancestors like normal
+     elements do — without this it silently fell back to Arial,
+     mismatched against the theme's body font everywhere else (same
+     issue hit earlier with the header's inline search input). */
+  font-family: inherit;
   border: 1px solid rgba(var(--color-foreground), 0.15);
   border-radius: 0.4rem;
   padding: 1rem;
