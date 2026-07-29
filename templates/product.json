@@ -15,7 +15,8 @@
         "badge": {
           "type": "pdp_badge",
           "settings": {
-            "text": "Bestseller"
+            "text": "Bestseller",
+            "highlight_text": "1.204 Aufrufe in den letzten 24 Stunden"
           }
         },
         "title": {
