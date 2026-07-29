@@ -22,7 +22,14 @@
       {{ block.shopify_attributes }}
     >
       {%- for option in product.options_with_values -%}
-        <fieldset class="js product-form__input">
+        {%- liquid
+          assign lower_option_name = option.name | downcase
+          assign option_modifier = ''
+          if lower_option_name contains 'größe' or lower_option_name contains 'size'
+            assign option_modifier = ' product-form__input--size'
+          endif
+        -%}
+        <fieldset class="js product-form__input{{ option_modifier }}">
           <legend class="form__label">{{ option.name }}</legend>
           {% render 'product-variant-options', product: product, option: option, block: block %}
         </fieldset>

@@ -1,0 +1,22 @@
+.product__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.65);
+  margin-bottom: 1.6rem;
+}
+
+.product__breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product__breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.product__breadcrumb [aria-current='page'] {
+  color: rgb(var(--color-foreground));
+}

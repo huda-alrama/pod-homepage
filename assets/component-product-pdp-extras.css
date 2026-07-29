@@ -1,0 +1,152 @@
+/* With show_dynamic_checkout off (so there are exactly two buttons —
+   the app's "Jetzt gestalten" and Add to cart, matching the design),
+   Dawn's own buy-buttons.liquid makes Add to cart button--primary
+   instead of button--secondary (that swap only happens when a dynamic
+   checkout button is also present). Restyled directly here rather
+   than touching that shared snippet, since the primary/secondary
+   button color system runs on CSS custom properties that are simpler
+   to re-declare than to fight via classes. */
+.product__info-container .product-form__submit.button--primary {
+  --color-button: var(--color-background);
+  --color-button-text: var(--color-foreground);
+  --alpha-button-background: 1;
+}
+
+.product__info-container .product-form__submit.button--primary::after {
+  --border-opacity: var(--buttons-border-opacity);
+}
+
+/* Badge pill above the title (e.g. "Bestseller") */
+.product__badge-pill {
+  display: inline-block;
+  background: rgba(22, 163, 74, 0.12);
+  color: #166534;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Price extra line: tax label + per-unit badge + free shipping link */
+.product__price-extra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+
+.product__price-extra-tax {
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.65);
+}
+
+.product__price-extra-badge {
+  background: rgba(22, 163, 74, 0.12);
+  color: #166534;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 0.4rem;
+  white-space: nowrap;
+}
+
+.product__price-extra-shipping {
+  display: block;
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #166534;
+}
+
+/* Size guide link + fit note */
+.product__size-help {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.product__size-help-link {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.product__size-help-note {
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.65);
+  margin-top: 0.2rem;
+}
+
+/* Bulk pricing tiles */
+.product__bulk-pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 0.8rem 0 1.6rem;
+}
+
+.product__bulk-pricing-tile {
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 0.4rem;
+  padding: 1rem;
+  text-align: center;
+  background: rgb(var(--color-background));
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.product__bulk-pricing-tile:hover {
+  border-color: rgba(var(--color-foreground), 0.4);
+}
+
+.product__bulk-pricing-tile.is-selected {
+  border: 2px solid rgb(var(--color-foreground));
+}
+
+.product__bulk-pricing-qty {
+  display: block;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.product__bulk-pricing-discount {
+  display: block;
+  color: #166534;
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+/* Stock status */
+.product__stock-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+  margin: 1.2rem 0;
+}
+
+.product__stock-status-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.product__stock-status-dot--in-stock {
+  background: #16a34a;
+}
+
+.product__stock-status-dot--sold-out {
+  background: #b91c1c;
+}
+
+/* Social proof line */
+.product__social-proof {
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.7);
+  margin-top: 1rem;
+  text-align: center;
+}

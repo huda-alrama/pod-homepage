@@ -12,9 +12,22 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "badge": {
+          "type": "pdp_badge",
+          "settings": {
+            "text": "Bestseller"
+          }
+        },
         "title": {
           "type": "title",
           "settings": {}
+        },
+        "subtitle": {
+          "type": "text",
+          "settings": {
+            "text": "Schwerer 220-g/m²-Stoff für lässigen Fit.",
+            "text_style": "subtitle"
+          }
         },
         "rating": {
           "type": "rating",
@@ -24,23 +37,33 @@
           "type": "price",
           "settings": {}
         },
+        "price_extra": {
+          "type": "pdp_price_extra",
+          "settings": {}
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
             "picker_type": "button"
           }
         },
+        "size_help": {
+          "type": "pdp_size_help",
+          "settings": {
+            "fit_note": "Fällt oversized aus"
+          }
+        },
         "quantity_selector": {
           "type": "quantity_selector",
-          "disabled": true,
           "settings": {}
         },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": false
-          }
+        "bulk_pricing": {
+          "type": "pdp_bulk_pricing",
+          "settings": {}
+        },
+        "stock_status": {
+          "type": "pdp_stock_status",
+          "settings": {}
         },
         "pod_platform_designer_button_GLGXTh": {
           "type": "shopify://apps/pod-platform/blocks/designer-button/019f64fe-c614-7401-923a-c065954756e5",
@@ -49,9 +72,30 @@
             "button_label": "Jetzt gestalten"
           }
         },
-        "shipping_info": {
-          "type": "spreadshirt_shipping_info",
-          "settings": {}
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false
+          }
+        },
+        "social_proof": {
+          "type": "pdp_social_proof",
+          "settings": {
+            "text": ""
+          }
+        },
+        "complementary": {
+          "type": "complementary",
+          "settings": {
+            "block_heading": "Vervollständige deinen Look",
+            "make_collapsible_row": false,
+            "product_list_limit": 1,
+            "products_per_page": 1,
+            "pagination_style": "dots",
+            "image_ratio": "square",
+            "enable_quick_add": true
+          }
         },
         "description": {
           "type": "description",
@@ -63,6 +107,22 @@
             "heading": "Größe & Passform",
             "icon": "ruler",
             "content": "<p>Bitte beachte unsere Größentabelle vor der Bestellung, um die passende Größe zu finden.</p>"
+          }
+        },
+        "reviews_tab": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Produktbewertungen",
+            "icon": "star",
+            "content": "<p>Lies dir die Erfahrungen anderer Kund:innen zu diesem Produkt durch.</p>"
+          }
+        },
+        "print_types_tab": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Druckarten",
+            "icon": "shirt",
+            "content": "<p>Wir bieten verschiedene Veredelungsarten an, je nach Design und Produkt.</p>"
           }
         },
         "vendor": {
@@ -82,16 +142,25 @@
         }
       },
       "block_order": [
+        "badge",
         "title",
+        "subtitle",
         "rating",
         "price",
+        "price_extra",
         "variant_picker",
+        "size_help",
         "quantity_selector",
-        "buy_buttons",
+        "bulk_pricing",
+        "stock_status",
         "pod_platform_designer_button_GLGXTh",
-        "shipping_info",
+        "buy_buttons",
+        "social_proof",
+        "complementary",
         "description",
         "size_fit_tab",
+        "reviews_tab",
+        "print_types_tab",
         "vendor",
         "share"
       ],
@@ -106,14 +175,30 @@
         "mobile_thumbnails": "show",
         "hide_variants": false,
         "enable_video_looping": false,
+        "show_breadcrumb": true,
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "trust_bar": {
+      "type": "trust-badges",
+      "blocks": {
+        "b1": { "type": "badge", "settings": { "heading": "", "text": "✔ GOTS-zertifiziert" } },
+        "b2": { "type": "badge", "settings": { "heading": "", "text": "↺ 100 Tage Rückgaberecht" } },
+        "b3": { "type": "badge", "settings": { "heading": "", "text": "🚚 Kostenloser Versand ab 39 €" } },
+        "b4": { "type": "badge", "settings": { "heading": "", "text": "★ 4.5/5 aus 48 Bewertungen" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "color_scheme": "background-2",
+        "padding_top": 24,
+        "padding_bottom": 24
       }
     },
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "Related products",
+        "heading": "Passt dazu",
         "heading_size": "h2",
         "products_to_show": 4,
         "columns_desktop": 4,
@@ -121,15 +206,140 @@
         "image_ratio": "portrait",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
+        "show_rating": true,
         "columns_mobile": "2",
         "padding_top": 48,
         "padding_bottom": 28
+      }
+    },
+    "review_summary": {
+      "type": "product-review-summary",
+      "settings": {
+        "reviews_label": "Bewertungen",
+        "subheading": "Feedback aus der Community",
+        "button_label": "Mehr Bewertungen lesen",
+        "color_scheme": "background-2",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "feature_shipping": {
+      "type": "feature-icon-grid",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "icon": "⚡",
+            "heading": "Versand in 24 h",
+            "text": "Bestellungen bis 14 Uhr gehen am selben Werktag in Produktion — Express in 1-2 Tagen bei dir."
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "icon": "🚚",
+            "heading": "Express-Option",
+            "text": "Mit Express-Versand schon in 1-2 Werktagen bei dir — Sendungsverfolgung inklusive."
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "icon": "↺",
+            "heading": "100 Tage Rückgaberecht",
+            "text": "Kostenlose Rücksendung — unkompliziert und ohne Wenn und Aber."
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "icon": "♻",
+            "heading": "Klimaneutraler Versand",
+            "text": "CO₂-kompensiert und in plastikfreier Verpackung verschickt."
+          }
+        }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "image_position": "left",
+        "heading": "Schneller Versand.",
+        "heading_size": "h1",
+        "text": "<p>Produziert und verschickt aus Deutschland — bestellt ist bei uns fast schon geliefert. Und falls doch etwas nicht passt: kostenlose Rücksendung, 100 Tage lang.</p>",
+        "color_scheme": "background-1",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "stats_bar": {
+      "type": "stats-bar",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "24 h", "label": "Produktionszeit" } },
+        "s2": { "type": "stat", "settings": { "number": "40+", "label": "Waschgänge getestet" } },
+        "s3": { "type": "stat", "settings": { "number": "100 %", "label": "Bio-Baumwolle" } },
+        "s4": { "type": "stat", "settings": { "number": "4.5 ★", "label": "48 Bewertungen" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "color_scheme": "inverse",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "feature_printing": {
+      "type": "feature-icon-grid",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "icon": "🖨",
+            "heading": "Beste Maschinen",
+            "text": "Neueste Direct-to-Garment- und Stickmaschinen für brillante Farben und scharfe Details."
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "icon": "💧",
+            "heading": "Wasserbasierte Farben",
+            "text": "GOTS-konforme Farben — weicher Griff statt Gummischicht, über 40 Waschgänge getestet."
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "icon": "🔍",
+            "heading": "Einzeln geprüft",
+            "text": "Jeder Druck durchläuft vor dem Versand eine manuelle Qualitätskontrolle."
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "icon": "🧵",
+            "heading": "Stickerei-Option",
+            "text": "Hochwertige Stickerei für Logos und Schriftzüge — besonders edel und langlebig."
+          }
+        }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "image_position": "right",
+        "heading": "Druck in Markenqualität.",
+        "heading_size": "h1",
+        "text": "<p>Gedruckt wird in Deutschland — auf den besten Maschinen, die es aktuell gibt. So hält dein Design so lange wie das Shirt selbst.</p>",
+        "color_scheme": "background-1",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "trust_bar",
+    "related-products",
+    "review_summary",
+    "feature_shipping",
+    "stats_bar",
+    "feature_printing"
   ]
 }

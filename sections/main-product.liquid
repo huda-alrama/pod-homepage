@@ -28,8 +28,10 @@
     }
   {%- endstyle -%}
 
+  {{ 'component-product-pdp-extras.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-gallery-arrows.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-bulk-pricing.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer" type="module"></script>
   {% if section.settings.image_zoom == 'hover' %}
     <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
@@ -58,6 +60,20 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+
+  {%- if section.settings.show_breadcrumb -%}
+    {{ 'component-product-breadcrumb.css' | asset_url | stylesheet_tag }}
+    <nav class="product__breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ shop.name }}</a>
+      {%- assign breadcrumb_collection = product.collections.first -%}
+      {%- if breadcrumb_collection -%}
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="{{ breadcrumb_collection.url }}">{{ breadcrumb_collection.title }}</a>
+      {%- endif -%}
+      <span aria-hidden="true">&rsaquo;</span>
+      <span aria-current="page">{{ product.title }}</span>
+    </nav>
+  {%- endif -%}
 
   <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
     <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
@@ -371,6 +387,88 @@
                     {{ 'accessibility.total_reviews' | t -}}
                   </span>
                 </p>
+              {%- endif -%}
+            {%- when 'pdp_badge' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="product__badge-pill" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+              {%- endif -%}
+            {%- when 'pdp_price_extra' -%}
+              {%- comment -%}
+                Two lines under the price: "inkl. MwSt." (derived from
+                the store's real tax-inclusive setting, not invented)
+                plus a per-unit price badge computed from the product's
+                own real price — and an editable free-shipping line
+                (merchant fills in the real threshold).
+              {%- endcomment -%}
+              <div class="product__price-extra" {{ block.shopify_attributes }}>
+                {%- if shop.taxes_included -%}
+                  <span class="product__price-extra-tax">{{ block.settings.tax_label }}</span>
+                {%- endif -%}
+                {%- if block.settings.show_per_unit_badge -%}
+                  <span class="product__price-extra-badge">
+                    {{ block.settings.per_unit_prefix }}
+                    {{ product.selected_or_first_available_variant.price | default: product.price | money }}
+                    {{ block.settings.per_unit_suffix }}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.free_shipping_text != blank -%}
+                  <a
+                    {% if block.settings.free_shipping_url != blank %}href="{{ block.settings.free_shipping_url }}"{% endif %}
+                    class="product__price-extra-shipping"
+                  >
+                    {{ block.settings.free_shipping_text }}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- when 'pdp_size_help' -%}
+              <div class="product__size-help" {{ block.shopify_attributes }}>
+                {%- if block.settings.guide_text != blank -%}
+                  <a
+                    {% if block.settings.guide_url != blank %}href="{{ block.settings.guide_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
+                    class="product__size-help-link"
+                  >
+                    {{ block.settings.guide_text }}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.fit_note != blank -%}
+                  <p class="product__size-help-note">{{ block.settings.fit_note }}</p>
+                {%- endif -%}
+              </div>
+            {%- when 'pdp_bulk_pricing' -%}
+              {%- comment -%}
+                Quantity tiles that set the real quantity input's value
+                when clicked (see product-bulk-pricing.js) — the
+                discount percentages shown are informational labels
+                from block settings; the actual checkout price only
+                changes if the store has a matching Shopify quantity-
+                break/volume-pricing rule configured for this product,
+                since a theme alone can't apply a real price rule.
+              {%- endcomment -%}
+              <product-bulk-pricing
+                class="product__bulk-pricing"
+                data-quantity-input-id="Quantity-{{ section.id }}"
+                {{ block.shopify_attributes }}
+              >
+                {% render 'product-bulk-pricing-tiles', block: block %}
+              </product-bulk-pricing>
+            {%- when 'pdp_stock_status' -%}
+              {%- comment -%}
+                Real availability from the selected variant — no
+                invented "ships in X days" countdown, just an honest
+                in-stock/sold-out indicator.
+              {%- endcomment -%}
+              <p class="product__stock-status" {{ block.shopify_attributes }}>
+                {%- if product.selected_or_first_available_variant.available -%}
+                  <span class="product__stock-status-dot product__stock-status-dot--in-stock"></span>
+                  {{ block.settings.in_stock_text }}
+                {%- else -%}
+                  <span class="product__stock-status-dot product__stock-status-dot--sold-out"></span>
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </p>
+            {%- when 'pdp_social_proof' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="product__social-proof" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
               {%- endif -%}
             {%- when 'spreadshirt_shipping_info' -%}
               {%- comment -%}
@@ -1071,6 +1169,220 @@
         {
           "type": "paragraph",
           "content": "t:sections.main-product.blocks.rating.settings.paragraph.content"
+        }
+      ]
+    },
+    {
+      "type": "pdp_badge",
+      "name": "Badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge text",
+          "info": "Keep this honest — no invented view counts or stats.",
+          "default": "Bestseller"
+        }
+      ]
+    },
+    {
+      "type": "pdp_price_extra",
+      "name": "Price details",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tax_label",
+          "label": "Tax-inclusive label",
+          "info": "Only shows when your store's prices already include tax (Settings > Taxes).",
+          "default": "inkl. MwSt."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_per_unit_badge",
+          "label": "Show per-unit price badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "per_unit_prefix",
+          "label": "Per-unit badge prefix",
+          "default": "nur"
+        },
+        {
+          "type": "text",
+          "id": "per_unit_suffix",
+          "label": "Per-unit badge suffix",
+          "default": "/Stück"
+        },
+        {
+          "type": "text",
+          "id": "free_shipping_text",
+          "label": "Free shipping line",
+          "default": "inkl. KOSTENLOSER Versand & Rücksendung ab 39 €"
+        },
+        {
+          "type": "url",
+          "id": "free_shipping_url",
+          "label": "Free shipping line link (optional)"
+        }
+      ]
+    },
+    {
+      "type": "pdp_size_help",
+      "name": "Size guide link",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "guide_text",
+          "label": "Size guide link text",
+          "default": "Nicht sicher welche Größe?"
+        },
+        {
+          "type": "url",
+          "id": "guide_url",
+          "label": "Size guide URL"
+        },
+        {
+          "type": "text",
+          "id": "fit_note",
+          "label": "Fit note",
+          "info": "E.g. \"Fällt oversized aus\" — leave blank to hide."
+        }
+      ]
+    },
+    {
+      "type": "pdp_bulk_pricing",
+      "name": "Bulk pricing tiles",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "The discount % shown is informational only — it doesn't change the price at checkout unless you've set up a matching Shopify volume-pricing/quantity-break rule for this product."
+        },
+        {
+          "type": "text",
+          "id": "tier_0_label",
+          "label": "Base tier label",
+          "default": "1 Stück"
+        },
+        {
+          "type": "text",
+          "id": "tier_1_qty",
+          "label": "Tier 1 quantity",
+          "default": "5"
+        },
+        {
+          "type": "text",
+          "id": "tier_1_label",
+          "label": "Tier 1 label",
+          "default": "5+ Artikel"
+        },
+        {
+          "type": "text",
+          "id": "tier_1_discount",
+          "label": "Tier 1 discount label",
+          "default": "Spare 10%"
+        },
+        {
+          "type": "text",
+          "id": "tier_2_qty",
+          "label": "Tier 2 quantity",
+          "default": "15"
+        },
+        {
+          "type": "text",
+          "id": "tier_2_label",
+          "label": "Tier 2 label",
+          "default": "15+ Artikel"
+        },
+        {
+          "type": "text",
+          "id": "tier_2_discount",
+          "label": "Tier 2 discount label",
+          "default": "Spare 20%"
+        },
+        {
+          "type": "text",
+          "id": "tier_3_qty",
+          "label": "Tier 3 quantity",
+          "default": "30"
+        },
+        {
+          "type": "text",
+          "id": "tier_3_label",
+          "label": "Tier 3 label",
+          "default": "30+ Artikel"
+        },
+        {
+          "type": "text",
+          "id": "tier_3_discount",
+          "label": "Tier 3 discount label",
+          "default": "Spare 35%"
+        },
+        {
+          "type": "text",
+          "id": "tier_4_qty",
+          "label": "Tier 4 quantity",
+          "default": "100"
+        },
+        {
+          "type": "text",
+          "id": "tier_4_label",
+          "label": "Tier 4 label",
+          "default": "100+ Artikel"
+        },
+        {
+          "type": "text",
+          "id": "tier_4_discount",
+          "label": "Tier 4 discount label",
+          "default": "Spare 50%"
+        },
+        {
+          "type": "text",
+          "id": "tier_5_qty",
+          "label": "Tier 5 quantity",
+          "default": "500"
+        },
+        {
+          "type": "text",
+          "id": "tier_5_label",
+          "label": "Tier 5 label",
+          "default": "500+ Artikel"
+        },
+        {
+          "type": "text",
+          "id": "tier_5_discount",
+          "label": "Tier 5 discount label",
+          "default": "Spare 60%"
+        }
+      ]
+    },
+    {
+      "type": "pdp_stock_status",
+      "name": "Stock status",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "in_stock_text",
+          "label": "In-stock text",
+          "default": "Auf Lager"
+        }
+      ]
+    },
+    {
+      "type": "pdp_social_proof",
+      "name": "Social proof line",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "info": "Only fill this in with a real, verifiable number — leave blank to hide."
         }
       ]
     },
@@ -2000,6 +2312,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "default": true,
+      "label": "Show breadcrumb"
+    },
     {
       "type": "checkbox",
       "id": "enable_sticky_info",
