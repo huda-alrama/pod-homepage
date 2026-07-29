@@ -128,6 +128,14 @@
         "padding_bottom": 36
       }
     },
+    "bestsellers_divider": {
+      "type": "spreadshirt-divider",
+      "settings": {
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "template_cards": {
       "type": "template-cards",
       "blocks": {
@@ -431,6 +439,7 @@
     "trust_badges",
     "gestalten_links",
     "bestsellers",
+    "bestsellers_divider",
     "template_cards",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "theme_merch",

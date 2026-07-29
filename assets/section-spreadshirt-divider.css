@@ -1,0 +1,22 @@
+/* Matches spreadshirt.de's own section divider (read directly off
+   their live site): a page-width-constrained 4px bar in a light,
+   neutral gray, hidden on mobile — rgba(var(--color-foreground), 0.08)
+   instead of a hardcoded gray so it stays theme-aware (adapts to
+   whatever color scheme the section carries) while landing on
+   essentially the same visual weight as spreadshirt's bg-gray-200. */
+.spreadshirt-divider {
+  display: none;
+  height: 4px;
+  background-color: rgba(var(--color-foreground), 0.08);
+}
+
+@media screen and (min-width: 750px) {
+  /* Doubled selector purely to beat base.css's own `div:empty {
+     display: none }` (a generic auto-hide-empty-blocks rule) — this
+     div is genuinely empty (just a colored bar, no content), so it
+     matches that rule too, and div:empty's specificity (element +
+     pseudo-class) otherwise beats a plain single-class selector. */
+  .spreadshirt-divider.spreadshirt-divider {
+    display: block;
+  }
+}
