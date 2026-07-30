@@ -18,41 +18,77 @@
 
 /* Wraps the whole product info column (title, price, variant pickers,
    bulk pricing, CTAs, social proof, etc.) in a single rounded card,
-   matching the mockup rather than Dawn's default borderless column.
-   overflow: hidden clips the badge bar's square corners to match the
-   card's own rounding (see .product__badge-bar below) instead of
-   relying on the bar's own border-radius lining up with it exactly —
-   any sub-pixel mismatch there left a visible sliver at the corners.
+   matching the mockup. The mockup's own markup keeps the badge bar
+   and the padded content as two separate sibling elements inside this
+   unpadded, overflow:hidden card — not one padded element with the
+   badge bled out via negative margins (that approach worked visually
+   but needed increasingly fiddly math). Matching that structure here
+   (see main-product.liquid: badge renders first, then a separate
+   .product__info-content wraps everything else) is simpler and more
+   robust: the badge and content box just sit flush against the card's
+   own edges and rounding with no offset math at all.
 
    <product-info> is a custom element with no built-in display style,
    so it defaults to display: inline — which breaks the padding/
-   overflow math above (an inline box doesn't offset block children
-   by its own padding the way a block box does). Force it to block. */
+   overflow-clipping math for any card built this way. Force it to
+   block. */
 .product__info-container {
   display: block;
   background: rgb(var(--color-background));
-  border: 1px solid rgba(var(--color-foreground), 0.08);
+  border: 1px solid rgb(228, 226, 220);
   border-radius: 1.2rem;
-  padding: 2rem;
   overflow: hidden;
 }
 
 /* Badge bar above the title (e.g. "Bestseller! 1.204 Aufrufe in den
-   letzten 24 Stunden"). Bleeds into the card's own top edge via
-   negative margins, since it's always the first element inside
-   .product__info-container; the parent's overflow: hidden clips its
-   square corners into the card's rounded shape. */
+   letzten 24 Stunden"). A plain sibling of .product__info-content, so
+   it's naturally flush with the card's own edges and top corners —
+   no negative margins needed. */
 .product__badge-bar {
-  background: rgba(var(--color-foreground), 0.04);
-  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  background: rgb(244, 242, 236);
+  border-bottom: 1px solid rgb(228, 226, 220);
   color: rgb(var(--color-foreground));
-  font-size: 1.3rem;
-  padding: 0.9rem 2rem;
-  margin: -2rem -2rem 1rem;
+  font-size: 1.25rem;
+  margin: 0;
+  padding: 1rem 2rem;
 }
 
 .product__badge-bar strong {
   font-weight: 700;
+}
+
+/* Padded wrapper for everything except the badge bar — see comment on
+   .product__info-container above. Ports Dawn's own direct-child
+   spacing rules (assets/section-main-product.css) from
+   .product__info-container, since those children now live one level
+   deeper in here instead. */
+.product__info-content {
+  padding: 2rem;
+}
+
+.product__info-content > * + * {
+  margin: 1.5rem 0;
+}
+
+.product__info-content iframe {
+  max-width: 100%;
+}
+
+.product__info-content .product-form,
+.product__info-content .product__description,
+.product__info-content .icon-with-text {
+  margin: 2.5rem 0;
+}
+
+.product--no-media .product__info-content > modal-opener {
+  display: block;
+  text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+  .product__info-content > *:first-child {
+    margin-top: 0;
+  }
 }
 
 /* Price extra line: tax label + per-unit badge + free shipping link */

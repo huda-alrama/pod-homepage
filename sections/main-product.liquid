@@ -88,7 +88,29 @@
       >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
+        {%- comment -%}
+          The badge bar renders full-bleed above the padded content
+          (border-to-border, no side/top padding, sitting flush with
+          the card's own rounded corners) — rendered as its own pass
+          here, outside .product__info-content, rather than inside the
+          padded wrapper with negative margins to bleed out of it.
+        {%- endcomment -%}
         {%- for block in section.blocks -%}
+          {%- if block.type == 'pdp_badge' and block.settings.text != blank -%}
+            <p class="product__badge-bar" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.text }}!</strong>
+              {%- if block.settings.highlight_text != blank -%}
+                {{ ' ' }}{{ block.settings.highlight_text }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+        {%- endfor -%}
+
+        <div class="product__info-content">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pdp_badge' -%}
+            {%- continue -%}
+          {%- endif -%}
           {%- case block.type -%}
             {%- when '@app' -%}
               {% render block %}
@@ -388,15 +410,6 @@
                   </span>
                 </p>
               {%- endif -%}
-            {%- when 'pdp_badge' -%}
-              {%- if block.settings.text != blank -%}
-                <p class="product__badge-bar" {{ block.shopify_attributes }}>
-                  <strong>{{ block.settings.text }}!</strong>
-                  {%- if block.settings.highlight_text != blank -%}
-                    {{ ' ' }}{{ block.settings.highlight_text }}
-                  {%- endif -%}
-                </p>
-              {%- endif -%}
             {%- when 'pdp_price_extra' -%}
               {%- comment -%}
                 Two lines under the price: "inkl. MwSt." (derived from
@@ -620,6 +633,7 @@
           {{ 'products.product.view_full_details' | t }}
           {% render 'icon-arrow' %}
         </a>
+        </div>
       </product-info>
     </div>
     {%- if section.settings.media_position == 'right' -%}
