@@ -26,6 +26,20 @@
         padding-bottom: {{ section.settings.padding_bottom }}px;
       }
     }
+
+    /* Space Grotesk, matching the mockup's title/description
+       typography — self-hosted (SIL Open Font License, free) rather
+       than a Google Fonts <link>, so there's no external request.
+       Only the one weight the mockup actually uses (600/semibold) is
+       loaded, scoped to this section only; the rest of the theme
+       still uses the site-wide Inter font. */
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('{{ 'space-grotesk-600.woff2' | asset_url }}') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
   {%- endstyle -%}
 
   {{ 'component-product-pdp-extras.css' | asset_url | stylesheet_tag }}

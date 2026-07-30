@@ -16,6 +16,26 @@
   --border-opacity: var(--buttons-border-opacity);
 }
 
+/* Title + description typography, matching the mockup — Dawn's
+   default h1 (4rem, site-wide Inter) is much larger than the
+   mockup's compact 20px/600-weight heading, and the subtitle's
+   default color/size (1.8rem, 70% opacity) reads heavier than the
+   mockup's small 13px grey description line. @font-face for Space
+   Grotesk is declared in this section's own {% style %} block (see
+   sections/main-product.liquid) rather than here, since asset_url
+   isn't available in a plain (non-Liquid) .css file. */
+.product__info-content .product__title h1 {
+  font: 600 2rem/1.3 'Space Grotesk', sans-serif;
+  text-wrap: pretty;
+}
+
+.product__info-content .product__text.subtitle {
+  font-size: 1.3rem;
+  letter-spacing: normal;
+  color: rgb(85, 85, 85);
+  margin-top: 0.4rem;
+}
+
 /* Wraps the whole product info column (title, price, variant pickers,
    bulk pricing, CTAs, social proof, etc.) in a single rounded card,
    matching the mockup. The mockup's own markup keeps the badge bar
