@@ -1,25 +1,21 @@
-.trust-badges__list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.trust-badges {
+  background: rgb(244, 242, 236);
 }
 
-@media screen and (max-width: 749px) {
-  .trust-badges__list {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+.trust-badges__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 0.8rem 1.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 1.4rem 2.4rem;
 }
 
 .trust-badges__item {
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  justify-content: center;
-  text-align: left;
 }
 
 .trust-badges__icon {
@@ -43,6 +39,6 @@
 
 .trust-badges__text {
   margin: 0;
-  font-size: 1.3rem;
-  color: rgba(var(--color-foreground), 0.75);
+  font-size: 1.25rem;
+  color: rgb(62, 59, 52);
 }
