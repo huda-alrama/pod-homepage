@@ -67,17 +67,17 @@
                   {% elsif form.posted_successfully? %}
                     aria-describedby="ProductFooterNewsletter-success"
                   {% endif %}
-                  placeholder="{{ 'newsletter.label' | t }}"
+                  placeholder="{{ section.settings.newsletter_placeholder }}"
                   required
                 >
                 <label class="field__label" for="ProductFooterNewsletter-{{ section.id }}">
-                  {{ 'newsletter.label' | t }}
+                  {{ section.settings.newsletter_placeholder }}
                 </label>
                 <button
                   type="submit"
                   class="newsletter-form__button field__button"
                   name="commit"
-                  aria-label="{{ 'newsletter.button_label' | t }}"
+                  aria-label="{{ section.settings.newsletter_button_label }}"
                 >
                   {{ section.settings.newsletter_button_label }}
                 </button>
@@ -150,7 +150,7 @@
     <div class="page-width product-footer__payments">
       {%- for type in shop.enabled_payment_types -%}
         {%- unless type == 'bogus' -%}
-          <span class="product-footer__payment-pill">
+          <span class="product-footer__payment-pill{% if type == 'klarna' %} product-footer__payment-pill--klarna{% endif %}">
             {%- case type -%}
               {%- when 'visa' -%}VISA
               {%- when 'master' -%}Mastercard
@@ -266,6 +266,12 @@
       "id": "newsletter_button_label",
       "label": "Newsletter button label",
       "default": "Registrieren"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Email field placeholder",
+      "default": "E-Mail-Adresse"
     },
     {
       "type": "richtext",

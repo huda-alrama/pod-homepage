@@ -56,6 +56,14 @@
   background: transparent;
   color: rgb(245, 239, 230);
   flex: 1 1 auto;
+  border-radius: 999px;
+}
+
+/* This theme's global input roundness (settings_data.json:
+   inputs_radius) is only 2px — override to a full pill to match the
+   mockup instead of changing that site-wide setting. */
+.product-footer__newsletter .field:before {
+  border-radius: 999px;
 }
 
 /* The input's actual visible border is a box-shadow ring on .field's
@@ -65,6 +73,7 @@
    Override the ring color directly rather than the (unused here)
    border-color property above. */
 .product-footer__newsletter .field:after {
+  border-radius: 999px;
   box-shadow: 0 0 0 0.1rem rgba(245, 239, 230, 0.4);
 }
 
@@ -160,6 +169,7 @@
 .product-footer__reviews {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 0.8rem;
   font-size: 1.3rem;
@@ -176,11 +186,12 @@
 .product-footer__payments {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.8rem;
 }
 
 .product-footer__payment-pill {
-  background: rgb(245, 239, 230);
+  background: rgb(255, 255, 255);
   color: rgb(20, 20, 18);
   font-size: 1.2rem;
   font-weight: 600;
@@ -188,9 +199,14 @@
   border-radius: 0.4rem;
 }
 
+.product-footer__payment-pill--klarna {
+  background: rgb(255, 179, 199);
+}
+
 .product-footer__locale {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 2.4rem;
   font-size: 1.3rem;
 }
@@ -198,6 +214,7 @@
 .product-footer__buttons {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.2rem;
 }
 
@@ -230,6 +247,7 @@
 .product-footer__legal {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.8rem 2rem;
   font-size: 1.3rem;
 }
