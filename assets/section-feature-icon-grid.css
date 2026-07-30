@@ -38,7 +38,14 @@
 }
 
 .feature-icon-grid__item-icon {
-  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background: rgb(244, 242, 236);
+  border-radius: 0.8rem;
+  font-size: 1.8rem;
   line-height: 1;
   flex-shrink: 0;
 }

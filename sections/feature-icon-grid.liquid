@@ -30,6 +30,8 @@
           | image_url: width: 1200
           | image_tag: loading: 'lazy', widths: '400, 600, 800, 1200', class: 'feature-icon-grid__image'
         }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'feature-icon-grid__image placeholder-svg placeholder' }}
       {%- endif -%}
     </div>
     <div class="feature-icon-grid__content">
