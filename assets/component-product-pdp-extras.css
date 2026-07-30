@@ -129,16 +129,24 @@
   gap: 1rem;
 }
 
+/* Dawn's own .price--large is only 1.8rem with tracked letter-spacing
+   — the mockup's price is a bold 22px Space Grotesk figure with
+   normal spacing. Scoped to the price row so it doesn't affect price
+   displays elsewhere (cart, collection cards, etc). */
+.product__price-row .price {
+  font: 700 2.2rem 'Space Grotesk', sans-serif;
+  letter-spacing: normal;
+}
+
 .product__price-extra-tax {
-  font-size: 1.3rem;
-  color: rgba(var(--color-foreground), 0.65);
+  font-size: 1.2rem;
+  color: rgb(138, 134, 124);
 }
 
 .product__price-extra-badge {
   background: rgb(30, 122, 70);
   color: rgb(255, 255, 255);
-  font-size: 1.2rem;
-  font-weight: 600;
+  font: 600 1.2rem 'Space Grotesk', sans-serif;
   padding: 0.5rem 1rem;
   border-radius: 0.6rem;
   white-space: nowrap;
@@ -149,9 +157,8 @@
    .product__price-row above). */
 .product__price-extra-shipping {
   display: block;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #166534;
+  font-size: 1.2rem;
+  color: rgb(30, 122, 70);
 }
 
 /* Size guide link + fit note */
@@ -187,10 +194,11 @@
      elements do — without this it silently fell back to Arial,
      mismatched against the theme's body font everywhere else (same
      issue hit earlier with the header's inline search input). */
-  font-family: inherit;
-  border: 1px solid rgba(var(--color-foreground), 0.15);
-  border-radius: 0.4rem;
-  padding: 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  border: 1px solid rgb(216, 213, 206);
+  border-radius: 1rem;
+  padding: 0.9rem 0.4rem;
   text-align: center;
   background: rgb(var(--color-background));
   cursor: pointer;
@@ -202,20 +210,19 @@
 }
 
 .product__bulk-pricing-tile.is-selected {
-  border: 2px solid rgb(var(--color-foreground));
+  border: 2px solid rgb(20, 20, 18);
 }
 
 .product__bulk-pricing-qty {
   display: block;
-  font-weight: 600;
-  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .product__bulk-pricing-discount {
   display: block;
-  color: #166534;
-  font-size: 1.2rem;
-  margin-top: 0.2rem;
+  color: rgb(30, 122, 70);
+  font-size: 1.1rem;
+  margin-top: 0.1rem;
 }
 
 /* Stock status */
