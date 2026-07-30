@@ -1,0 +1,444 @@
+{{ 'section-product-footer.css' | asset_url | stylesheet_tag }}
+{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- comment -%}
+  PDP-only footer replacement, matching the POD PLUS mockup — dark
+  background, newsletter signup, link columns, review summary,
+  payment methods, region/language, CTA buttons, legal links. Only
+  included on the product template (see templates/product.json); the
+  site-wide footer-group is explicitly skipped there instead (see
+  layout/theme.liquid) rather than showing both.
+
+  Uses real store data where the mockup implies it, rather than
+  hardcoding: shop.enabled_payment_types for payment badges,
+  product.metafields.reviews for the rating line (same source as
+  product-review-summary.liquid), localization.country/language for
+  the region row, and shop.policies for the standard legal links.
+  Fields with no real Shopify equivalent (Impressum, accessibility
+  statement, privacy-settings trigger, the 3 CTA buttons) are
+  left blank by default for the merchant to fill in — same pattern as
+  the GOTS badge and the highlight-text stat elsewhere on this PDP.
+{%- endcomment -%}
+
+<footer class="product-footer">
+  <div class="page-width section-{{ section.id }}-padding product-footer__top">
+    <div class="product-footer__brand">
+      {%- if section.settings.brand_name != blank -%}
+        <p class="product-footer__wordmark">{{ section.settings.brand_name }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.newsletter_enable -%}
+        <div class="product-footer__newsletter">
+          {%- if section.settings.newsletter_heading != blank -%}
+            <h2 class="product-footer__newsletter-heading">{{ section.settings.newsletter_heading }}</h2>
+          {%- endif -%}
+          {%- form 'customer', id: 'ProductFooterNewsletter', class: 'newsletter-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="newsletter-form__field-wrapper">
+              <div class="field">
+                <input
+                  id="ProductFooterNewsletter-{{ section.id }}"
+                  type="email"
+                  name="contact[email]"
+                  class="field__input"
+                  value="{{ form.email }}"
+                  aria-required="true"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="email"
+                  {% if form.errors %}
+                    autofocus
+                    aria-invalid="true"
+                    aria-describedby="ProductFooterNewsletter-error"
+                  {% elsif form.posted_successfully? %}
+                    aria-describedby="ProductFooterNewsletter-success"
+                  {% endif %}
+                  placeholder="{{ 'newsletter.label' | t }}"
+                  required
+                >
+                <label class="field__label" for="ProductFooterNewsletter-{{ section.id }}">
+                  {{ 'newsletter.label' | t }}
+                </label>
+                <button
+                  type="submit"
+                  class="newsletter-form__button field__button"
+                  name="commit"
+                  aria-label="{{ 'newsletter.button_label' | t }}"
+                >
+                  {{ section.settings.newsletter_button_label }}
+                </button>
+              </div>
+              {%- if form.errors -%}
+                <small class="newsletter-form__message form__message" id="ProductFooterNewsletter-error">
+                  {{- form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </small>
+              {%- endif -%}
+            </div>
+            {%- if form.posted_successfully? -%}
+              <p class="newsletter-form__message newsletter-form__message--success form__message" id="ProductFooterNewsletter-success" tabindex="-1" autofocus>
+                {{- 'newsletter.success' | t }}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+          {%- if section.settings.newsletter_disclaimer != blank -%}
+            <div class="product-footer__newsletter-disclaimer rte">{{ section.settings.newsletter_disclaimer }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_social -%}
+        {%- render 'social-icons' -%}
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'link_list' -%}
+        <div class="product-footer__column" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <p class="product-footer__column-heading">{{ block.settings.heading }}</p>
+          {%- endif -%}
+          {%- if block.settings.menu != blank -%}
+            <ul class="product-footer__column-list" role="list">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}" class="product-footer__link">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.show_review_summary and product.metafields.reviews.rating.value != blank -%}
+    <div class="page-width product-footer__reviews">
+      <span>{{ section.settings.reviews_intro }}</span>
+      <strong>{{ section.settings.reviews_verdict }}</strong>
+      <span
+        class="rating"
+        role="img"
+        aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}"
+      >
+        <span
+          aria-hidden="true"
+          class="rating-star"
+          style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }};"
+        ></span>
+      </span>
+      <span>
+        {{ product.metafields.reviews.rating.value }} {{ 'accessibility.total_reviews' | t }}
+        <a href="{{ section.settings.reviews_link | default: '#reviews' }}">{{ product.metafields.reviews.rating_count }} {{ section.settings.reviews_label }}</a>
+      </span>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+    <div class="page-width product-footer__payments">
+      {%- for type in shop.enabled_payment_types -%}
+        {%- unless type == 'bogus' -%}
+          <span class="product-footer__payment-pill">
+            {%- case type -%}
+              {%- when 'visa' -%}VISA
+              {%- when 'master' -%}Mastercard
+              {%- when 'american_express' -%}AMEX
+              {%- when 'paypal' -%}PayPal
+              {%- when 'shopify_pay' -%}Shop Pay
+              {%- when 'google_pay' -%}G Pay
+              {%- when 'apple_pay' -%}Apple Pay
+              {%- when 'klarna' -%}Klarna
+              {%- when 'sofort' -%}SOFORT
+              {%- when 'diners_club' -%}Diners Club
+              {%- when 'discover' -%}Discover
+              {%- when 'jcb' -%}JCB
+              {%- when 'unionpay' -%}UnionPay
+              {%- when 'maestro' -%}Maestro
+              {%- else -%}{{ type | replace: '_', ' ' | capitalize }}
+            {%- endcase -%}
+          </span>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_region_language -%}
+    <div class="page-width product-footer__locale">
+      {%- if localization.country -%}
+        <span><strong>{{ section.settings.region_label }}:</strong> {{ localization.country.name }}</span>
+      {%- endif -%}
+      {%- if localization.language -%}
+        <span><strong>{{ section.settings.language_label }}:</strong> {{ localization.language.endonym_name | capitalize }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.button_1_label != blank or section.settings.button_2_label != blank or section.settings.button_3_label != blank -%}
+    <div class="page-width product-footer__buttons">
+      {%- if section.settings.button_1_label != blank -%}
+        <a href="{{ section.settings.button_1_url | default: '#' }}" class="product-footer__button">{{ section.settings.button_1_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.button_2_label != blank -%}
+        <a href="{{ section.settings.button_2_url | default: '#' }}" class="product-footer__button">{{ section.settings.button_2_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.button_3_label != blank -%}
+        <a href="{{ section.settings.button_3_url | default: '#' }}" class="product-footer__button">{{ section.settings.button_3_label }}</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign has_legal_links = false -%}
+  {%- if shop.policies.shipping_policy.body != blank
+    or shop.policies.terms_of_service.body != blank
+    or shop.policies.refund_policy.body != blank
+    or shop.policies.privacy_policy.body != blank
+    or section.settings.privacy_settings_url != blank
+    or section.settings.accessibility_url != blank
+    or section.settings.impressum_url != blank
+  -%}
+    {%- assign has_legal_links = true -%}
+  {%- endif -%}
+  <div class="page-width product-footer__legal{% unless has_legal_links %} product-footer__legal--empty{% endunless %}">
+    {%- if shop.policies.shipping_policy.body != blank -%}
+      <a href="{{ shop.policies.shipping_policy.url }}">{{ shop.policies.shipping_policy.title }}</a>
+    {%- endif -%}
+    {%- if shop.policies.terms_of_service.body != blank -%}
+      <a href="{{ shop.policies.terms_of_service.url }}">{{ shop.policies.terms_of_service.title }}</a>
+    {%- endif -%}
+    {%- if shop.policies.refund_policy.body != blank -%}
+      <a href="{{ shop.policies.refund_policy.url }}">{{ shop.policies.refund_policy.title }}</a>
+    {%- endif -%}
+    {%- if shop.policies.privacy_policy.body != blank -%}
+      <a href="{{ shop.policies.privacy_policy.url }}">{{ shop.policies.privacy_policy.title }}</a>
+    {%- endif -%}
+    {%- if section.settings.privacy_settings_url != blank -%}
+      <a href="{{ section.settings.privacy_settings_url }}">{{ section.settings.privacy_settings_label }}</a>
+    {%- endif -%}
+    {%- if section.settings.accessibility_url != blank -%}
+      <a href="{{ section.settings.accessibility_url }}">{{ section.settings.accessibility_label }}</a>
+    {%- endif -%}
+    {%- if section.settings.impressum_url != blank -%}
+      <a href="{{ section.settings.impressum_url }}">{{ section.settings.impressum_label }}</a>
+    {%- endif -%}
+  </div>
+
+  <div class="page-width product-footer__copyright">
+    &copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_name | default: shop.name }}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Product footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "POD PLUS"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "10 %-Gutschein sichern."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_label",
+      "label": "Newsletter button label",
+      "default": "Registrieren"
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_disclaimer",
+      "label": "Newsletter disclaimer",
+      "default": "<p>Jederzeit kündbar – jede E-Mail enthält einen Abmeldelink. Deine Daten werden nicht an Dritte weitergegeben.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_review_summary",
+      "label": "Show review summary",
+      "info": "Only shows when this product has real review data (metafields.reviews.rating).",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reviews_intro",
+      "label": "Reviews intro text",
+      "default": "Das Urteil unserer Kunden:"
+    },
+    {
+      "type": "text",
+      "id": "reviews_verdict",
+      "label": "Reviews verdict label",
+      "info": "A short verdict word matching the real rating below — keep this honest and update it if the rating changes.",
+      "default": "Sehr gut"
+    },
+    {
+      "type": "text",
+      "id": "reviews_label",
+      "label": "Reviews count label",
+      "default": "Bewertungen"
+    },
+    {
+      "type": "url",
+      "id": "reviews_link",
+      "label": "Reviews link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show accepted payment methods",
+      "info": "Pulled live from your store's actually enabled payment providers (Settings > Payments) — not editable here.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_region_language",
+      "label": "Show region / language",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "region_label",
+      "label": "Region label",
+      "default": "Region (Store)"
+    },
+    {
+      "type": "text",
+      "id": "language_label",
+      "label": "Language label",
+      "default": "Sprache"
+    },
+    {
+      "type": "header",
+      "content": "Call-to-action buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Button 1 label",
+      "default": "Jetzt gestalten"
+    },
+    { "type": "url", "id": "button_1_url", "label": "Button 1 link" },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Button 2 label",
+      "default": "Selber verkaufen"
+    },
+    { "type": "url", "id": "button_2_url", "label": "Button 2 link" },
+    {
+      "type": "text",
+      "id": "button_3_label",
+      "label": "Button 3 label",
+      "default": "Support kontaktieren"
+    },
+    { "type": "url", "id": "button_3_url", "label": "Button 3 link" },
+    {
+      "type": "header",
+      "content": "Additional legal links"
+    },
+    {
+      "type": "text",
+      "id": "privacy_settings_label",
+      "label": "Privacy settings label",
+      "default": "Datenschutzeinstellungen"
+    },
+    {
+      "type": "url",
+      "id": "privacy_settings_url",
+      "label": "Privacy settings link",
+      "info": "Typically provided by your cookie-consent app."
+    },
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Barrierefreiheit"
+    },
+    { "type": "url", "id": "accessibility_url", "label": "Accessibility statement link" },
+    {
+      "type": "text",
+      "id": "impressum_label",
+      "label": "Impressum label",
+      "default": "Impressum"
+    },
+    { "type": "url", "id": "impressum_url", "label": "Impressum link" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Link column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product footer",
+      "blocks": [
+        { "type": "link_list" },
+        { "type": "link_list" },
+        { "type": "link_list" }
+      ]
+    }
+  ]
+}
+{% endschema %}

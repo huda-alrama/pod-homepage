@@ -259,7 +259,15 @@
       {{ content_for_layout }}
     </main>
 
-    {% sections 'footer-group' %}
+    {%- comment -%}
+      The product template renders its own PDP-only footer
+      (sections/product-footer.liquid, wired into
+      templates/product.json) instead of the site-wide footer-group,
+      so skip the latter there to avoid showing both.
+    {%- endcomment -%}
+    {%- unless request.page_type == 'product' -%}
+      {% sections 'footer-group' %}
+    {%- endunless -%}
 
     {% render 'floating-support-button' %}
 
