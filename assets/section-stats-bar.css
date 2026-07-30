@@ -14,10 +14,13 @@
 .stats-bar__number {
   font: 700 2.6rem 'Space Grotesk', sans-serif;
   line-height: 1;
-  margin-bottom: 0.2rem;
+  margin: 0;
 }
 
 .stats-bar__label {
   font-size: 1.2rem;
   color: rgb(185, 180, 168);
+  /* <p> has a default browser margin on both sides — reset it and
+     add back only the 2px top gap the mockup actually specifies. */
+  margin: 0.2rem 0 0;
 }
