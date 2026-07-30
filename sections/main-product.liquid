@@ -131,13 +131,42 @@
                 </a>
               </div>
             {%- when 'price' -%}
-              <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                {%- render 'price',
-                  product: product,
-                  use_variant: true,
-                  show_badges: true,
-                  price_class: 'price--large'
-                -%}
+              {%- comment -%}
+                The tax label + per-unit badge from the pdp_price_extra
+                block render inline here, next to the price itself,
+                matching the mockup's single-row layout — rather than
+                on their own row below (that block still renders its
+                free-shipping line in its normal block-order position;
+                see the 'pdp_price_extra' case further down).
+              {%- endcomment -%}
+              {%- assign price_extra_block = nil -%}
+              {%- for pb in section.blocks -%}
+                {%- if pb.type == 'pdp_price_extra' -%}
+                  {%- assign price_extra_block = pb -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+              <div class="product__price-row">
+                <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                  {%- render 'price',
+                    product: product,
+                    use_variant: true,
+                    show_badges: true,
+                    price_class: 'price--large'
+                  -%}
+                </div>
+                {%- if price_extra_block -%}
+                  {%- if shop.taxes_included and price_extra_block.settings.tax_label != blank -%}
+                    <span class="product__price-extra-tax">{{ price_extra_block.settings.tax_label }}</span>
+                  {%- endif -%}
+                  {%- if price_extra_block.settings.show_per_unit_badge -%}
+                    <span class="product__price-extra-badge">
+                      {{ price_extra_block.settings.per_unit_prefix }}
+                      {{ product.selected_or_first_available_variant.price | default: product.price | money }}
+                      {{ price_extra_block.settings.per_unit_suffix }}
+                    </span>
+                  {%- endif -%}
+                {%- endif -%}
               </div>
               {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
                 <div class="product__tax caption rte">
@@ -412,23 +441,13 @@
               {%- endif -%}
             {%- when 'pdp_price_extra' -%}
               {%- comment -%}
-                Two lines under the price: "inkl. MwSt." (derived from
-                the store's real tax-inclusive setting, not invented)
-                plus a per-unit price badge computed from the product's
-                own real price — and an editable free-shipping line
-                (merchant fills in the real threshold).
+                The tax label + per-unit badge render inline next to
+                the price itself instead (see the 'price' case above)
+                — this block's own position in block order now only
+                renders the free-shipping line (merchant fills in the
+                real threshold).
               {%- endcomment -%}
               <div class="product__price-extra" {{ block.shopify_attributes }}>
-                {%- if shop.taxes_included -%}
-                  <span class="product__price-extra-tax">{{ block.settings.tax_label }}</span>
-                {%- endif -%}
-                {%- if block.settings.show_per_unit_badge -%}
-                  <span class="product__price-extra-badge">
-                    {{ block.settings.per_unit_prefix }}
-                    {{ product.selected_or_first_available_variant.price | default: product.price | money }}
-                    {{ block.settings.per_unit_suffix }}
-                  </span>
-                {%- endif -%}
                 {%- if block.settings.free_shipping_text != blank -%}
                   <a
                     {% if block.settings.free_shipping_url != blank %}href="{{ block.settings.free_shipping_url }}"{% endif %}

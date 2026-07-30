@@ -91,13 +91,14 @@
   }
 }
 
-/* Price extra line: tax label + per-unit badge + free shipping link */
-.product__price-extra {
+/* Price row: the price itself plus the tax label + per-unit badge,
+   all inline on one row, matching the mockup (the free-shipping line
+   below is a separate element — see .product__price-extra). */
+.product__price-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
-  margin-top: 0.6rem;
 }
 
 .product__price-extra-tax {
@@ -106,18 +107,20 @@
 }
 
 .product__price-extra-badge {
-  background: rgba(22, 163, 74, 0.12);
-  color: #166534;
+  background: rgb(30, 122, 70);
+  color: rgb(255, 255, 255);
   font-size: 1.2rem;
   font-weight: 600;
-  padding: 0.4rem 1rem;
-  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.6rem;
   white-space: nowrap;
+  margin-left: auto;
 }
 
+/* Free-shipping line only now (tax label + badge moved to
+   .product__price-row above). */
 .product__price-extra-shipping {
   display: block;
-  width: 100%;
   font-size: 1.3rem;
   font-weight: 600;
   color: #166534;
