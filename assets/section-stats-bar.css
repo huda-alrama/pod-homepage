@@ -1,24 +1,23 @@
+.stats-bar-wrapper {
+  background: rgb(20, 20, 18);
+  color: rgb(245, 239, 230);
+}
+
 .stats-bar {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   gap: 2.4rem;
   text-align: center;
 }
 
 .stats-bar__number {
-  font-size: 3rem;
-  font-weight: 800;
+  font: 700 2.6rem 'Space Grotesk', sans-serif;
   line-height: 1;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.2rem;
 }
 
 .stats-bar__label {
-  font-size: 1.3rem;
-  opacity: 0.75;
-}
-
-@media screen and (min-width: 750px) {
-  .stats-bar {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  font-size: 1.2rem;
+  color: rgb(185, 180, 168);
 }
