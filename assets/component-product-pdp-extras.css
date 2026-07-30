@@ -81,8 +81,16 @@
    .product__info-container above. Ports Dawn's own direct-child
    spacing rules (assets/section-main-product.css) from
    .product__info-container, since those children now live one level
-   deeper in here instead. */
+   deeper in here instead.
+
+   margin-top: 0 cancels Dawn's own ".product__info-container > * + *"
+   rule (section-main-product.css) — this div is the container's
+   second direct child (after the badge bar), so that rule still
+   matches and was adding an extra 15px on top of this div's own
+   padding-top, pushing the title further from the badge than
+   intended. */
 .product__info-content {
+  margin-top: 0;
   padding: 2rem;
 }
 
