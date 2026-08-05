@@ -31,6 +31,12 @@
   text-decoration: none;
 }
 
+.spreadshirt-nav-bar__link--active {
+  font-weight: 600;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.4rem;
+}
+
 .spreadshirt-nav-bar__secondary-link {
   display: flex;
   align-items: center;

@@ -16,7 +16,10 @@
         <ul class="spreadshirt-nav-bar__list">
           {%- for link in section.settings.menu.links -%}
             <li>
-              <a href="{{ link.url }}" class="spreadshirt-nav-bar__link link">
+              <a
+                href="{{ link.url }}"
+                class="spreadshirt-nav-bar__link link{% if section.settings.highlight_first_link and forloop.first %} spreadshirt-nav-bar__link--active{% endif %}"
+              >
                 {{ link.title }}
               </a>
             </li>
@@ -66,6 +69,13 @@
       "id": "show_line_separator",
       "default": true,
       "label": "Show bottom border"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight_first_link",
+      "default": false,
+      "label": "Bold + underline the first menu link",
+      "info": "Matches the mockup's \"Gestalten\" tab treatment."
     },
     {
       "type": "select",

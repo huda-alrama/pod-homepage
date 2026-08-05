@@ -1,0 +1,81 @@
+{{ 'section-product-header-cta-row.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  The third header row in the POD PLUS mockup: category links on the
+  left, a solid "Jetzt gestalten" CTA button on the right — sits below
+  the logo/icons row and the Gestalten/Shoppen/B2B row (spreadshirt-nav-bar),
+  PDP-only (see templates/product.json + layout/theme.liquid).
+{%- endcomment -%}
+
+<div class="color-{{ section.settings.color_scheme }} product-header-cta-row-wrapper">
+  <div class="product-header-cta-row page-width">
+    {%- if section.settings.menu != blank -%}
+      <nav class="product-header-cta-row__menu">
+        <ul class="product-header-cta-row__list">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a href="{{ link.url }}" class="product-header-cta-row__link link">
+                {{ link.title }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a
+        {% if section.settings.button_url != blank %}
+          href="{{ section.settings.button_url }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+        class="product-header-cta-row__button"
+      >
+        {{ section.settings.button_label }}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product header CTA row",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Category menu"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Jetzt gestalten",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "accent-1", "label": "t:sections.all.colors.accent_1.label" },
+        { "value": "accent-2", "label": "t:sections.all.colors.accent_2.label" },
+        { "value": "background-1", "label": "t:sections.all.colors.background_1.label" },
+        { "value": "background-2", "label": "t:sections.all.colors.background_2.label" },
+        { "value": "inverse", "label": "t:sections.all.colors.inverse.label" }
+      ],
+      "default": "inverse",
+      "label": "Color scheme"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product header CTA row"
+    }
+  ]
+}
+{% endschema %}

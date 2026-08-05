@@ -253,7 +253,15 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    {% sections 'header-group' %}
+    {%- comment -%}
+      The product template renders its own PDP-only header (dark
+      trust strip + logo/icons + nav rows, wired into
+      templates/product.json) instead of the site-wide header-group,
+      so skip the latter there to avoid showing both.
+    {%- endcomment -%}
+    {%- unless request.page_type == 'product' -%}
+      {% sections 'header-group' %}
+    {%- endunless -%}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}

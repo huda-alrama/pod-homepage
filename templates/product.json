@@ -9,6 +9,59 @@
  */
 {
   "sections": {
+    "product_top_trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "t1": { "type": "badge", "settings": { "heading": "", "text": "100 Tage Rückgaberecht" } },
+        "t2": { "type": "badge", "settings": { "heading": "", "text": "GOTS-zertifizierte Bio-Baumwolle" } },
+        "t3": { "type": "badge", "settings": { "heading": "", "text": "Kostenloser Versand ab 39 €" } },
+        "t4": { "type": "badge", "settings": { "heading": "", "text": "Kostenlose Rücksendung" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {
+        "color_scheme": "background-2",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "product_header": {
+      "type": "header",
+      "settings": {
+        "logo_position": "middle-center",
+        "menu": "",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "always",
+        "show_line_separator": false,
+        "show_inline_search": true,
+        "color_scheme": "background-1",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "product_nav_bar": {
+      "type": "spreadshirt-nav-bar",
+      "settings": {
+        "menu": "main-menu",
+        "secondary_link_label": "Selber verkaufen",
+        "secondary_link_url": "",
+        "show_line_separator": false,
+        "highlight_first_link": true,
+        "color_scheme": "background-1"
+      }
+    },
+    "product_cta_row": {
+      "type": "product-header-cta-row",
+      "settings": {
+        "menu": "",
+        "button_label": "Jetzt gestalten",
+        "button_url": "https://dev.al-rama.ae/designer",
+        "color_scheme": "background-1"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -350,6 +403,10 @@
     }
   },
   "order": [
+    "product_top_trust",
+    "product_header",
+    "product_nav_bar",
+    "product_cta_row",
     "main",
     "trust_bar",
     "related-products",

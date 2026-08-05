@@ -1,0 +1,97 @@
+/* Hardcoded to the mockup's exact dark palette rather than routed
+   through the theme's color-scheme system, since this row (and the
+   two sibling PDP-only header rows it visually connects to — see the
+   cross-section overrides below) needs to match those hex values
+   exactly regardless of whatever the merchant's "inverse" scheme
+   happens to resolve to. */
+.product-header-cta-row-wrapper {
+  background: rgb(20, 20, 18);
+}
+
+.product-header-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+}
+
+.product-header-cta-row__list {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.product-header-cta-row__link {
+  font-size: 1.35rem;
+  color: rgb(245, 239, 230);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.product-header-cta-row__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Keeps the button pinned to the right even when there's no menu
+     (single flex child) — .product-header-cta-row's own
+     justify-content: space-between only has an effect with 2+ items. */
+  margin-left: auto;
+  background: rgb(232, 80, 30);
+  color: rgb(255, 255, 255);
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 1rem 1.8rem;
+  border-radius: 0.8rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+
+.product-header-cta-row__button:hover {
+  opacity: 0.9;
+}
+
+/* Dark treatment for the two sibling PDP-only header rows above this
+   one (product_header = the reused "header" section type, product_nav_bar
+   = the reused "spreadshirt-nav-bar" type — see templates/product.json).
+   Scoped by each instance's unique shopify-section wrapper rather
+   than by type/class, since both section types are also used
+   site-wide via sections/header-group.json with their normal (light)
+   styling — only these specific PDP instances should go dark. The
+   actual wrapper id is "shopify-section-{template-id}__{section-key}"
+   (the template id varies), so match the end of the id rather than
+   the id exactly. */
+[id$="__product_header"] .header {
+  background: rgb(20, 20, 18);
+}
+
+[id$="__product_header"] .header__heading-link,
+[id$="__product_header"] .header__icon,
+[id$="__product_header"] .header__heading-link .h2 {
+  color: rgb(245, 239, 230);
+}
+
+[id$="__product_nav_bar"] .spreadshirt-nav-bar-wrapper {
+  background: rgb(20, 20, 18);
+  border-bottom: none;
+}
+
+[id$="__product_nav_bar"] .spreadshirt-nav-bar__link,
+[id$="__product_nav_bar"] .spreadshirt-nav-bar__secondary-link {
+  color: rgb(185, 180, 168);
+}
+
+[id$="__product_nav_bar"] .spreadshirt-nav-bar__link--active,
+[id$="__product_nav_bar"] .spreadshirt-nav-bar__secondary-link {
+  color: rgb(245, 239, 230);
+}
+
+#shopify-section-product_nav_bar .spreadshirt-nav-bar__secondary-link {
+  color: rgb(245, 239, 230);
+}
