@@ -2260,6 +2260,10 @@ product-info .loading-overlay:not(.hidden) ~ *,
   padding: 0.8rem 0;
   margin: 0;
   letter-spacing: 0.1rem;
+  /* Overrides the h5 class's inherited --font-heading-weight (bold)
+     to match spreadshirt.de's own banner, which uses a medium weight
+     rather than the site's bold heading font. */
+  font-weight: 500;
 }
 
 /* section-header */
