@@ -2235,7 +2235,7 @@ product-info .loading-overlay:not(.hidden) ~ *,
 .announcement-bar__link {
   display: block;
   width: 100%;
-  padding: 1rem 0;
+  padding: 0.8rem 0;
   text-decoration: none;
 }
 
@@ -2257,7 +2257,7 @@ product-info .loading-overlay:not(.hidden) ~ *,
 }
 
 .announcement-bar__message {
-  padding: 1rem 0;
+  padding: 0.8rem 0;
   margin: 0;
   letter-spacing: 0.1rem;
 }
