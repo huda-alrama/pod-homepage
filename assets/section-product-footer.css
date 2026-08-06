@@ -60,6 +60,11 @@
   flex: 1 1 0%;
   min-width: 0;
   border-radius: 999px;
+  /* base.css sets border: 0 on .field__input directly (its own
+     border-look normally comes from the wrapper's ::after box-shadow
+     ring instead — see the comment on .field:after below). Real
+     border property on the input itself here per explicit request. */
+  border: 0.1rem solid rgb(138, 134, 124) !important;
   /* component-newsletter.css's .newsletter-form__field-wrapper
      .field__input rule sets padding-right: 5rem, reserved for Dawn's
      old overlapping icon-button (unused here — our button is a real
@@ -104,11 +109,11 @@
   border-radius: 999px;
 }
 
-/* The input's visible border is a box-shadow ring on .field's ::after
-   (base.css). */
+/* No ring on the wrapper's ::after — the border below is a real
+   property of .field__input itself, not this pseudo-element trick. */
 .product-footer__newsletter .field:after {
   border-radius: 999px;
-  box-shadow: 0 0 0 0.1rem rgb(138, 134, 124);
+  box-shadow: none;
 }
 
 .product-footer__newsletter .newsletter-form__button {
