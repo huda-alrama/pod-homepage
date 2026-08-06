@@ -52,13 +52,6 @@
   align-items: stretch;
   gap: 3rem;
   margin-top: 1.4rem;
-  /* Dark card framing the white input + cream button pair, distinct
-     from the footer's own background rather than just sitting
-     directly on it. */
-  background: rgb(30, 30, 28);
-  border: 1px solid rgba(245, 239, 230, 0.12);
-  border-radius: 999px;
-  padding: 0.6rem;
 }
 
 .product-footer__newsletter .field__input {
