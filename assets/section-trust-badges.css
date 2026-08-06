@@ -12,6 +12,17 @@
   padding: 1.4rem 2.4rem;
 }
 
+/* The top strip above the PDP-only header (product_top_trust) uses
+   thinner padding than the one lower on the page (trust_bar) —
+   matching the mockup, which gives them 9px and 14px respectively.
+   Scoped by the instance's shopify-section wrapper id (see the
+   product-mega-nav/product-header-cta-row overrides for the same
+   "ends with" id-matching approach) rather than the shared class,
+   since both sections reuse this same trust-badges type. */
+[id$="__product_top_trust"] .trust-badges__list {
+  padding: 0.9rem 2.4rem;
+}
+
 .trust-badges__item {
   display: flex;
   align-items: center;
