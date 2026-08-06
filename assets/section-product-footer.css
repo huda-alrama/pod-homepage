@@ -50,22 +50,17 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
-  gap: 0.8rem;
+  gap: 1rem;
+  margin-top: 1.4rem;
 }
 
 .product-footer__newsletter .field__input {
   background: transparent;
   color: rgb(245, 239, 230);
-  flex: 1 1 auto;
+  flex: 1 1 0%;
   border-radius: 999px;
-  /* component-newsletter.css reserves 5rem of right padding for
-     Dawn's default absolutely-positioned icon button, which
-     overlapped the input's right edge. We don't use that approach —
-     our button is a real flex sibling instead (see the comment on
-     .product-footer__newsletter .field above) — so that padding just
-     left a large dead gap of empty space at the end of the input,
-     making it look disconnected from the button next to it. */
-  padding-right: 1.8rem;
+  padding: 1.2rem 1.8rem;
+  font-size: 1.3rem;
 }
 
 /* This theme's global input roundness (settings_data.json:
@@ -79,15 +74,16 @@
    ::after (base.css), colored via --color-foreground at
    --inputs-border-opacity (0.1 in this theme) — i.e. barely-visible
    black-on-black once this section's own background is near-black.
-   Override the ring color directly rather than the (unused here)
+   Override the ring color (and match the mockup's exact
+   rgb(74, 74, 69) border) directly rather than the (unused here)
    border-color property above. */
 .product-footer__newsletter .field:after {
   border-radius: 999px;
-  box-shadow: 0 0 0 0.1rem rgba(245, 239, 230, 0.4);
+  box-shadow: 0 0 0 0.1rem rgb(74, 74, 69);
 }
 
 .product-footer__newsletter .field__label {
-  color: rgba(245, 239, 230, 0.6);
+  color: rgb(138, 134, 124);
 }
 
 .product-footer__newsletter .newsletter-form__button {
@@ -96,7 +92,9 @@
   height: auto;
   overflow: visible;
   flex-shrink: 0;
-  padding: 0 2.2rem;
+  display: flex;
+  align-items: center;
+  padding: 1.2rem 2.2rem;
   border-radius: 999px;
   /* <button> doesn't inherit font-family from ancestors by default —
      without this it silently fell back to Arial instead of the
