@@ -50,7 +50,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
-  gap: 1rem;
+  gap: 3rem;
   margin-top: 1.4rem;
   /* Dark card framing the white input + cream button pair, distinct
      from the footer's own background rather than just sitting
