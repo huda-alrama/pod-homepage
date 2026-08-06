@@ -338,8 +338,26 @@
 /* Size guide modal (snippets/product-size-guide-modal.liquid) —
    replicates the "Größen-Leitfaden" popup from the designer app.
    Dawn's .product-popup-modal already handles the dialog chrome
-   (backdrop, box, close button); these rules are just the
-   diagram/table content layout. */
+   (backdrop, box, close button), but its sizing is generic/shared
+   site-wide (var(--popup-corner-radius), width: 92%, height: 80%) —
+   override to match the reference popup's actual box exactly:
+   16px corner radius, fixed max-width, content-based height rather
+   than a fixed percentage of the viewport. */
+.product-popup-modal__content.product-size-guide {
+  border-radius: 1.6rem;
+  width: 92%;
+  max-width: 52rem;
+  height: auto;
+  max-height: 85vh;
+  padding: 0 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .product-popup-modal__content.product-size-guide {
+    padding-right: 2rem;
+  }
+}
+
 .product-size-guide__label {
   margin: 1.6rem 0 0.8rem;
   font-size: 1.1rem;
