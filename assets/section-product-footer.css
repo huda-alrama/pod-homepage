@@ -58,7 +58,12 @@
 .product-footer__newsletter .field__input {
   background: transparent !important;
   color: rgb(245, 239, 230);
-  flex: 1 1 0%;
+  /* Sized to its own content instead of stretching to fill the row,
+     so it sits left-aligned with natural width rather than spanning
+     the full available space — but still allowed to shrink (not
+     flex-grow: 0 with a hard width) so the button doesn't get pushed
+     off-screen on narrow viewports. */
+  flex: 0 1 22rem;
   min-width: 0;
   border-radius: 999px;
   /* base.css sets border: 0 on .field__input directly (its own
