@@ -54,7 +54,10 @@
   left: 0;
   z-index: 31;
   min-width: max-content;
-  background: rgb(255, 255, 255);
+  /* The mockup's own off-white surface color (trust strip, feature
+     icon boxes) rather than stark white, which read oddly stark next
+     to the black nav bar and the rest of the page's warm palette. */
+  background: rgb(244, 242, 236);
   box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.18);
   padding: 1.6rem 2.4rem;
 }
@@ -96,7 +99,9 @@ a.product-mega-nav__l1:hover {
   top: calc(100% + 1.6rem);
   left: 0;
   z-index: 32;
-  background: rgb(245, 244, 241);
+  /* Same off-white as .product-mega-nav__panel, for a consistent
+     surface color between the two flyout levels. */
+  background: rgb(244, 242, 236);
   box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.18);
   padding: 2rem;
   display: none;
