@@ -62,12 +62,8 @@
 }
 
 .product-footer__newsletter .field__input {
-  /* Independent of the dark footer around it, per explicit request —
-     white fill, dark serif text/placeholder, not the footer's
-     dark/cream palette. */
-  background: rgb(255, 255, 255) !important;
-  color: rgb(20, 20, 18);
-  font-family: Georgia, 'Times New Roman', serif;
+  background: transparent !important;
+  color: rgb(245, 239, 230);
   flex: 1 1 0%;
   min-width: 0;
   border-radius: 999px;
@@ -82,29 +78,48 @@
   font-size: 1.3rem;
 }
 
+/* Dawn's floating-label pattern: .field__label sits over the
+   placeholder and shrinks to a small title above the typed text on
+   focus/fill, while .field__input's own top padding grows to make
+   room for it. Not wanted here — just a plain input with a normal
+   placeholder that disappears when typing, nothing floating above
+   it. Hide the label and cancel the input's focus/filled padding
+   jump that existed only to make room for it. */
+.product-footer__newsletter .field__label {
+  display: none;
+}
+
+/* Dawn hides the input's own native placeholder (opacity: 0 in
+   base.css) since it normally relies on .field__label above for
+   visible placeholder-style text instead. With that label hidden,
+   show the real placeholder so the field isn't just blank. */
+.product-footer__newsletter .field__input::placeholder {
+  opacity: 1;
+  color: rgb(138, 134, 124);
+}
+
+.product-footer__newsletter .field__input:focus,
+.product-footer__newsletter .field__input:not(:placeholder-shown) {
+  padding: 1.2rem 1.8rem !important;
+  margin: 0 !important;
+}
+
 /* This theme's global input roundness (settings_data.json:
    inputs_radius) is only 2px — override to a full pill to match the
    mockup instead of changing that site-wide setting. */
 .product-footer__newsletter .field:before {
   border-radius: 999px;
-  background: rgb(255, 255, 255) !important;
 }
 
 /* The input's actual visible border is a box-shadow ring on .field's
    ::after (base.css), colored via --color-foreground at
    --inputs-border-opacity (0.1 in this theme) — i.e. barely-visible
    black-on-black once this section's own background is near-black.
-   Override the ring color to a solid dark border matching the
-   reference image, directly rather than the (unused here)
+   Override the ring color directly rather than the (unused here)
    border-color property above. */
 .product-footer__newsletter .field:after {
   border-radius: 999px;
-  box-shadow: 0 0 0 0.15rem rgb(20, 20, 18);
-}
-
-.product-footer__newsletter .field__label {
-  color: rgb(138, 134, 124);
-  font-family: Georgia, 'Times New Roman', serif;
+  box-shadow: 0 0 0 0.1rem rgba(245, 239, 230, 0.3);
 }
 
 .product-footer__newsletter .newsletter-form__button {
