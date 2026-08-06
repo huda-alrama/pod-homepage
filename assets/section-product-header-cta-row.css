@@ -93,11 +93,17 @@
 }
 
 [id$="__product_header"] .header__heading-link,
-[id$="__product_header"] .header__icon,
-[id$="__product_header"] .header__heading-link .h2 {
+[id$="__product_header"] .header__icon {
   color: rgb(245, 239, 230);
 }
 
-#shopify-section-product_nav_bar .spreadshirt-nav-bar__secondary-link {
-  color: rgb(245, 239, 230);
+/* Matches the mockup's wordmark exactly: font: 700 17px "Space
+   Grotesk", letter-spacing: 0.18em, color: #fff — distinct from the
+   cream (rgb(245, 239, 230)) used for the rest of this header's
+   icons/text. */
+[id$="__product_header"] .header__heading-link .h2 {
+  font: 700 1.7rem 'Space Grotesk', sans-serif;
+  letter-spacing: 0.18em;
+  color: rgb(255, 255, 255);
 }
+
