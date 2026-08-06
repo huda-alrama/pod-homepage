@@ -48,6 +48,7 @@
    side by side like the mockup, and let the button size to its text. */
 .product-footer__newsletter .field {
   display: flex;
+  flex-wrap: nowrap;
   align-items: stretch;
   gap: 0.8rem;
 }
@@ -57,6 +58,14 @@
   color: rgb(245, 239, 230);
   flex: 1 1 auto;
   border-radius: 999px;
+  /* component-newsletter.css reserves 5rem of right padding for
+     Dawn's default absolutely-positioned icon button, which
+     overlapped the input's right edge. We don't use that approach —
+     our button is a real flex sibling instead (see the comment on
+     .product-footer__newsletter .field above) — so that padding just
+     left a large dead gap of empty space at the end of the input,
+     making it look disconnected from the button next to it. */
+  padding-right: 1.8rem;
 }
 
 /* This theme's global input roundness (settings_data.json:
