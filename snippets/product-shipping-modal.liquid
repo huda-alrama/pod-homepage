@@ -1,0 +1,88 @@
+{% comment %}
+  Shipping & returns info modal, opened from the "inkl. KOSTENLOSER
+  Versand & Rücksendung ab 39 €" line (pdp_price_extra block).
+  Reuses Dawn's existing modal-opener/modal-dialog components
+  (assets/global.js) and .product-popup-modal styling — same pattern
+  as snippets/product-size-guide-modal.liquid.
+
+  The copy here intentionally mirrors the real, already-editable
+  claims used in the feature_shipping section and trust badges lower
+  on this page (kostenloser Versand ab 39 €, 100 Tage Rückgaberecht,
+  klimaneutraler Versand, etc.) — no new/invented policy details. Kept
+  as static text here rather than pulled from that section's block
+  settings, since sections can't read each other's block settings in
+  Liquid; update both together if either changes.
+
+  Accepts:
+  - section_id: {String} unique id for this modal instance
+
+  Usage:
+  {% render 'product-shipping-modal', section_id: section.id %}
+{% endcomment %}
+
+<modal-dialog id="ShippingModal-{{ section_id }}" class="product-popup-modal">
+  <div
+    role="dialog"
+    aria-label="Versand & Rücksendung"
+    aria-modal="true"
+    class="product-popup-modal__content product-shipping-info"
+    tabindex="-1"
+  >
+    <button
+      id="ModalClose-Shipping-{{ section_id }}"
+      type="button"
+      class="product-popup-modal__toggle"
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      {% render 'icon-close' %}
+    </button>
+    <div class="product-popup-modal__content-info">
+      <h1 class="h2">Versand & Rücksendung</h1>
+
+      <div class="product-shipping-info__item">
+        <span class="product-shipping-info__icon" aria-hidden="true">🚚</span>
+        <div>
+          <p class="product-shipping-info__heading">Kostenloser Versand ab 39 €</p>
+          <p class="product-shipping-info__text">
+            Bestellungen ab einem Warenkorbwert von 39 € versenden wir innerhalb Deutschlands
+            kostenlos. Darunter berechnen wir eine geringe Versandpauschale, die dir im Checkout
+            angezeigt wird.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-shipping-info__item">
+        <span class="product-shipping-info__icon" aria-hidden="true">⚡</span>
+        <div>
+          <p class="product-shipping-info__heading">Produktion & Lieferzeit</p>
+          <p class="product-shipping-info__text">
+            Bestellungen, die bis 14 Uhr eingehen, gehen am selben Werktag in Produktion.
+            Die Standardlieferung dauert danach in der Regel 1–3 Werktage; mit Express bist
+            du schon in 1–2 Werktagen versorgt.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-shipping-info__item">
+        <span class="product-shipping-info__icon" aria-hidden="true">↺</span>
+        <div>
+          <p class="product-shipping-info__heading">100 Tage Rückgaberecht</p>
+          <p class="product-shipping-info__text">
+            Passt doch nicht? Du hast ab Erhalt 100 Tage Zeit, um dein Produkt kostenlos
+            zurückzusenden. Wende dich dafür einfach an unseren Kundenservice.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-shipping-info__item">
+        <span class="product-shipping-info__icon" aria-hidden="true">♻</span>
+        <div>
+          <p class="product-shipping-info__heading">Klimaneutraler Versand</p>
+          <p class="product-shipping-info__text">
+            Alle Sendungen werden CO₂-kompensiert und in plastikfreier Verpackung verschickt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</modal-dialog>

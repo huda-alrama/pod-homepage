@@ -153,11 +153,29 @@
   margin-left: auto;
 }
 
-/* Free-shipping line only now (tax label + badge moved to
-   .product__price-row above). */
-.product__price-extra-shipping {
+.product__price-extra-shipping-opener {
   display: block;
+  width: 100%;
+}
+
+/* Free-shipping line only now (tax label + badge moved to
+   .product__price-row above). Now a <button> inside modal-opener
+   rather than an <a> — reset default button chrome and font-family
+   (buttons don't inherit font-family from ancestors by default,
+   same gotcha hit elsewhere on this page). */
+.product__price-extra-shipping {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: left;
   font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: underline;
   color: rgb(30, 122, 70);
 }
 
@@ -454,4 +472,61 @@
   font-size: 1.1rem;
   line-height: 1.5;
   color: rgba(var(--color-foreground), 0.5);
+}
+
+/* Shipping & returns modal (snippets/product-shipping-modal.liquid) —
+   same override pattern as .product-size-guide above: fixed max-width
+   card with content-based height rather than Dawn's generic
+   width:92%/height:80% popup sizing. */
+.product-popup-modal__content.product-shipping-info {
+  border-radius: 1.6rem;
+  width: 92%;
+  max-width: 52rem;
+  height: auto;
+  max-height: 85vh;
+  padding: 0 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .product-popup-modal__content.product-shipping-info {
+    padding-right: 2rem;
+  }
+}
+
+.product-shipping-info__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-top: 1.8rem;
+}
+
+.product-shipping-info__item:first-child {
+  margin-top: 1.6rem;
+}
+
+.product-shipping-info__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: rgba(var(--color-foreground), 0.05);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.product-shipping-info__heading {
+  margin: 0 0 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.product-shipping-info__text {
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: rgba(var(--color-foreground), 0.7);
 }

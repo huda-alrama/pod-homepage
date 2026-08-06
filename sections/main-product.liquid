@@ -463,12 +463,11 @@
               {%- endcomment -%}
               <div class="product__price-extra" {{ block.shopify_attributes }}>
                 {%- if block.settings.free_shipping_text != blank -%}
-                  <a
-                    {% if block.settings.free_shipping_url != blank %}href="{{ block.settings.free_shipping_url }}"{% endif %}
-                    class="product__price-extra-shipping"
-                  >
-                    {{ block.settings.free_shipping_text }}
-                  </a>
+                  <modal-opener class="product__price-extra-shipping-opener" data-modal="#ShippingModal-{{ section.id }}">
+                    <button type="button" class="product__price-extra-shipping" aria-haspopup="dialog">
+                      {{ block.settings.free_shipping_text }}
+                    </button>
+                  </modal-opener>
                 {%- endif -%}
               </div>
             {%- when 'pdp_size_help' -%}
@@ -681,6 +680,11 @@
   {%- assign size_help_blocks = section.blocks | where: 'type', 'pdp_size_help' -%}
   {%- if size_help_blocks.size > 0 -%}
     {% render 'product-size-guide-modal', section_id: section.id %}
+  {%- endif -%}
+
+  {%- assign price_extra_blocks_with_shipping = section.blocks | where: 'type', 'pdp_price_extra' -%}
+  {%- if price_extra_blocks_with_shipping.size > 0 -%}
+    {% render 'product-shipping-modal', section_id: section.id %}
   {%- endif -%}
 
   {% assign popups = section.blocks | where: 'type', 'popup' %}
@@ -1300,12 +1304,8 @@
           "type": "text",
           "id": "free_shipping_text",
           "label": "Free shipping line",
-          "default": "inkl. KOSTENLOSER Versand & Rücksendung ab 39 €"
-        },
-        {
-          "type": "url",
-          "id": "free_shipping_url",
-          "label": "Free shipping line link (optional)"
+          "default": "inkl. KOSTENLOSER Versand & Rücksendung ab 39 €",
+          "info": "Opens the shipping & returns popup (snippets/product-shipping-modal.liquid) below."
         }
       ]
     },
