@@ -70,6 +70,22 @@
    but is now its own dedicated product-mega-nav section (see
    section-product-mega-nav.css) with its dark styling built in
    directly, so no override is needed for it here anymore. */
+/* Dawn gives the sticky header z-index: 3 via
+   ".section-header.shopify-section-group-header-group" (base.css) —
+   but that second class is only added automatically when a section
+   renders through a section GROUP (sections/header-group.json, used
+   site-wide). This header instead sits directly in
+   templates/product.json's own section order, so it never gets that
+   class and was falling back to z-index: auto. Since
+   .product__info-container has an explicit z-index: 2
+   (section-main-product.css, for its own sticky behavior), "auto"
+   loses to it in the same stacking context — the info card's content
+   was rendering on top of the header instead of disappearing behind
+   it while scrolling, looking like a detached, floating fragment. */
+[id$="__product_header"] .section-header {
+  z-index: 3;
+}
+
 [id$="__product_header"] .header {
   background: rgb(20, 20, 18);
 }
