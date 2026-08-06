@@ -82,7 +82,9 @@
    loses to it in the same stacking context — the info card's content
    was rendering on top of the header instead of disappearing behind
    it while scrolling, looking like a detached, floating fragment. */
-[id$="__product_header"] .section-header {
+/* Compound selector (no space) — the id and the .section-header
+   class are on the very same wrapper div, not parent/descendant. */
+[id$="__product_header"].section-header {
   z-index: 3;
 }
 
