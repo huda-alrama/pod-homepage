@@ -87,10 +87,13 @@
   height: auto;
   overflow: visible;
   flex-shrink: 0;
-  padding: 0 2rem;
+  padding: 0 2.2rem;
   border-radius: 999px;
-  font-size: 1.4rem;
-  font-weight: 600;
+  /* <button> doesn't inherit font-family from ancestors by default —
+     without this it silently fell back to Arial instead of the
+     mockup's font: 600 13.5px "Space Grotesk" (same gotcha hit
+     earlier on the bulk-pricing tiles and header search input). */
+  font: 600 1.35rem 'Space Grotesk', sans-serif;
   color: rgb(20, 20, 18);
 }
 
