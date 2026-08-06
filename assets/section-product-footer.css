@@ -50,31 +50,24 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-top: 1.4rem;
 }
 
 .product-footer__newsletter .field__input {
   background: transparent;
   color: rgb(245, 239, 230);
-  flex-grow: 0 !important;
-  flex-shrink: 0 !important;
-  flex-basis: 10px !important;
-  /* base.css's own .field__input rule sets min-width/width, and
-     component-newsletter.css's .newsletter-form__field-wrapper
-     .field__input rule sets padding-right: 5rem (reserved for
-     Dawn's old overlapping icon-button) — both beat plain
-     declarations here on load order/specificity, so force past all
-     of them. This is a deliberate, explicit 10px width request, not
-     an accidental clash. Without the padding-right override
-     specifically, that leftover 5rem forces the box to render ~50px
-     wide regardless of width/max-width, since border-box can't let
-     padding exceed the box's own size. */
-  width: 10px !important;
-  max-width: 10px !important;
-  min-width: 0 !important;
+  flex: 1 1 0%;
+  min-width: 0;
   border-radius: 999px;
-  padding: 1.2rem 0 !important;
+  /* component-newsletter.css's .newsletter-form__field-wrapper
+     .field__input rule sets padding-right: 5rem, reserved for Dawn's
+     old overlapping icon-button (unused here — our button is a real
+     flex sibling instead). That leftover padding alone forces this
+     box wider than intended since border-box can't let padding
+     exceed the box's own size, so override it with !important rather
+     than relying on plain cascade order. */
+  padding: 1.2rem 1.8rem !important;
   font-size: 1.3rem;
 }
 
