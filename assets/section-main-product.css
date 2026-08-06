@@ -19,7 +19,14 @@
   .product__column-sticky {
     display: block;
     position: sticky;
-    top: 3rem;
+    /* Dawn hardcodes this to a flat 3rem, which only avoids overlapping
+       a sticky header by coincidence when the header happens to be
+       roughly that tall. The PDP-only header (sections/product-header.liquid
+       chain) is taller (~76px), so the column was sticking under it —
+       use the real measured header height (--header-height, set by
+       StickyHeader's setHeaderHeight() in sections/header.liquid) with
+       the original 3rem as a fallback/breathing-room floor. */
+    top: max(3rem, var(--header-height, 0px));
     z-index: 2;
   }
 
