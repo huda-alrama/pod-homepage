@@ -57,16 +57,19 @@
   opacity: 0.9;
 }
 
-/* Dark treatment for the two sibling PDP-only header rows above this
-   one (product_header = the reused "header" section type, product_nav_bar
-   = the reused "spreadshirt-nav-bar" type — see templates/product.json).
-   Scoped by each instance's unique shopify-section wrapper rather
-   than by type/class, since both section types are also used
-   site-wide via sections/header-group.json with their normal (light)
-   styling — only these specific PDP instances should go dark. The
-   actual wrapper id is "shopify-section-{template-id}__{section-key}"
-   (the template id varies), so match the end of the id rather than
-   the id exactly. */
+/* Dark treatment for the sibling PDP-only header row above this one
+   (product_header = the reused "header" section type — see
+   templates/product.json). Scoped by the instance's unique
+   shopify-section wrapper rather than by type/class, since "header"
+   is also used site-wide via sections/header-group.json with its
+   normal (light) styling — only this specific PDP instance should go
+   dark. The actual wrapper id is
+   "shopify-section-{template-id}__{section-key}" (the template id
+   varies), so match the end of the id rather than the id exactly.
+   product_nav_bar used to reuse "spreadshirt-nav-bar" the same way,
+   but is now its own dedicated product-mega-nav section (see
+   section-product-mega-nav.css) with its dark styling built in
+   directly, so no override is needed for it here anymore. */
 [id$="__product_header"] .header {
   background: rgb(20, 20, 18);
 }
@@ -74,21 +77,6 @@
 [id$="__product_header"] .header__heading-link,
 [id$="__product_header"] .header__icon,
 [id$="__product_header"] .header__heading-link .h2 {
-  color: rgb(245, 239, 230);
-}
-
-[id$="__product_nav_bar"] .spreadshirt-nav-bar-wrapper {
-  background: rgb(20, 20, 18);
-  border-bottom: none;
-}
-
-[id$="__product_nav_bar"] .spreadshirt-nav-bar__link,
-[id$="__product_nav_bar"] .spreadshirt-nav-bar__secondary-link {
-  color: rgb(185, 180, 168);
-}
-
-[id$="__product_nav_bar"] .spreadshirt-nav-bar__link--active,
-[id$="__product_nav_bar"] .spreadshirt-nav-bar__secondary-link {
   color: rgb(245, 239, 230);
 }
 

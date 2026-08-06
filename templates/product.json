@@ -43,13 +43,10 @@
       }
     },
     "product_nav_bar": {
-      "type": "spreadshirt-nav-bar",
+      "type": "product-mega-nav",
       "settings": {
-        "menu": "main-menu",
         "secondary_link_label": "Selber verkaufen",
         "secondary_link_url": "",
-        "show_line_separator": false,
-        "highlight_first_link": true,
         "color_scheme": "background-1"
       }
     },

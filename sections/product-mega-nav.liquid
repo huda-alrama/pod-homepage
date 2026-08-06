@@ -1,0 +1,327 @@
+{{ 'section-product-mega-nav.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  PDP-only mega nav replicating spreadshirt.de's real header navigation
+  structure (Gestalten / Shoppen / B2B, each with a hover flyout of
+  category tabs, some of which open a further level-2 flyout panel).
+  Hardcoded per the user's request ("give exactly same and give #
+  href") rather than driven by a Shopify menu, since this store has no
+  equivalent multi-level menu set up yet — every link is a "#"
+  placeholder until real destinations exist. Pure CSS :hover, no JS,
+  matching the no-JS-dependency pattern of the other PDP-only header
+  rows.
+{%- endcomment -%}
+
+<div class="color-{{ section.settings.color_scheme }} product-mega-nav-wrapper">
+  <div class="product-mega-nav page-width">
+    <nav class="product-mega-nav__nav">
+      <ul class="product-mega-nav__top-list">
+
+        <li class="product-mega-nav__item">
+          <a href="#" class="product-mega-nav__top-link product-mega-nav__top-link--active">Gestalten</a>
+          <div class="product-mega-nav__panel">
+            <div class="product-mega-nav__panel-row">
+              <a href="#" class="product-mega-nav__l1">T-Shirt bedrucken</a>
+              <a href="#" class="product-mega-nav__l1">Kleidung besticken</a>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Bekleidung</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Kleidung</a>
+                    <a href="#">T-Shirts &amp; Tops</a>
+                    <a href="#">Pullover &amp; Hoodies</a>
+                    <a href="#">Jacken &amp; Westen</a>
+                    <a href="#">Hosen &amp; Shorts</a>
+                    <a href="#">Sportbekleidung</a>
+                    <a href="#">Bademode</a>
+                    <a href="#">Nachhaltige Produkte</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Accessoires</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Accessoires</a>
+                    <a href="#">Headwear</a>
+                    <a href="#">Taschen &amp; Rucksäcke</a>
+                    <a href="#">Halswärmer</a>
+                    <a href="#">Socken &amp; Schuhe</a>
+                    <a href="#">Buttons &amp; Anstecker</a>
+                    <a href="#">Regenschirme</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Home &amp; Living</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Produkte</a>
+                    <a href="#">Küche</a>
+                    <a href="#">Deko &amp; Living</a>
+                    <a href="#">Textilien</a>
+                    <a href="#">Haustier-Zubehör</a>
+                  </div>
+                </div>
+              </div>
+
+              <a href="#" class="product-mega-nav__l1">Sticker</a>
+
+              <div class="product-mega-nav__group">
+                <span class="product-mega-nav__l1">Geschenke</span>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Personalisierte Geschenke</a>
+                    <a href="#">Geburtstagsgeschenke</a>
+                    <a href="#">Geschenke für Paare</a>
+                    <a href="#">Fotogeschenke</a>
+                    <a href="#">Babygeschenke</a>
+                    <a href="#">Geschenkgutscheine</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <span class="product-mega-nav__l1">Anlässe</span>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Junggesellinnenabschied</a>
+                    <a href="#">Junggesellenabschied</a>
+                    <a href="#">Schulabschluss</a>
+                    <a href="#">Einschulung</a>
+                    <a href="#">Gruppenoutfits</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="product-mega-nav__item">
+          <a href="#" class="product-mega-nav__top-link">Shoppen</a>
+          <div class="product-mega-nav__panel">
+            <div class="product-mega-nav__panel-row">
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Bestseller</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Sprüche T-Shirts</a>
+                    <a href="#">Lustige T-Shirts</a>
+                    <a href="#">Rente T-Shirts</a>
+                    <a href="#">Hunde T-Shirts</a>
+                    <a href="#">50. Geburtstag T-Shirts</a>
+                    <a href="#">T-Shirt für Mama</a>
+                  </div>
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Fahrrad T-Shirt</a>
+                    <a href="#">Partner T-Shirts</a>
+                    <a href="#">Retro T-Shirts</a>
+                    <a href="#">Tassen mit Sprüchen</a>
+                    <a href="#">Lustige Sticker</a>
+                    <a href="#">Abi Hoodies</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Männer</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Männer Produkte</a>
+                    <a href="#">Bestickte Kleidung</a>
+                    <a href="#">T-Shirts &amp; Tops</a>
+                    <a href="#">Pullover &amp; Hoodies</a>
+                    <a href="#">Jacken &amp; Westen</a>
+                    <a href="#">Hosen &amp; Shorts</a>
+                    <a href="#">Sportbekleidung</a>
+                    <a href="#">Nachhaltige Kleidung</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Frauen</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Frauen Produkte</a>
+                    <a href="#">Bestickte Kleidung</a>
+                    <a href="#">T-Shirts &amp; Tops</a>
+                    <a href="#">Pullover &amp; Hoodies</a>
+                    <a href="#">Jacken &amp; Westen</a>
+                    <a href="#">Hosen &amp; Shorts</a>
+                    <a href="#">Sportbekleidung</a>
+                    <a href="#">Nachhaltige Kleidung</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Kinder &amp; Babys</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Produkte</a>
+                    <a href="#">Bestickte Kleidung</a>
+                    <a href="#">T-Shirts &amp; Tops</a>
+                    <a href="#">Pullover &amp; Hoodies</a>
+                    <a href="#">Hosen &amp; Shorts</a>
+                    <a href="#">Sportbekleidung</a>
+                    <a href="#">Nachhaltige Kleidung</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Accessoires</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Accessoires</a>
+                    <a href="#">Bestickte Accessoires</a>
+                    <a href="#">Headwear</a>
+                    <a href="#">Taschen &amp; Rucksäcke</a>
+                    <a href="#">Socken &amp; Schuhe</a>
+                    <a href="#">Halswärmer</a>
+                    <a href="#">Buttons &amp; Anstecker</a>
+                    <a href="#">Regenschirme</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Home &amp; Living</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Alle Produkte</a>
+                    <a href="#">Bestickte Produkte</a>
+                    <a href="#">Küche</a>
+                    <a href="#">Deko &amp; Living</a>
+                    <a href="#">Textilien</a>
+                    <a href="#">Haustier-Zubehör</a>
+                  </div>
+                </div>
+              </div>
+
+              <a href="#" class="product-mega-nav__l1">Sticker</a>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Geschenke</a>
+                <div class="product-mega-nav__sub product-mega-nav__sub--wide">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Geschenke für Männer</a>
+                    <a href="#">Geschenke für Frauen</a>
+                    <a href="#">Geschenkideen für Kinder</a>
+                    <a href="#">Geschenke für Mama</a>
+                    <a href="#">Geschenk für Papa</a>
+                    <a href="#">Geschenk für Freundin</a>
+                    <a href="#">Geschenk für Freund</a>
+                    <a href="#">Geschenk beste Freundin</a>
+                  </div>
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Geschenk für Schwester</a>
+                    <a href="#">Geschenk für Bruder</a>
+                    <a href="#">Geschenkideen zum Geburtstag</a>
+                    <a href="#">Geschenkideen 18. Geburtstag</a>
+                    <a href="#">Geschenkideen 30. Geburtstag</a>
+                    <a href="#">Geschenkideen 50. Geburtstag</a>
+                    <a href="#">Geschenke zur Rente</a>
+                    <a href="#">Richtfest Geschenk</a>
+                  </div>
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Geschenkideen zur Hochzeit</a>
+                    <a href="#">Geschenk zur goldenen Hochzeit</a>
+                    <a href="#">Silberhochzeit Geschenk</a>
+                    <a href="#">Geschenke zur Taufe</a>
+                    <a href="#">Babyparty Geschenke</a>
+                    <a href="#">Geschenk zur Geburt</a>
+                    <a href="#">Geschenke zum Einzug</a>
+                    <a href="#">Geschenkgutscheine</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-mega-nav__group">
+                <a href="#" class="product-mega-nav__l1">Fanartikel</a>
+                <div class="product-mega-nav__sub">
+                  <div class="product-mega-nav__sub-col">
+                    <a href="#">Filme &amp; Serien</a>
+                    <a href="#">Comics &amp; Superhelden</a>
+                    <a href="#">Klassiker &amp; Kids</a>
+                    <a href="#">Musik &amp; Bands</a>
+                    <a href="#">Video-Games &amp; E-Sports</a>
+                    <a href="#">Alle Themen</a>
+                  </div>
+                </div>
+              </div>
+
+              <a href="#" class="product-mega-nav__l1">T-Shirt der Woche</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="product-mega-nav__item">
+          <button type="button" class="product-mega-nav__top-link product-mega-nav__top-link--button">B2B</button>
+          <div class="product-mega-nav__panel">
+            <div class="product-mega-nav__panel-row">
+              <a href="#" class="product-mega-nav__l1">Firmenkleidung gestalten</a>
+              <a href="#" class="product-mega-nav__l1">Beraten lassen</a>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+    {%- if section.settings.secondary_link_label != blank -%}
+      <a
+        {% if section.settings.secondary_link_url != blank %}
+          href="{{ section.settings.secondary_link_url }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+        class="product-mega-nav__secondary-link link animate-arrow"
+      >
+        {{ section.settings.secondary_link_label }}
+        <span class="icon-wrap">{% render 'icon-arrow' %}</span>
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product mega nav",
+  "settings": [
+    {
+      "type": "text",
+      "id": "secondary_link_label",
+      "default": "Selber verkaufen",
+      "label": "Secondary link label"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link_url",
+      "label": "Secondary link URL"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "accent-1", "label": "t:sections.all.colors.accent_1.label" },
+        { "value": "accent-2", "label": "t:sections.all.colors.accent_2.label" },
+        { "value": "background-1", "label": "t:sections.all.colors.background_1.label" },
+        { "value": "background-2", "label": "t:sections.all.colors.background_2.label" },
+        { "value": "inverse", "label": "t:sections.all.colors.inverse.label" }
+      ],
+      "default": "background-1",
+      "label": "Color scheme"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product mega nav"
+    }
+  ]
+}
+{% endschema %}

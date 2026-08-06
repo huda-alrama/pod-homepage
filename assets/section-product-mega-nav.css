@@ -1,0 +1,167 @@
+.product-mega-nav-wrapper {
+  background: rgb(20, 20, 18);
+  position: relative;
+  z-index: 30;
+}
+
+.product-mega-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+.product-mega-nav__top-list {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.product-mega-nav__item {
+  position: relative;
+}
+
+.product-mega-nav__top-link {
+  display: inline-block;
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgb(185, 180, 168);
+  text-decoration: none;
+  padding: 0.4rem 0;
+}
+
+.product-mega-nav__top-link--active {
+  color: rgb(245, 239, 230);
+  font-weight: 600;
+  border-bottom: 2px solid rgb(245, 239, 230);
+}
+
+/* Level 1 flyout row: appears below the top-level tab on hover. */
+.product-mega-nav__panel {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 31;
+  min-width: max-content;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.18);
+  padding: 1.6rem 2.4rem;
+}
+
+.product-mega-nav__item:hover .product-mega-nav__panel {
+  display: block;
+}
+
+.product-mega-nav__panel-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.2rem;
+  flex-wrap: nowrap;
+}
+
+.product-mega-nav__group {
+  position: relative;
+}
+
+.product-mega-nav__l1 {
+  display: inline-block;
+  font-size: 1.35rem;
+  color: rgb(20, 20, 18);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: default;
+}
+
+a.product-mega-nav__l1:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Level 2 flyout panel: appears below a level-1 item that has
+   children, offset to sit clear of the level-1 row above it. */
+.product-mega-nav__sub {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1.6rem);
+  left: 0;
+  z-index: 32;
+  background: rgb(245, 244, 241);
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.18);
+  padding: 2rem;
+  display: none;
+  gap: 2.4rem;
+}
+
+/* This is the widest (3-column) panel, and its trigger ("Geschenke")
+   sits well to the right within the Shoppen row — anchoring from the
+   right edge instead of the left keeps it from overflowing past the
+   viewport, regardless of exactly where its trigger falls in the row. */
+.product-mega-nav__sub--wide {
+  left: auto;
+  right: 0;
+}
+
+.product-mega-nav__group:hover .product-mega-nav__sub {
+  display: flex;
+}
+
+.product-mega-nav__sub-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  min-width: 18rem;
+}
+
+.product-mega-nav__sub-col a {
+  font-size: 1.3rem;
+  color: rgb(20, 20, 18);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.product-mega-nav__sub-col a:hover {
+  text-decoration: underline;
+}
+
+.product-mega-nav__secondary-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgb(245, 239, 230);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 989px) {
+  .product-mega-nav {
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+
+  .product-mega-nav__top-list {
+    flex-wrap: wrap;
+    gap: 1.2rem 1.8rem;
+  }
+
+  /* No hover on touch devices, and no JS to drive a tap-to-open
+     interaction here — showing all three tabs' flyouts stacked at
+     once would bury the page under ~40 links. Just show the three
+     top-level tabs; the deeper category/sub levels stay
+     desktop-only until this gets a real tap-driven implementation. */
+  .product-mega-nav__panel {
+    display: none !important;
+  }
+}
