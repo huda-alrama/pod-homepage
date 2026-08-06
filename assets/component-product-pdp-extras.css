@@ -169,10 +169,25 @@
   text-align: right;
 }
 
+.product__size-help-opener {
+  cursor: pointer;
+}
+
 .product__size-help-link {
+  /* Now a <button> inside modal-opener rather than an <a> — reset the
+     default button chrome and font-family (buttons don't inherit
+     font-family from ancestors by default, same gotcha hit elsewhere
+     on this page). */
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
   font-size: 1.3rem;
   font-weight: 600;
   text-decoration: underline;
+  color: rgb(var(--color-foreground));
 }
 
 .product__size-help-note {
@@ -318,4 +333,107 @@
   color: rgba(var(--color-foreground), 0.7);
   margin-top: 1rem;
   text-align: center;
+}
+
+/* Size guide modal (snippets/product-size-guide-modal.liquid) —
+   replicates the "Größen-Leitfaden" popup from the designer app.
+   Dawn's .product-popup-modal already handles the dialog chrome
+   (backdrop, box, close button); these rules are just the
+   diagram/table content layout. */
+.product-size-guide__label {
+  margin: 1.6rem 0 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06rem;
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+.product-size-guide__fit {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.6rem;
+  font-size: 1.3rem;
+}
+
+.product-size-guide__fit svg {
+  flex-shrink: 0;
+  color: rgba(var(--color-foreground), 0.45);
+}
+
+.product-size-guide__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.product-size-guide__diagram {
+  flex: 0 0 auto;
+  width: 13rem;
+  margin: 0 auto;
+}
+
+.product-size-guide__diagram svg {
+  width: 100%;
+  height: auto;
+  max-width: 16rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.product-size-guide__legend {
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.1rem;
+  color: rgba(var(--color-foreground), 0.55);
+  text-align: center;
+}
+
+.product-size-guide__table-wrap {
+  flex: 1 1 24rem;
+  min-width: 0;
+  overflow-x: auto;
+  border: 1px solid rgba(var(--color-foreground), 0.08);
+  border-radius: 0.8rem;
+}
+
+.product-size-guide__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.3rem;
+}
+
+.product-size-guide__table th {
+  background: rgba(var(--color-foreground), 0.04);
+  color: rgba(var(--color-foreground), 0.55);
+  font-weight: 500;
+  text-align: right;
+  padding: 0.8rem 1.2rem;
+}
+
+.product-size-guide__table th:first-child,
+.product-size-guide__table td:first-child {
+  text-align: left;
+}
+
+.product-size-guide__table td {
+  padding: 0.8rem 1.2rem;
+  text-align: right;
+  color: rgba(var(--color-foreground), 0.75);
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+.product-size-guide__table td:first-child {
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.product-size-guide__note {
+  margin: 1.6rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: rgba(var(--color-foreground), 0.5);
 }

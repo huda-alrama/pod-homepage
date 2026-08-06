@@ -1,0 +1,116 @@
+{% comment %}
+  Size guide modal opened from the "Nicht sicher welche Größe?" link
+  (pdp_size_help block) — replicates the "Größen-Leitfaden" popup
+  shown in the designer app (dev.al-rama.ae) when editing this
+  product, using Dawn's existing modal-opener/modal-dialog components
+  (assets/global.js) and .product-popup-modal styling rather than
+  building a new dialog system from scratch.
+
+  The measurements below are the real values shown for "Men's T-Shirt"
+  in the designer app. This is currently the same static table for
+  every product on the site — swap in per-product measurements (e.g.
+  via metafields) once that data exists for the rest of the catalog.
+
+  Accepts:
+  - section_id: {String} unique id for this modal instance
+
+  Usage:
+  {% render 'product-size-guide-modal', section_id: section.id %}
+{% endcomment %}
+
+<modal-dialog id="SizeGuideModal-{{ section_id }}" class="product-popup-modal">
+  <div
+    role="dialog"
+    aria-label="Größen-Leitfaden"
+    aria-modal="true"
+    class="product-popup-modal__content product-size-guide"
+    tabindex="-1"
+  >
+    <button
+      id="ModalClose-SizeGuide-{{ section_id }}"
+      type="button"
+      class="product-popup-modal__toggle"
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      {% render 'icon-close' %}
+    </button>
+    <div class="product-popup-modal__content-info">
+      <h1 class="h2">Größen-Leitfaden</h1>
+      <p class="product-size-guide__label">Größentabelle</p>
+      <p class="product-size-guide__fit">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M9 3v18M15 3v18M3 9h18M3 15h18"></path>
+        </svg>
+        <strong>Passform:</strong>&nbsp;Regular fit
+      </p>
+      <div class="product-size-guide__row">
+        <div class="product-size-guide__diagram">
+          <svg viewBox="0 0 200 210" fill="none" stroke="#9ca3af" stroke-width="1.5" aria-hidden="true">
+            <path d="M78 26 C82 12 118 12 122 26 L146 20 L182 50 L180 76 L148 68 L150 190 L50 190 L52 68 L20 76 L18 50 L54 20 Z" stroke="#374151" stroke-width="2" stroke-linejoin="round"></path>
+            <path d="M82 30 C90 14 110 14 118 30" stroke="#374151" stroke-width="1.5" fill="none"></path>
+            <line x1="8" y1="26" x2="8" y2="190" stroke-dasharray="3 3"></line>
+            <path d="M5 26 L8 20 L11 26 M5 190 L8 196 L11 190" stroke-linecap="round" stroke-linejoin="round"></path>
+            <text x="0" y="112" font-size="11" fill="#374151" font-weight="600">A</text>
+            <line x1="18" y1="100" x2="182" y2="100" stroke-dasharray="3 3"></line>
+            <path d="M18 97 L12 100 L18 103 M182 97 L188 100 L182 103" stroke-linecap="round" stroke-linejoin="round"></path>
+            <text x="94" y="115" font-size="11" fill="#374151" font-weight="600">B</text>
+            <line x1="150" y1="24" x2="180" y2="48" stroke-dasharray="3 3"></line>
+            <text x="184" y="42" font-size="11" fill="#374151" font-weight="600">C</text>
+          </svg>
+          <ul class="product-size-guide__legend">
+            <li>A – Länge in cm</li>
+            <li>B – Breite in cm</li>
+            <li>C – Ärmellänge in cm</li>
+          </ul>
+        </div>
+        <div class="product-size-guide__table-wrap">
+          <table class="product-size-guide__table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>A (in)</th>
+                <th>B (in)</th>
+                <th>C (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>S</td>
+                <td>27.99</td>
+                <td>17.99</td>
+                <td>6.22</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>28.98</td>
+                <td>20</td>
+                <td>6.5</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td>30</td>
+                <td>21.97</td>
+                <td>6.97</td>
+              </tr>
+              <tr>
+                <td>2XL</td>
+                <td>31.97</td>
+                <td>25.98</td>
+                <td>7.48</td>
+              </tr>
+              <tr>
+                <td>3XL</td>
+                <td>32.99</td>
+                <td>27.99</td>
+                <td>7.76</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="product-size-guide__note">
+        Finde die richtige Größe: Vergleiche diese Maße mit einem ähnlichen Kleidungsstück, das du bereits besitzt. Lege es dafür flach ausgebreitet hin.
+      </p>
+    </div>
+  </div>
+</modal-dialog>

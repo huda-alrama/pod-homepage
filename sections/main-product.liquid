@@ -474,12 +474,11 @@
             {%- when 'pdp_size_help' -%}
               <div class="product__size-help" {{ block.shopify_attributes }}>
                 {%- if block.settings.guide_text != blank -%}
-                  <a
-                    {% if block.settings.guide_url != blank %}href="{{ block.settings.guide_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
-                    class="product__size-help-link"
-                  >
-                    {{ block.settings.guide_text }}
-                  </a>
+                  <modal-opener class="product__size-help-opener" data-modal="#SizeGuideModal-{{ section.id }}">
+                    <button type="button" class="product__size-help-link link" aria-haspopup="dialog">
+                      {{ block.settings.guide_text }}
+                    </button>
+                  </modal-opener>
                 {%- endif -%}
                 {%- if block.settings.fit_note != blank -%}
                   <p class="product__size-help-note">{{ block.settings.fit_note }}</p>
@@ -678,6 +677,11 @@
   </div>
 
   {% render 'product-media-modal' variant_images: variant_images %}
+
+  {%- assign size_help_blocks = section.blocks | where: 'type', 'pdp_size_help' -%}
+  {%- if size_help_blocks.size > 0 -%}
+    {% render 'product-size-guide-modal', section_id: section.id %}
+  {%- endif -%}
 
   {% assign popups = section.blocks | where: 'type', 'popup' %}
   {%- for block in popups -%}
@@ -1314,12 +1318,8 @@
           "type": "text",
           "id": "guide_text",
           "label": "Size guide link text",
-          "default": "Nicht sicher welche Größe?"
-        },
-        {
-          "type": "url",
-          "id": "guide_url",
-          "label": "Size guide URL"
+          "default": "Nicht sicher welche Größe?",
+          "info": "Opens the size guide popup (snippets/product-size-guide-modal.liquid) below."
         },
         {
           "type": "text",
