@@ -54,11 +54,11 @@
   left: 0;
   z-index: 31;
   min-width: max-content;
-  /* The mockup's own off-white surface color (trust strip, feature
-     icon boxes) rather than stark white, which read oddly stark next
-     to the black nav bar and the rest of the page's warm palette. */
-  background: rgb(244, 242, 236);
-  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.18);
+  /* Same black as .product-mega-nav-wrapper (the parent nav bar),
+     so the flyout reads as a continuation of it rather than a
+     different surface. */
+  background: rgb(20, 20, 18);
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.35);
   padding: 1.6rem 2.4rem;
 }
 
@@ -80,7 +80,7 @@
 .product-mega-nav__l1 {
   display: inline-block;
   font-size: 1.35rem;
-  color: rgb(20, 20, 18);
+  color: rgb(245, 239, 230);
   text-decoration: none;
   white-space: nowrap;
   cursor: default;
@@ -99,10 +99,11 @@ a.product-mega-nav__l1:hover {
   top: calc(100% + 1.6rem);
   left: 0;
   z-index: 32;
-  /* Same off-white as .product-mega-nav__panel, for a consistent
-     surface color between the two flyout levels. */
-  background: rgb(244, 242, 236);
-  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.18);
+  /* Same black as .product-mega-nav-wrapper and .product-mega-nav__panel,
+     so all three levels (nav bar, level-1 flyout, level-2 flyout)
+     share one continuous surface color. */
+  background: rgb(20, 20, 18);
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.35);
   padding: 2rem;
   display: none;
   gap: 2.4rem;
@@ -130,12 +131,13 @@ a.product-mega-nav__l1:hover {
 
 .product-mega-nav__sub-col a {
   font-size: 1.3rem;
-  color: rgb(20, 20, 18);
+  color: rgb(185, 180, 168);
   text-decoration: none;
   white-space: nowrap;
 }
 
 .product-mega-nav__sub-col a:hover {
+  color: rgb(245, 239, 230);
   text-decoration: underline;
 }
 
