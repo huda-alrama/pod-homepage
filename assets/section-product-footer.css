@@ -34,6 +34,17 @@
   max-width: 40rem;
 }
 
+/* component-newsletter.css centers .newsletter-form itself at desktop
+   widths (max-width: 36rem; margin: 0 auto) — narrower than this
+   40rem parent, so on desktop only, the auto-centering shifted the
+   input ~20px right of the heading above it (which sits outside that
+   centered block, unaffected). Undo the centering so it stays flush
+   with the heading at every width. */
+.product-footer__newsletter .newsletter-form {
+  margin: 0;
+  max-width: 100%;
+}
+
 .product-footer__newsletter-heading {
   margin: 0;
   font-size: 1.8rem;
