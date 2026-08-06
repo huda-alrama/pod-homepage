@@ -53,6 +53,7 @@
   align-items: stretch;
   gap: 1rem;
   margin-top: 1.4rem;
+  margin-left: -1rem;
 }
 
 .product-footer__newsletter .field__input {
