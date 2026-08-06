@@ -105,11 +105,10 @@
 }
 
 /* The input's visible border is a box-shadow ring on .field's ::after
-   (base.css) — removed entirely per explicit request, no border at
-   all around the input. */
+   (base.css). */
 .product-footer__newsletter .field:after {
   border-radius: 999px;
-  box-shadow: none;
+  box-shadow: 0 0 0 0.1rem rgb(138, 134, 124);
 }
 
 .product-footer__newsletter .newsletter-form__button {
