@@ -55,8 +55,12 @@
 }
 
 .product-footer__newsletter .field__input {
-  background: transparent;
-  color: rgb(245, 239, 230);
+  /* Independent of the dark footer around it, per explicit request —
+     white fill, dark serif text/placeholder, not the footer's
+     dark/cream palette. */
+  background: rgb(255, 255, 255) !important;
+  color: rgb(20, 20, 18);
+  font-family: Georgia, 'Times New Roman', serif;
   flex: 1 1 0%;
   min-width: 0;
   border-radius: 999px;
@@ -76,22 +80,24 @@
    mockup instead of changing that site-wide setting. */
 .product-footer__newsletter .field:before {
   border-radius: 999px;
+  background: rgb(255, 255, 255) !important;
 }
 
 /* The input's actual visible border is a box-shadow ring on .field's
    ::after (base.css), colored via --color-foreground at
    --inputs-border-opacity (0.1 in this theme) — i.e. barely-visible
    black-on-black once this section's own background is near-black.
-   Override the ring color (and match the mockup's exact
-   rgb(74, 74, 69) border) directly rather than the (unused here)
+   Override the ring color to a solid dark border matching the
+   reference image, directly rather than the (unused here)
    border-color property above. */
 .product-footer__newsletter .field:after {
   border-radius: 999px;
-  box-shadow: 0 0 0 0.1rem rgb(74, 74, 69);
+  box-shadow: 0 0 0 0.15rem rgb(20, 20, 18);
 }
 
 .product-footer__newsletter .field__label {
   color: rgb(138, 134, 124);
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .product-footer__newsletter .newsletter-form__button {
