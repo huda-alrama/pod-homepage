@@ -104,15 +104,12 @@
   border-radius: 999px;
 }
 
-/* The input's actual visible border is a box-shadow ring on .field's
-   ::after (base.css), colored via --color-foreground at
-   --inputs-border-opacity (0.1 in this theme) — i.e. barely-visible
-   black-on-black once this section's own background is near-black.
-   Override the ring color directly rather than the (unused here)
-   border-color property above. */
+/* The input's visible border is a box-shadow ring on .field's ::after
+   (base.css) — removed entirely per explicit request, no border at
+   all around the input. */
 .product-footer__newsletter .field:after {
   border-radius: 999px;
-  box-shadow: 0 0 0 0.1rem rgba(245, 239, 230, 0.3);
+  box-shadow: none;
 }
 
 .product-footer__newsletter .newsletter-form__button {
