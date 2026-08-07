@@ -1,9 +1,10 @@
-// Sets the real quantity input when a bulk-pricing tile is clicked, so
-// "In den Warenkorb" actually adds that quantity. Tiers themselves are
-// fetched live from the real discount-tiers API (confirmed backed by
-// a matching Shopify automatic discount at checkout, not just a
-// theme-side display) — this file never hardcodes tier numbers, so it
-// can't drift out of sync with the real backend.
+// Purely informational display of the real bulk-discount tiers — tiles
+// are disabled (not clickable), the highlighted tile just reflects
+// whatever quantity is currently set in the native Quantity stepper
+// above. Tiers themselves are fetched live from the real discount-tiers
+// API (confirmed backed by a matching Shopify automatic discount at
+// checkout, not just a theme-side display) — this file never hardcodes
+// tier numbers, so it can't drift out of sync with the real backend.
 //
 // Requires that API to send Access-Control-Allow-Origin for this
 // storefront's domain. Without it the browser blocks the response
@@ -23,8 +24,13 @@ if (!customElements.get('product-bulk-pricing')) {
         this.selectedQtyEl = this.querySelector('.product__bulk-pricing-selected-qty');
         this.progressFill = this.querySelector('.product__bulk-pricing-progress-fill');
         this.tiles = Array.from(this.querySelectorAll('.product__bulk-pricing-tile'));
-        this.tiles.forEach((tile) => this.wireTile(tile));
-        this.updateProgress(this.tiles[0]);
+        this.tiles.forEach((tile) => this.disableTile(tile));
+        this.syncFromInput();
+
+        if (this.input) {
+          this.input.addEventListener('change', () => this.syncFromInput());
+          this.input.addEventListener('input', () => this.syncFromInput());
+        }
 
         if (this.dataset.apiUrl) this.loadTiers();
       }
@@ -72,30 +78,36 @@ if (!customElements.get('product-bulk-pricing')) {
         discountSpan.textContent = discountLabel;
         tile.appendChild(discountSpan);
 
-        this.wireTile(tile);
+        this.disableTile(tile);
         this.tiles.push(tile);
         this.grid.appendChild(tile);
 
-        const selected = this.tiles.find((t) => t.classList.contains('is-selected'));
-        this.updateProgress(selected);
+        this.syncFromInput();
       }
 
-      wireTile(tile) {
-        tile.addEventListener('click', () => this.selectTile(tile));
+      disableTile(tile) {
+        tile.disabled = true;
+        tile.tabIndex = -1;
       }
 
-      selectTile(tile) {
-        this.tiles.forEach((t) => t.classList.remove('is-selected'));
-        tile.classList.add('is-selected');
-        this.updateProgress(tile);
-        if (!this.input) return;
-        this.input.value = tile.dataset.quantity;
-        this.input.dispatchEvent(new Event('change', { bubbles: true }));
+      // Highlights the tile matching the current real quantity (the
+      // highest tier whose minQuantity is <= the quantity, falling back
+      // to the base "1 Stück" tile) — display only, never writes back to
+      // the input. Tiles are sorted ascending by data-quantity since
+      // loadTiers() sorts before calling addTile().
+      syncFromInput() {
+        const qty = this.input ? parseInt(this.input.value, 10) || 1 : 1;
+        let match = this.tiles[0];
+        this.tiles.forEach((tile) => {
+          if (Number(tile.dataset.quantity) <= qty) match = tile;
+        });
+        this.updateProgress(match);
       }
 
       updateProgress(tile) {
         if (!tile) return;
-        if (this.selectedQtyEl) this.selectedQtyEl.textContent = tile.dataset.quantity;
+        this.tiles.forEach((t) => t.classList.toggle('is-selected', t === tile));
+        if (this.selectedQtyEl) this.selectedQtyEl.textContent = this.input ? this.input.value : tile.dataset.quantity;
         if (!this.progressFill) return;
         const index = this.tiles.indexOf(tile);
         const ratio = (index + 1) / this.tiles.length;

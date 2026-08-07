@@ -263,12 +263,16 @@
   padding: 0.9rem 0.4rem;
   text-align: center;
   background: rgb(var(--color-background));
-  cursor: pointer;
   transition: border-color 0.15s ease;
 }
 
-.product__bulk-pricing-tile:hover {
-  border-color: rgba(var(--color-foreground), 0.4);
+/* Tiles are display-only (see product-bulk-pricing.js) — real <button
+   disabled> rather than a styling-only class, so they're genuinely
+   unclickable/unfocusable and not just visually inert. */
+.product__bulk-pricing-tile:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+  color: inherit;
 }
 
 .product__bulk-pricing-tile.is-selected {
