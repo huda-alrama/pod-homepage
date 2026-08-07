@@ -20,8 +20,11 @@ if (!customElements.get('product-bulk-pricing')) {
       connectedCallback() {
         this.input = document.getElementById(this.dataset.quantityInputId);
         this.grid = this.querySelector('.product__bulk-pricing-grid');
+        this.selectedQtyEl = this.querySelector('.product__bulk-pricing-selected-qty');
+        this.progressFill = this.querySelector('.product__bulk-pricing-progress-fill');
         this.tiles = Array.from(this.querySelectorAll('.product__bulk-pricing-tile'));
         this.tiles.forEach((tile) => this.wireTile(tile));
+        this.updateProgress(this.tiles[0]);
 
         if (this.dataset.apiUrl) this.loadTiers();
       }
@@ -72,6 +75,9 @@ if (!customElements.get('product-bulk-pricing')) {
         this.wireTile(tile);
         this.tiles.push(tile);
         this.grid.appendChild(tile);
+
+        const selected = this.tiles.find((t) => t.classList.contains('is-selected'));
+        this.updateProgress(selected);
       }
 
       wireTile(tile) {
@@ -81,9 +87,19 @@ if (!customElements.get('product-bulk-pricing')) {
       selectTile(tile) {
         this.tiles.forEach((t) => t.classList.remove('is-selected'));
         tile.classList.add('is-selected');
+        this.updateProgress(tile);
         if (!this.input) return;
         this.input.value = tile.dataset.quantity;
         this.input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      updateProgress(tile) {
+        if (!tile) return;
+        if (this.selectedQtyEl) this.selectedQtyEl.textContent = tile.dataset.quantity;
+        if (!this.progressFill) return;
+        const index = this.tiles.indexOf(tile);
+        const ratio = (index + 1) / this.tiles.length;
+        this.progressFill.style.width = `${ratio * 100}%`;
       }
     }
   );

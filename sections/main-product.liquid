@@ -504,6 +504,13 @@
                 data-tier-discount-template="{{ block.settings.tier_discount_template | escape }}"
                 {{ block.shopify_attributes }}
               >
+                <div class="product__bulk-pricing-header">
+                  <span>Menge: <strong class="product__bulk-pricing-selected-qty">1</strong></span>
+                  <span class="product__bulk-pricing-hint">Mehr Stück, mehr Rabatt</span>
+                </div>
+                <div class="product__bulk-pricing-progress">
+                  <div class="product__bulk-pricing-progress-fill"></div>
+                </div>
                 <div class="product__bulk-pricing-grid">
                   <button type="button" class="product__bulk-pricing-tile is-selected" data-quantity="1">
                     <span class="product__bulk-pricing-qty">{{ block.settings.tier_0_label }}</span>

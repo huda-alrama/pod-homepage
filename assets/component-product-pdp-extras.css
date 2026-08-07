@@ -215,11 +215,40 @@
 }
 
 /* Bulk pricing tiles */
+.product__bulk-pricing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  font-size: 1.3rem;
+}
+
+.product__bulk-pricing-hint {
+  font-size: 1.15rem;
+  color: rgb(138, 134, 124);
+}
+
+.product__bulk-pricing-progress {
+  height: 0.4rem;
+  background: rgb(237, 235, 229);
+  border-radius: 99px;
+  margin-top: 0.8rem;
+  overflow: hidden;
+}
+
+.product__bulk-pricing-progress-fill {
+  height: 100%;
+  width: 16.6667%;
+  background: rgb(30, 122, 70);
+  border-radius: 99px;
+  transition: width 0.3s;
+}
+
 .product__bulk-pricing-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
-  margin: 0.8rem 0 1.6rem;
+  margin: 1rem 0 1.6rem;
 }
 
 .product__bulk-pricing-tile {
