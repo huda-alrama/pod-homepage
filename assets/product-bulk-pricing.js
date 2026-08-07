@@ -1,19 +1,28 @@
 // Purely informational display of the real bulk-discount tiers — tiles
 // are disabled (not clickable), the highlighted tile just reflects
 // whatever quantity is currently set in the native Quantity stepper
-// above. Tiers themselves are fetched live from the real discount-tiers
-// API (confirmed backed by a matching Shopify automatic discount at
-// checkout, not just a theme-side display) — this file never hardcodes
-// tier numbers, so it can't drift out of sync with the real backend.
+// above. Tiers are fetched live from the real discount-tiers API
+// (confirmed backed by a matching Shopify automatic discount at
+// checkout, not just a theme-side display) whenever that succeeds.
 //
-// Requires that API to send Access-Control-Allow-Origin for this
-// storefront's domain. Without it the browser blocks the response
-// before JS ever sees it (curl/server-to-server calls aren't subject
-// to CORS, which is why this can look fine outside a browser but still
-// fail here) — confirmed missing as of this writing. When that's
-// missing, or the request otherwise fails, this fails silently and
-// just leaves the base "1 Stück" tile that's already rendered
-// server-side, rather than showing an error or stale numbers.
+// TEMPORARY: that API currently has no Access-Control-Allow-Origin
+// header for this storefront's origin, so the browser blocks the
+// response before JS ever sees it (curl/server-to-server calls aren't
+// subject to CORS, which is why this can look fine outside a browser
+// but still fail here). FALLBACK_TIERS below is a stopgap so the grid
+// still displays the intended mockup tiers while that's unresolved —
+// it's only ever used when the live fetch fails or errors, so it's
+// self-removing: once the CORS header + the remaining tiers are added
+// on the backend, real data wins automatically and this constant
+// becomes dead code (safe to delete then, no theme change needed).
+const FALLBACK_TIERS = [
+  { minQuantity: 5, discountPercent: 10 },
+  { minQuantity: 15, discountPercent: 20 },
+  { minQuantity: 30, discountPercent: 35 },
+  { minQuantity: 100, discountPercent: 50 },
+  { minQuantity: 500, discountPercent: 60 },
+];
+
 if (!customElements.get('product-bulk-pricing')) {
   customElements.define(
     'product-bulk-pricing',
@@ -39,11 +48,15 @@ if (!customElements.get('product-bulk-pricing')) {
         let tiers;
         try {
           const response = await fetch(this.dataset.apiUrl, { headers: { Accept: 'application/json' } });
-          if (!response.ok) return;
-          tiers = await response.json();
+          if (!response.ok) {
+            tiers = FALLBACK_TIERS;
+          } else {
+            tiers = await response.json();
+          }
         } catch (error) {
-          // Network error or CORS block — leave the base tile as-is.
-          return;
+          // Network error or CORS block — use the fallback tiers instead
+          // of leaving just the base tile (see FALLBACK_TIERS comment).
+          tiers = FALLBACK_TIERS;
         }
 
         if (!Array.isArray(tiers)) return;
